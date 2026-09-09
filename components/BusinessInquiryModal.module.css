@@ -1,0 +1,321 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  max-width: 620px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 24px 64px -12px rgba(15, 23, 42, 0.28);
+  border: 1px solid var(--line);
+  padding: 32px;
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: var(--ivory-deep);
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--indigo-deep);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.closeBtn:hover {
+  background: #E2E8F0;
+  transform: rotate(90deg);
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(29, 111, 216, 0.08);
+  border: 1px solid rgba(29, 111, 216, 0.2);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--marigold);
+  margin-bottom: 10px;
+}
+
+.header h2 {
+  font-size: 24px;
+  color: var(--indigo-deep);
+  margin-bottom: 6px;
+  letter-spacing: -0.015em;
+}
+
+.header p {
+  color: #64748B;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--indigo-deep);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.serviceChip {
+  background: var(--ivory-deep);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: all 0.18s ease;
+}
+
+.serviceChip:hover {
+  border-color: rgba(29, 111, 216, 0.3);
+  background: #E0EDFB;
+}
+
+.serviceChip.activeChip {
+  background: rgba(29, 111, 216, 0.08);
+  border-color: var(--marigold);
+  box-shadow: 0 2px 8px rgba(29, 111, 216, 0.15);
+}
+
+.serviceName {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--indigo-deep);
+}
+
+.serviceTag {
+  font-size: 10.5px;
+  color: #64748B;
+}
+
+.inputRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.input, .textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: #F8FAFC;
+  font-size: 13.5px;
+  color: var(--ink);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.input:focus, .textarea:focus {
+  outline: none;
+  background: #FFFFFF;
+  border-color: var(--marigold);
+  box-shadow: 0 0 0 3px rgba(29, 111, 216, 0.12);
+}
+
+.textarea {
+  resize: vertical;
+}
+
+.formFooter {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding-top: 6px;
+}
+
+.submitBtn {
+  background: #0F172A;
+  color: #FFFFFF;
+  border: 1px solid #0F172A;
+  padding: 12px 20px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: #1E293B;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.whatsAppQuickBtn {
+  background: #25D366;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 18px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 13.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+}
+
+.whatsAppQuickBtn:hover {
+  background: #20BA5A;
+  transform: translateY(-1px);
+}
+
+.successView {
+  text-align: center;
+  padding: 24px 8px;
+}
+
+.successIconWrap {
+  margin-bottom: 16px;
+}
+
+.successView h3 {
+  font-size: 24px;
+  color: var(--indigo-deep);
+  margin-bottom: 8px;
+}
+
+.successView p {
+  color: #64748B;
+  font-size: 14.5px;
+  line-height: 1.6;
+  max-width: 440px;
+  margin: 0 auto 24px;
+}
+
+.successActions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btnWhatsApp {
+  background: #25D366;
+  color: #FFFFFF;
+  border: none;
+  padding: 11px 22px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnWhatsApp:hover {
+  background: #20BA5A;
+}
+
+.btnSecondary {
+  background: var(--ivory-deep);
+  color: var(--indigo-deep);
+  border: 1px solid var(--line);
+  padding: 11px 24px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 600px) {
+  .modal {
+    padding: 24px 18px;
+  }
+  .servicesGrid {
+    grid-template-columns: 1fr;
+  }
+  .inputRow {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .formFooter {
+    flex-direction: column;
+  }
+  .whatsAppQuickBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}

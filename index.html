@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bihar Say — Redesign Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#FFFFFF;
+    --ivory-deep:#EAF2FB;
+    --ink:#152238;
+    --indigo:#0E3E73;
+    --indigo-deep:#092C54;
+    --marigold:#1D6FD8;
+    --sindoor:#0E3E73;
+    --sage:#4A7AAE;
+    --sky:#8FC6FF;
+    --line:rgba(14,62,115,0.14);
+    --line-light:rgba(255,255,255,0.2);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ivory);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;object-fit:cover;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- Top strip ---------- */
+  .topstrip{
+    background:var(--indigo-deep);
+    color:var(--ivory);
+    font-size:13px;
+  }
+  .topstrip .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-top:9px;padding-bottom:9px;
+    flex-wrap:wrap;gap:8px;
+  }
+  .topstrip .cta{color:var(--sky);font-weight:600;}
+  .topstrip .socials{display:flex;gap:14px;opacity:0.85;}
+  .topstrip .socials span{width:14px;height:14px;display:inline-block;border:1.4px solid var(--ivory);border-radius:50%;}
+
+  /* ---------- Header ---------- */
+  header.site{
+    background:var(--indigo);
+    color:var(--ivory);
+    position:sticky;top:0;z-index:40;
+    border-bottom:1px solid var(--line-light);
+  }
+  header.site .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-top:18px;padding-bottom:18px;
+    gap:24px;flex-wrap:wrap;
+  }
+  .brand{display:flex;align-items:baseline;gap:10px;}
+  .brand .mark{
+    width:42px;height:42px;border-radius:9px;
+    background:#FFFFFF;
+    display:flex;align-items:center;justify-content:center;
+    flex:none;overflow:hidden;padding:3px;
+  }
+  .brand .mark img{width:100%;height:100%;object-fit:contain;}
+  .brand .name{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:var(--ivory);}
+  .brand .name em{font-style:normal;color:#BFE0FF;}
+  nav.primary{display:flex;gap:30px;font-size:14.5px;font-weight:500;}
+  nav.primary a{padding:6px 0;border-bottom:2px solid transparent;transition:border-color .15s;}
+  nav.primary a:hover, nav.primary a:focus-visible{border-color:var(--sky);}
+  .header-actions{display:flex;align-items:center;gap:16px;}
+  .btn-join{
+    background:#FFFFFF;color:var(--indigo-deep);
+    padding:9px 18px;border-radius:99px;font-weight:700;font-size:13.5px;
+  }
+
+  /* ---------- Hero / Top Picks ---------- */
+  .hero-section{padding:44px 0 56px;}
+  .section-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:22px;gap:16px;flex-wrap:wrap;
+  }
+  .section-head h2{font-size:28px;}
+  .section-head .sub{font-size:14px;color:var(--ink);opacity:.6;max-width:360px;}
+
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:28px;
+  }
+  .feature-main{
+    position:relative;border-radius:14px;overflow:hidden;
+    aspect-ratio:16/11;background:var(--indigo-deep);
+  }
+  .feature-main img{width:100%;height:100%;position:absolute;inset:0;opacity:.88;}
+  .feature-main .scrim{
+    position:absolute;inset:0;
+    background:linear-gradient(0deg,rgba(20,29,48,.92) 8%,rgba(20,29,48,.15) 55%,transparent 75%);
+  }
+  .feature-main .tag{
+    position:absolute;top:20px;left:20px;
+    background:var(--sindoor);color:var(--ivory);
+    font-size:11.5px;font-weight:700;padding:5px 12px;border-radius:99px;
+  }
+  .feature-main .cap{
+    position:absolute;left:24px;right:24px;bottom:22px;color:var(--ivory);
+  }
+  .feature-main .cap h3{font-size:27px;line-height:1.2;color:var(--ivory);}
+  .feature-main .cap .meta{font-size:12.5px;opacity:.8;margin-top:9px;}
+
+  .feature-list{display:flex;flex-direction:column;gap:0;}
+  .feature-list article{
+    display:flex;gap:14px;padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .feature-list article:first-child{padding-top:2px;}
+  .feature-list .thumb{
+    width:104px;height:78px;border-radius:9px;overflow:hidden;flex:none;background:var(--ivory-deep);
+  }
+  .feature-list .body .cat{font-size:11px;font-weight:700;color:var(--sindoor);}
+  .feature-list .body h4{font-family:'Fraunces',serif;font-size:16px;line-height:1.3;margin-top:5px;font-weight:600;}
+
+  /* ---------- Category sections ---------- */
+  .category-section{padding:14px 0 50px;border-top:1px solid var(--line);}
+  .category-section .section-head h2{display:flex;align-items:center;gap:10px;}
+  .dot{width:11px;height:11px;border-radius:50%;flex:none;}
+  .dot.culture{background:#0E3E73;}
+  .dot.edu{background:#4A7AAE;}
+  .dot.startup{background:#1D6FD8;}
+  .dot.industry{background:#7FA8D6;}
+  .dot.sports{background:#092C54;}
+  .dot.invest{background:#2E5FA3;}
+
+  .card-row{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:20px;}
+  .story-card{
+    background:var(--ivory);
+    border-radius:12px;overflow:hidden;
+  }
+  .story-card .thumb{aspect-ratio:4/3;background:var(--ivory-deep);border-radius:12px;overflow:hidden;}
+  .story-card .thumb img{width:100%;height:100%;}
+  .story-card .body{padding:14px 3px 0;}
+  .story-card .cat{font-size:11px;font-weight:700;color:var(--sindoor);}
+  .story-card h4{font-family:'Fraunces',serif;font-weight:600;font-size:17px;line-height:1.32;margin-top:6px;}
+  .story-card .byline{font-size:12px;opacity:.55;margin-top:8px;}
+  .story-card.lead h4{font-size:21px;}
+
+  /* ---------- Video / community strip ---------- */
+  .community-strip{
+    background:var(--indigo);color:var(--ivory);
+    border-radius:16px;margin:8px 0 56px;
+    display:grid;grid-template-columns:1fr 1fr;overflow:hidden;
+  }
+  .community-strip .copy{padding:42px 40px;display:flex;flex-direction:column;justify-content:center;gap:14px;}
+  .community-strip h2{color:var(--ivory);font-size:26px;line-height:1.25;}
+  .community-strip p{font-size:14.5px;opacity:.8;max-width:380px;}
+  .community-strip .btn-join{align-self:flex-start;}
+  .video-slot{
+    background:var(--indigo-deep);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;min-height:230px;
+  }
+  .play{
+    width:58px;height:58px;border-radius:50%;background:#FFFFFF;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .play::after{content:'';border-left:16px solid var(--indigo-deep);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px;}
+
+  /* ---------- Top Post / Popular Entries widget strip ---------- */
+  .widget-strip{
+    display:grid;grid-template-columns:1fr 1fr;gap:40px;
+    padding:8px 0 54px;border-top:1px solid var(--line);
+  }
+  .widget-strip h5{
+    font-family:'Fraunces',serif;font-size:15px;font-weight:600;
+    color:var(--indigo);margin:0 0 16px;
+  }
+  .widget-strip ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;}
+  .widget-strip li{display:flex;gap:14px;align-items:baseline;}
+  .widget-strip .num{
+    font-family:'Fraunces',serif;font-weight:600;font-size:15px;color:var(--marigold);
+    width:20px;flex:none;
+  }
+  .widget-strip li div{display:flex;flex-direction:column;gap:3px;}
+  .widget-strip a{font-size:14.5px;font-weight:500;line-height:1.35;}
+  .widget-strip a:hover{color:var(--marigold);}
+  .widget-strip .date{font-size:12px;opacity:.55;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--indigo-deep);color:var(--ivory);padding:56px 0 26px;margin-top:20px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-bottom:36px;border-bottom:1px solid var(--line-light);}
+  footer h5{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--sky);margin-bottom:16px;font-weight:700;}
+  footer .about p{font-size:14px;opacity:.78;max-width:320px;}
+  footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;font-size:14px;opacity:.85;}
+  .bottom-bar{display:flex;justify-content:space-between;padding-top:20px;font-size:12.5px;opacity:.6;flex-wrap:wrap;gap:10px;}
+
+  /* ---------- Custom cursor tracker ---------- */
+  body.cursor-fx-active{cursor:none;}
+  body.cursor-fx-active a, body.cursor-fx-active button, body.cursor-fx-active .btn-join,
+  body.cursor-fx-active .story-card, body.cursor-fx-active .feature-main, body.cursor-fx-active .play{cursor:none;}
+  .cursor-dot{
+    position:fixed;top:-100px;left:-100px;width:8px;height:8px;border-radius:50%;
+    background:var(--marigold);pointer-events:none;z-index:9999;
+    transform:translate(-50%,-50%);
+  }
+  .cursor-ring{
+    position:fixed;top:-100px;left:-100px;width:34px;height:34px;border-radius:50%;
+    border:1.6px solid var(--marigold);pointer-events:none;z-index:9998;
+    transform:translate(-50%,-50%);
+    transition:width .18s ease,height .18s ease,background .18s ease;
+  }
+  .cursor-ring.hovering{
+    width:54px;height:54px;background:rgba(29,111,216,0.1);
+  }
+  body.cursor-fx-hide .cursor-dot, body.cursor-fx-hide .cursor-ring{display:none;}
+
+  @media (max-width:860px){
+    nav.primary{display:none;}
+    .hero-grid{grid-template-columns:1fr;}
+    .card-row{grid-template-columns:1fr;}
+    .community-strip{grid-template-columns:1fr;}
+    .widget-strip{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;gap:28px;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <div class="topstrip">
+    <div class="wrap">
+      <span class="cta">Join 10,000+ Biharis — create your profile & share your story</span>
+      <div class="socials" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+    </div>
+  </div>
+
+  <header class="site">
+    <div class="wrap">
+      <a class="brand" href="#">
+        <span class="mark"><img src="https://biharsay.com/wp-content/uploads/2024/09/cropped-logo-1-270x270.webp" alt="Bihar Say logo"></span>
+        <span class="name">Bihar<em>Say</em></span>
+      </a>
+      <nav class="primary">
+        <a href="#">Home</a>
+        <a href="#">About Us</a>
+        <a href="#">Services</a>
+        <a href="#">Categories</a>
+        <a href="#">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <a class="btn-join" href="#">Join the Community</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <section class="hero-section">
+      <div class="section-head">
+        <h2>Top Picks</h2>
+        <div class="sub">The stories setting the pace for Bihar this week.</div>
+      </div>
+      <div class="hero-grid">
+        <a class="feature-main" href="#">
+          <img src="https://biharsay.com/wp-content/uploads/2025/04/Bihar-Say-Website-99.png" alt="Patna to get a high-tech indoor stadium">
+          <div class="scrim"></div>
+          <span class="tag">Investments & Economic</span>
+          <div class="cap">
+            <h3>Patna to Get a High-Tech ₹21 Crore Indoor Stadium</h3>
+            <div class="meta">Bihar Say · Amrita — Sept 7, 2026</div>
+          </div>
+        </a>
+        <div class="feature-list">
+          <article>
+            <div class="thumb"></div>
+            <div class="body">
+              <div class="cat">Investments & Economic</div>
+              <h4>₹59,000 Crore Is Heading to Bihar — and That May Not Be the Biggest Story</h4>
+            </div>
+          </article>
+          <article>
+            <div class="thumb"></div>
+            <div class="body">
+              <div class="cat">Culture & Heritage</div>
+              <h4>When Nepal Floods Trapped 106 Pilgrims, Bihar Became Their Way Home</h4>
+            </div>
+          </article>
+          <article>
+            <div class="thumb"></div>
+            <div class="body">
+              <div class="cat">Agriculture · Investments</div>
+              <h4>Bihar's Makhana Boom and the Hidden Cost of Migration</h4>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="section-head">
+        <h2><span class="dot culture"></span>Culture & Heritage</h2>
+        <div class="sub">Stories, festivals and everyday life across the state.</div>
+      </div>
+      <div class="card-row">
+        <div class="story-card lead">
+          <div class="thumb"><img src="https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-40.png" alt="Singhada superfood"></div>
+          <div class="body">
+            <div class="cat">Culture & Heritage</div>
+            <h4>Singhada: The Superfood That Boosts Immunity, Beauty & Everyday Energy</h4>
+            <div class="byline">Bihar Say · Amrita</div>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Culture & Heritage</div>
+            <h4>Sonpur Mela 2025 Special Trains: Full List, Timings & Travel Guide</h4>
+            <div class="byline">Bihar Say · Amrita</div>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Culture & Heritage</div>
+            <h4>Patna Women's College Hosts Golden Jubilee Reunion</h4>
+            <div class="byline">Bihar Say · Amrita</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="section-head">
+        <h2><span class="dot edu"></span>Education & Social</h2>
+        <div class="sub">Results, admissions, and the state's social progress.</div>
+      </div>
+      <div class="card-row">
+        <div class="story-card lead">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Education & Social</div>
+            <h4>Bihar DElEd Admission 2026: 20 Aug Merit List, Dates & Admission Details</h4>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Education & Social</div>
+            <h4>Munger Records India's Cleanest Air: Bihar AQI 2026 Update</h4>
+            <div class="byline">March 29, 2026</div>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Education & Social</div>
+            <h4>Bihar Board 10th Result 2026 Declared</h4>
+            <div class="byline">March 29, 2026</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="community-strip">
+      <div class="copy">
+        <h2>Watch stories from Bihar's changemakers</h2>
+        <p>Video features on the founders, farmers and creators shaping Bihar's growth — new episodes every week.</p>
+        <a class="btn-join" href="#">Watch on YouTube</a>
+      </div>
+      <div class="video-slot"><div class="play"></div></div>
+    </div>
+
+    <section class="category-section" style="border-top:none;">
+      <div class="section-head">
+        <h2><span class="dot startup"></span>Entrepreneurship & Startups</h2>
+        <div class="sub">Founders and ventures building from Bihar, for the world.</div>
+      </div>
+      <div class="card-row">
+        <div class="story-card lead">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Entrepreneurship & Startups</div>
+            <h4>JK Cement Crosses 31 MTA With New Buxar Plant in Bihar</h4>
+            <div class="byline">Jan 30, 2026</div>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Entrepreneurship & Startups</div>
+            <h4>"Bihar Say" Now 0 to 13K: What It Really Takes to Build a Digital Community That Lasts</h4>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Entrepreneurship & Startups</div>
+            <h4>Gomini: India's First Cow Care Startup Blending Tradition & Technology</h4>
+            <div class="byline">Aug 26, 2025</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="section-head">
+        <h2><span class="dot industry"></span>Industry & Innovation</h2>
+        <div class="sub">Manufacturing, infrastructure and technology momentum.</div>
+      </div>
+      <div class="card-row">
+        <div class="story-card lead">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Industry & Innovation</div>
+            <h4>Bihar AI Growth 2026: MoUs, GCC Policy & Tech Push at India AI Impact Summit Delhi</h4>
+            <div class="byline">Feb 17, 2026</div>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Industry & Innovation</div>
+            <h4>Bihar Gov Transfers ₹113 Crore to Flood-Affected Farmers via DBT</h4>
+            <div class="byline">Feb 22, 2026</div>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Industry & Innovation</div>
+            <h4>Foxconn Eyes Bihar for Electronics Manufacturing</h4>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="section-head">
+        <h2><span class="dot sports"></span>Sports</h2>
+        <div class="sub">Athletes, academies and Bihar's rise on the national stage.</div>
+      </div>
+      <div class="card-row">
+        <div class="story-card lead">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Sports</div>
+            <h4>Youngest Sensation: Bihar's Vaibhav Suryavanshi Shines at IPL Auction</h4>
+            <div class="byline">Neehar · Nov 18, 2024</div>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Sports</div>
+            <h4>Bihar: The Rising Star of Indian Sports — Hosts the Asian Women's Hockey Championship</h4>
+            <div class="byline">Nov 15, 2024</div>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Sports</div>
+            <h4>Rajgir's First Sports Academy: A Game Changer for Bihar's Athletes</h4>
+            <div class="byline">Neehar · Oct 25, 2024</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="section-head">
+        <h2><span class="dot invest"></span>Investments & Economic</h2>
+        <div class="sub">Capital, schemes and policy shaping Bihar's economy.</div>
+      </div>
+      <div class="card-row">
+        <div class="story-card lead">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Investments & Economic</div>
+            <h4>Wheat Procurement in Bihar 2026 Begins April 1</h4>
+            <div class="byline">Mar 29, 2026</div>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Agriculture · Investments</div>
+            <h4>Bihar's Makhana Boom and the Hidden Cost of Migration</h4>
+            <div class="byline">Sept 1, 2026</div>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="cat">Investments & Economic</div>
+            <h4>₹59,000 Crore Is Heading to Bihar — and That May Not Be the Biggest Story</h4>
+            <div class="byline">Sept 3, 2026</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="widget-strip">
+      <div class="widget-col">
+        <h5>Top Post</h5>
+        <ol>
+          <li><span class="num">1</span><div><a href="#">Patna to Get High-Tech ₹21 Crore Indoor Stadium</a><span class="date">Sept 7, 2026</span></div></li>
+          <li><span class="num">2</span><div><a href="#">India-Nepal Travel Is About to Get Easier: Jaynagar Set to Get a New Immigration Post</a><span class="date">Sept 5, 2026</span></div></li>
+          <li><span class="num">3</span><div><a href="#">₹59,000 Crore Is Heading to Bihar — and That May Not Be the Biggest Story</a><span class="date">Sept 3, 2026</span></div></li>
+        </ol>
+      </div>
+      <div class="widget-col">
+        <h5>Popular Entries</h5>
+        <ol>
+          <li><span class="num">1</span><div><a href="#">Patna to Get High-Tech ₹21 Crore Indoor Stadium</a></div></li>
+          <li><span class="num">2</span><div><a href="#">India-Nepal Travel Is About to Get Easier: Jaynagar Set to Get a New Immigration Post</a></div></li>
+          <li><span class="num">3</span><div><a href="#">₹59,000 Crore Is Heading to Bihar — and That May Not Be the Biggest Story</a></div></li>
+          <li><span class="num">4</span><div><a href="#">When Nepal Floods Trapped 106 Pilgrims, Bihar Became Their Way Home</a></div></li>
+          <li><span class="num">5</span><div><a href="#">Bihar's Makhana Boom and the Hidden Cost of Migration</a></div></li>
+        </ol>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="about">
+          <h5>Bihar Say</h5>
+          <p>Get the best from Bihar & Biharis across the world, every day with Bihar Say.</p>
+        </div>
+        <div>
+          <h5>Explore</h5>
+          <ul>
+            <li>About Us</li>
+            <li>Services</li>
+            <li>Categories</li>
+            <li>Contact</li>
+          </ul>
+        </div>
+        <div>
+          <h5>Reach Us</h5>
+          <ul>
+            <li>ask@biharsay.com</li>
+            <li>14A, Kailash Enclave, Shivpuri,<br>Boring Road, Patna – 800023</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <span>© 2026 Bihar Say. All rights reserved.</span>
+        <span>Facebook · Instagram · LinkedIn · X · YouTube</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      var dot = document.getElementById('cursorDot');
+      var ring = document.getElementById('cursorRing');
+      var mouseX = -100, mouseY = -100;
+      var ringX = -100, ringY = -100;
+      var started = false;
+
+      window.addEventListener('mousemove', function(e){
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        dot.style.left = mouseX + 'px';
+        dot.style.top = mouseY + 'px';
+        if(!started){
+          started = true;
+          document.body.classList.add('cursor-fx-active');
+        }
+      });
+
+      window.addEventListener('touchstart', function(){
+        document.body.classList.remove('cursor-fx-active');
+        document.body.classList.add('cursor-fx-hide');
+      }, {passive:true});
+
+      function loop(){
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        ring.style.left = ringX + 'px';
+        ring.style.top = ringY + 'px';
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+
+      var hoverables = document.querySelectorAll('a, button, .btn-join, .story-card, .feature-main, .play');
+      hoverables.forEach(function(el){
+        el.addEventListener('mouseenter', function(){ ring.classList.add('hovering'); });
+        el.addEventListener('mouseleave', function(){ ring.classList.remove('hovering'); });
+      });
+    })();
+  </script>
+</body>
+</html>

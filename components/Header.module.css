@@ -1,0 +1,269 @@
+.siteHeader {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--ink);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.navRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 0;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logoMark {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  overflow: hidden;
+  padding: 2px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-xs);
+}
+
+.logoImg {
+  object-fit: contain;
+}
+
+.brandTitle {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 23px;
+  font-weight: 700;
+  color: #0F172A;
+  letter-spacing: -0.03em;
+}
+
+.brandTitle em {
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 600;
+  margin-left: 1px;
+}
+
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.desktopNav a {
+  color: var(--ink-secondary);
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+  transition: all 0.18s ease;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+}
+
+.desktopNav a:hover,
+.desktopNav a.activeLink {
+  color: #0F172A;
+  border-color: #0F172A;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.userActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btnSubmitStory {
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 7px 14px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnSubmitStory:hover {
+  background: var(--bg-muted);
+  border-color: #CBD5E1;
+}
+
+.profileWrapper {
+  position: relative;
+}
+
+.avatarBtn {
+  background: none;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 36px;
+  height: 36px;
+  transition: all 0.2s ease;
+}
+
+.avatarBtn:hover {
+  border-color: #0F172A;
+  transform: scale(1.04);
+}
+
+.avatarImg {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatarFallback {
+  background: var(--marigold);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 14px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: #FFFFFF;
+  color: var(--ink);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--line);
+  min-width: 220px;
+  padding: 8px 0;
+  z-index: 100;
+  animation: fadeIn 0.15s ease;
+}
+
+.dropdownHeader {
+  padding: 10px 16px;
+}
+
+.dropdownName {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--indigo-deep);
+}
+
+.dropdownEmail {
+  font-size: 12px;
+  color: #64748B;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdownDivider {
+  height: 1px;
+  background: var(--line);
+  margin: 6px 0;
+}
+
+.dropdownItem {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 9px 16px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.dropdownItem:hover {
+  background: var(--ivory-deep);
+}
+
+.dropdownItem.danger {
+  color: #DC2626;
+}
+
+.dropdownItem.danger:hover {
+  background: #FEE2E2;
+}
+
+.hamburgerBtn {
+  display: none;
+  background: none;
+  border: none;
+  color: #0F172A;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s ease;
+}
+
+.hamburgerBtn:hover,
+.hamburgerBtn:focus {
+  background: #F1F5F9;
+}
+
+@media (max-width: 1024px) {
+  .desktopNav {
+    display: none;
+  }
+  .hamburgerBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .brandTitle {
+    font-size: 20px;
+  }
+  .logoMark {
+    width: 34px;
+    height: 34px;
+  }
+  .btnSubmitStory span {
+    display: none;
+  }
+  .btnSubmitStory {
+    padding: 7px 9px;
+  }
+  .actions {
+    gap: 8px;
+  }
+}

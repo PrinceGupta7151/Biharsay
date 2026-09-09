@@ -1,0 +1,242 @@
+.searchSection {
+  margin: 24px 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-xs);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.inputWrapper:focus-within {
+  border-color: #0F172A;
+  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
+}
+
+.categorySelectWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: none;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-full) 0 0 var(--radius-full);
+  padding: 0 30px 0 16px;
+  height: 48px;
+}
+
+.categorySelect {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  outline: none;
+  padding-right: 4px;
+}
+
+.selectChevron {
+  position: absolute;
+  right: 12px;
+  color: var(--ink-muted);
+  pointer-events: none;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: var(--line);
+  flex: none;
+}
+
+.textInputWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 16px;
+  color: var(--ink-muted);
+  pointer-events: none;
+}
+
+.inputField {
+  width: 100%;
+  padding: 13px 40px 13px 44px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+}
+
+.inputField::placeholder {
+  color: var(--ink-faint);
+  font-size: 13.5px;
+}
+
+.clearBtn {
+  position: absolute;
+  right: 14px;
+  background: var(--bg-muted);
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.clearBtn:hover {
+  background: #CBD5E1;
+  color: var(--ink);
+}
+
+/* Trending Tags Bar */
+.trendingRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 4px;
+}
+
+.trendingLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  flex: none;
+}
+
+.tagsScroll {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tagsScroll::-webkit-scrollbar {
+  display: none;
+}
+
+.trendTag {
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-full);
+  padding: 4px 11px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.18s ease;
+}
+
+.trendTag:hover {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  color: var(--accent);
+}
+
+.trendTag.activeTag {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-color: #0F172A;
+}
+
+.filterStatus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  animation: fadeIn 0.15s ease;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.resetBtn {
+  background: none;
+  border: none;
+  color: #EF4444;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.resetBtn:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 680px) {
+  .categorySelectWrap {
+    padding: 0 24px 0 12px;
+    height: 44px;
+  }
+  .categorySelect {
+    font-size: 12px;
+    max-width: 110px;
+  }
+  .inputField {
+    font-size: 13px;
+    padding: 11px 36px 11px 38px;
+  }
+  .searchIcon {
+    left: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .inputWrapper {
+    flex-direction: column;
+    border-radius: var(--radius-lg);
+    align-items: stretch;
+  }
+  .categorySelectWrap {
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    width: 100%;
+    border-bottom: 1px solid var(--line);
+  }
+  .categorySelect {
+    max-width: 100%;
+    width: 100%;
+  }
+  .divider {
+    display: none;
+  }
+  .textInputWrap {
+    width: 100%;
+  }
+}

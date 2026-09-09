@@ -1,0 +1,71 @@
+.fabWrapper {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 40;
+}
+
+.fabBtn {
+  background: #0F172A;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  padding: 11px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.fabBtn:hover {
+  background: #1E293B;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.45);
+  border-color: var(--sky);
+}
+
+.beacon {
+  width: 8px;
+  height: 8px;
+  background: #10B981;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulse 2s infinite;
+}
+
+.icon {
+  color: var(--sky);
+}
+
+.label {
+  letter-spacing: -0.01em;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  .fabWrapper {
+    bottom: 18px;
+    right: 18px;
+  }
+  .fabBtn {
+    padding: 9px 14px;
+    font-size: 12px;
+  }
+}

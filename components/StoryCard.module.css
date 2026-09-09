@@ -1,0 +1,171 @@
+.card {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  padding: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease;
+  box-shadow: var(--shadow-xs);
+}
+
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: #CBD5E1;
+  }
+  .card:hover .img {
+    transform: scale(1.05);
+  }
+  .card:hover .title a {
+    color: var(--accent);
+  }
+}
+
+.thumbLink {
+  display: block;
+  text-decoration: none;
+}
+
+.thumb {
+  aspect-ratio: 16 / 10;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+}
+
+.img {
+  object-fit: cover;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.fallbackThumb {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
+}
+
+.thumbCategory {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.bookmarkBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  box-shadow: var(--shadow-xs);
+  transition: all 0.18s ease;
+}
+
+.bookmarkBtn:hover {
+  background: #FFFFFF;
+  transform: scale(1.08);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.bookmarkBtn.saved {
+  background: var(--ink);
+  color: #FFFFFF;
+  border-color: var(--ink);
+}
+
+.body {
+  padding: 14px 2px 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.metaTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 7px;
+}
+
+.cat {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.readTime {
+  font-size: 11px;
+  color: var(--ink-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(16px, 1.8vw, 17.5px);
+  line-height: 1.34;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+  transition: color 0.15s ease;
+}
+
+.title:hover {
+  color: var(--accent);
+}
+
+.leadCard .title {
+  font-size: clamp(18px, 2.2vw, 21px);
+}
+
+.summary {
+  font-size: 13.5px;
+  color: var(--ink-secondary);
+  line-height: 1.5;
+  margin-top: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.byline {
+  font-size: 11.5px;
+  color: var(--ink-muted);
+  margin-top: auto;
+  padding-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.views {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
