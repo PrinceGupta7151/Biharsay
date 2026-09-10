@@ -1,0 +1,177 @@
+.tickerSection {
+  width: 100%;
+  background: var(--bg-subtle, #F8FAFC);
+  border-top: 1px solid var(--line, #E2E8F0);
+  border-bottom: 1px solid var(--line, #E2E8F0);
+  padding: 20px 0 24px;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.accentLine {
+  width: 32px;
+  height: 1px;
+  background: #2563EB;
+  opacity: 0.4;
+}
+
+.sectionLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ink-muted, #64748B);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.labelDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2563EB;
+}
+
+/* Gradient edge masks to smoothly fade items in/out */
+.maskLeft {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  background: linear-gradient(to right, var(--bg-subtle, #F8FAFC) 15%, transparent 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.maskRight {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  background: linear-gradient(to left, var(--bg-subtle, #F8FAFC) 15%, transparent 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+@media (min-width: 768px) {
+  .maskLeft, .maskRight {
+    width: 140px;
+  }
+}
+
+.marqueeContainer {
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+.marqueeTrack {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: tickerSlide 48s linear infinite;
+  will-change: transform;
+}
+
+.marqueeTrack:hover {
+  animation-play-state: paused;
+}
+
+.brandGroup {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-right: 20px;
+  flex-shrink: 0;
+}
+
+.brandCard {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #FFFFFF;
+  border: 1px solid var(--line, #E2E8F0);
+  border-radius: 9999px;
+  padding: 8px 18px 8px 10px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  flex-shrink: 0;
+  cursor: default;
+  user-select: none;
+}
+
+.brandCard:hover {
+  border-color: #CBD5E1;
+  background: #FFFFFF;
+}
+
+.logoBox {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  font-weight: 700;
+  font-size: 13px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: #FFFFFF;
+}
+
+.logoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.brandDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandNameRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.brandName {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink, #0F172A);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.brandCategory {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--ink-muted, #64748B);
+  white-space: nowrap;
+}
+
+@keyframes tickerSlide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

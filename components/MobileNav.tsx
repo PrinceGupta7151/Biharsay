@@ -137,6 +137,20 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
               <span className="dot startup" style={{ background: '#F59E0B' }} /> Commercial & Services
             </Link>
             <Link 
+              href="/#partner-brands" 
+              onClick={(e) => handleNavClick(e, 'partner-brands')} 
+              className={styles.linkItem}
+            >
+              <span className="dot edu" style={{ background: '#2563EB' }} /> Associated Brands &amp; Partners
+            </Link>
+            <Link 
+              href="/#msme-community" 
+              onClick={(e) => handleNavClick(e, 'msme-community')} 
+              className={styles.linkItem}
+            >
+              <span className="dot startup" style={{ background: '#10B981' }} /> MSME Community (Frootex)
+            </Link>
+            <Link 
               href="/#about-us" 
               onClick={(e) => handleNavClick(e, 'about-us')} 
               className={styles.linkItem}
@@ -144,6 +158,29 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
               <span className="dot culture" style={{ background: '#10B981' }} /> About & Media Reach
             </Link>
           </nav>
+        </div>
+
+        {/* Highlight MSME Card in Mobile Drawer */}
+        <div className={styles.msmeMobileCard}>
+          <div className={styles.msmeMobileHeader}>
+            <span className={styles.msmeMobileDot} />
+            <span>Targeting MSMEs Across Bihar</span>
+          </div>
+          <div className={styles.msmeMobileTitle}>
+            Register on seller.frootex.com
+          </div>
+          <p className={styles.msmeMobileDesc}>
+            Join Bihar&apos;s largest B2B business community with 0% commission &amp; pan-India buyer demand.
+          </p>
+          <a 
+            href="https://seller.frootex.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.msmeMobileBtn}
+            onClick={onClose}
+          >
+            Open Seller Portal ↗
+          </a>
         </div>
 
         {/* Action Buttons in Drawer */}

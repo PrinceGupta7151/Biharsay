@@ -1,0 +1,399 @@
+.msmeSection {
+  padding: 40px 0 60px;
+  position: relative;
+}
+
+.bannerCard {
+  background: linear-gradient(135deg, #090D1A 0%, #0F172A 50%, #172554 100%);
+  border-radius: var(--radius-xl, 24px);
+  padding: 48px 40px;
+  color: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.4);
+}
+
+@media (max-width: 768px) {
+  .bannerCard {
+    padding: 32px 24px;
+    border-radius: var(--radius-lg, 16px);
+  }
+}
+
+/* Background ambient glow spots */
+.glowTopRight {
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.3) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.glowBottomLeft {
+  position: absolute;
+  bottom: -100px;
+  left: -100px;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.bannerContent {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (max-width: 992px) {
+  .bannerContent {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* Left Column: Messaging & Value Props */
+.leftCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.topPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(37, 99, 235, 0.2);
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  color: #93C5FD;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  width: fit-content;
+  margin-bottom: 20px;
+}
+
+.topPillDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 8px #10B981;
+}
+
+.headline {
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.headlineGradient {
+  background: linear-gradient(135deg, #60A5FA 0%, #34D399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .headline {
+    font-size: 28px;
+  }
+}
+
+.subheadline {
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: #CBD5E1;
+  margin-bottom: 28px;
+  max-width: 580px;
+}
+
+.subheadline strong {
+  color: #FFFFFF;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 600px) {
+  .featuresGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.featureItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+  backdrop-filter: blur(4px);
+}
+
+.featureIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(37, 99, 235, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #60A5FA;
+}
+
+.featureText {
+  display: flex;
+  flex-direction: column;
+}
+
+.featureTitle {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #F8FAFC;
+  margin-bottom: 2px;
+}
+
+.featureDesc {
+  font-size: 11.5px;
+  color: #94A3B8;
+  line-height: 1.4;
+}
+
+/* Actions Row */
+.ctaRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btnRegisterPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  color: #FFFFFF;
+  padding: 13px 26px;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.45);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.btnRegisterPrimary:hover {
+  background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.55);
+}
+
+.btnRegisterPrimary svg {
+  transition: transform 0.2s ease;
+}
+
+.btnRegisterPrimary:hover svg {
+  transform: translateX(3px);
+}
+
+.directUrlHint {
+  font-size: 12.5px;
+  color: #94A3B8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.directUrlHint a {
+  color: #60A5FA;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.directUrlHint a:hover {
+  color: #93C5FD;
+}
+
+/* Right Column: Interactive App Card Preview */
+.rightCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.sellerBox {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+  position: relative;
+}
+
+.sellerBoxHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 18px;
+}
+
+.brandIdentity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.frootexIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.brandTitles {
+  display: flex;
+  flex-direction: column;
+}
+
+.frootexName {
+  font-size: 16px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+}
+
+.frootexTag {
+  font-size: 11.5px;
+  color: #94A3B8;
+}
+
+.liveTag {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34D399;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+/* Seller App Mini Dashboard Mockup */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.statCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.statNumber {
+  font-size: 18px;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin-bottom: 2px;
+}
+
+.statLabel {
+  font-size: 10.5px;
+  color: #94A3B8;
+}
+
+/* Step list inside card */
+.stepList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  color: #E2E8F0;
+}
+
+.stepBadge {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.2);
+  color: #60A5FA;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.appLinkBox {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.appLinkText {
+  font-size: 12px;
+  color: #CBD5E1;
+}
+
+.btnAppAction {
+  background: #FFFFFF;
+  color: #0F172A;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btnAppAction:hover {
+  background: #F1F5F9;
+  transform: translateY(-1px);
+}

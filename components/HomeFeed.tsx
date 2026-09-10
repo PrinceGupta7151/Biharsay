@@ -16,6 +16,8 @@ import PartnerFloatingFAB from './PartnerFloatingFAB';
 import BusinessInquiryModal from './BusinessInquiryModal';
 import NewsletterStrip from './NewsletterStrip';
 import GoogleAdSlot from './GoogleAdSlot';
+import PartnerBrandsTicker from './PartnerBrandsTicker';
+import MsmeCommunityBanner from './MsmeCommunityBanner';
 import { Sparkles, FileSearch, ArrowRight } from 'lucide-react';
 
 interface HomeFeedProps {
@@ -204,6 +206,9 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
             sideStories={sideStories.length > 0 ? sideStories : initialStories.slice(1, 4)} 
           />
 
+          {/* Associated Brands Moving Ticker (Infinite Banner) */}
+          <PartnerBrandsTicker />
+
           {/* Top Leaderboard Google AdSense / Sponsor Unit */}
           <GoogleAdSlot format="leaderboard" onInquire={handleOpenInquiry} />
 
@@ -251,6 +256,9 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
             category={getCategoryMeta('entrepreneurship-startups')} 
             stories={getCategoryStories('entrepreneurship-startups')} 
           />
+
+          {/* Flagship MSME Business Community Banner (seller.frootex.com) */}
+          <MsmeCommunityBanner onInquire={handleOpenInquiry} />
 
           {/* Category: Industry & Innovation */}
           <CategorySection 

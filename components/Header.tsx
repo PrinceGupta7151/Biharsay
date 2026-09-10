@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '@/context/AuthContext';
-import { Menu, X, User, Bookmark, LogOut, PlusCircle, Sparkles } from 'lucide-react';
+import { Menu, X, User, Bookmark, LogOut, PlusCircle, Sparkles, ChevronDown } from 'lucide-react';
 import MobileNav from './MobileNav';
 import styles from './Header.module.css';
 
@@ -13,8 +13,10 @@ export default function Header() {
   const [mounted, setMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
   const [activeSlug, setActiveSlug] = useState('home');
   const profileRef = useRef<HTMLDivElement>(null);
+  const moreDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -25,15 +27,19 @@ export default function Header() {
       if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
         setIsProfileDropdownOpen(false);
       }
+      if (moreDropdownRef.current && !moreDropdownRef.current.contains(e.target as Node)) {
+        setIsMoreDropdownOpen(false);
+      }
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setIsProfileDropdownOpen(false);
+        setIsMoreDropdownOpen(false);
       }
     };
 
-    if (isProfileDropdownOpen) {
+    if (isProfileDropdownOpen || isMoreDropdownOpen) {
       document.addEventListener('mousedown', handleClickOutside);
       document.addEventListener('keydown', handleKeyDown);
     }
@@ -42,7 +48,7 @@ export default function Header() {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isProfileDropdownOpen]);
+  }, [isProfileDropdownOpen, isMoreDropdownOpen]);
 
   useEffect(() => {
     const updateActive = () => {
@@ -120,32 +126,11 @@ export default function Header() {
                 Culture
               </Link>
               <Link 
-                href="/#education-social" 
-                onClick={(e) => handleNavClick(e, 'education-social')}
-                className={activeSlug === 'education-social' ? styles.activeLink : ''}
-              >
-                Education
-              </Link>
-              <Link 
                 href="/#entrepreneurship-startups" 
                 onClick={(e) => handleNavClick(e, 'entrepreneurship-startups')}
                 className={activeSlug === 'entrepreneurship-startups' ? styles.activeLink : ''}
               >
                 Startups
-              </Link>
-              <Link 
-                href="/#industry-innovation" 
-                onClick={(e) => handleNavClick(e, 'industry-innovation')}
-                className={activeSlug === 'industry-innovation' ? styles.activeLink : ''}
-              >
-                Innovation
-              </Link>
-              <Link 
-                href="/#sports" 
-                onClick={(e) => handleNavClick(e, 'sports')}
-                className={activeSlug === 'sports' ? styles.activeLink : ''}
-              >
-                Sports
               </Link>
               <Link 
                 href="/#investments-economic" 
@@ -155,23 +140,97 @@ export default function Header() {
                 Investments
               </Link>
               <Link 
-                href="/#commercial-services" 
-                onClick={(e) => handleNavClick(e, 'commercial-services')}
-                className={activeSlug === 'commercial-services' ? styles.activeLink : ''}
+                href="/#partner-brands" 
+                onClick={(e) => handleNavClick(e, 'partner-brands')}
+                className={activeSlug === 'partner-brands' ? styles.activeLink : ''}
               >
-                Services
+                Partners
               </Link>
-              <Link 
-                href="/#about-us" 
-                onClick={(e) => handleNavClick(e, 'about-us')}
-                className={activeSlug === 'about-us' ? styles.activeLink : ''}
-              >
-                About
-              </Link>
+
+              {/* More Topics Dropdown */}
+              <div className={styles.moreDropdownWrapper} ref={moreDropdownRef}>
+                <button
+                  type="button"
+                  className={`${styles.moreTriggerBtn} ${['education-social', 'industry-innovation', 'sports', 'commercial-services', 'about-us'].includes(activeSlug) ? styles.activeLink : ''}`}
+                  onClick={() => setIsMoreDropdownOpen(!isMoreDropdownOpen)}
+                  aria-expanded={isMoreDropdownOpen}
+                >
+                  <span>More</span>
+                  <ChevronDown 
+                    size={14} 
+                    className={`${styles.moreChevron} ${isMoreDropdownOpen ? styles.moreChevronRotated : ''}`} 
+                  />
+                </button>
+
+                {isMoreDropdownOpen && (
+                  <div className={styles.moreDropdownMenu}>
+                    <Link
+                      href="/#education-social"
+                      onClick={(e) => {
+                        handleNavClick(e, 'education-social');
+                        setIsMoreDropdownOpen(false);
+                      }}
+                      className={styles.moreDropdownItem}
+                    >
+                      <span className="dot edu" /> Education &amp; Social
+                    </Link>
+                    <Link
+                      href="/#industry-innovation"
+                      onClick={(e) => {
+                        handleNavClick(e, 'industry-innovation');
+                        setIsMoreDropdownOpen(false);
+                      }}
+                      className={styles.moreDropdownItem}
+                    >
+                      <span className="dot industry" /> Industry &amp; Tech
+                    </Link>
+                    <Link
+                      href="/#sports"
+                      onClick={(e) => {
+                        handleNavClick(e, 'sports');
+                        setIsMoreDropdownOpen(false);
+                      }}
+                      className={styles.moreDropdownItem}
+                    >
+                      <span className="dot sports" /> Sports &amp; Youth
+                    </Link>
+                    <Link
+                      href="/#commercial-services"
+                      onClick={(e) => {
+                        handleNavClick(e, 'commercial-services');
+                        setIsMoreDropdownOpen(false);
+                      }}
+                      className={styles.moreDropdownItem}
+                    >
+                      <span className="dot startup" style={{ background: '#F59E0B' }} /> Commercial Services
+                    </Link>
+                    <Link
+                      href="/#about-us"
+                      onClick={(e) => {
+                        handleNavClick(e, 'about-us');
+                        setIsMoreDropdownOpen(false);
+                      }}
+                      className={styles.moreDropdownItem}
+                    >
+                      <span className="dot culture" style={{ background: '#10B981' }} /> About Bihar Say
+                    </Link>
+                  </div>
+                )}
+              </div>
             </nav>
 
             {/* Right: Actions (Join / Profile / Mobile Toggle) */}
             <div className={styles.actions}>
+              <a 
+                href="https://seller.frootex.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.msmeNavPill}
+                title="Register your business on Frootex Seller Platform"
+              >
+                <span className={styles.msmeNavDot} />
+                <span>Sell on Frootex ↗</span>
+              </a>
               {mounted && user ? (
                 <div className={styles.userActions}>
                   <button 

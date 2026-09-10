@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <rect width="100" height="100" rx="20" fill="#E8F8EE"/>
+  <!-- DeHaat stylized green leaf & agricultural sprout 'D' mark -->
+  <path d="M26 22 H50 C66 22 76 34 76 50 C76 66 66 78 50 78 H26 Z" fill="#059669"/>
+  <path d="M38 34 H48 C58 34 64 41 64 50 C64 59 58 66 48 66 H38 Z" fill="#E8F8EE"/>
+  <!-- Sprout leaf inside -->
+  <path d="M44 48 C44 38 52 38 52 48 C52 56 46 58 44 64 C42 58 38 54 44 48 Z" fill="#10B981"/>
+</svg>
