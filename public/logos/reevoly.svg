@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <rect width="100" height="100" rx="22" fill="#EDE9FE"/>
+  <!-- Reevoly Dynamic Infinite Ribbon / Revolution Emblem -->
+  <defs>
+    <linearGradient id="reevGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#6D28D9"/>
+    </linearGradient>
+  </defs>
+  <!-- Stylized R & Orbit Loop -->
+  <circle cx="50" cy="50" r="32" fill="none" stroke="#C4B5FD" stroke-width="4" stroke-dasharray="6 4"/>
+  <path d="M35 70 V30 H52 C61 30 67 36 67 43 C67 50 61 54 52 54 H35" fill="none" stroke="url(#reevGrad)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M49 54 L66 70" fill="none" stroke="url(#reevGrad)" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="68" cy="32" r="5" fill="#EC4899"/>
+</svg>

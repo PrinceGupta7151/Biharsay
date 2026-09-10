@@ -6,6 +6,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: 100%;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
               box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.25s ease;
@@ -127,37 +128,53 @@
 .title {
   font-family: 'Playfair Display', Georgia, serif;
   font-weight: 600;
-  font-size: clamp(16px, 1.8vw, 17.5px);
-  line-height: 1.34;
+  font-size: 16.5px;
+  line-height: 1.35;
   color: var(--ink);
   letter-spacing: -0.015em;
-  transition: color 0.15s ease;
-}
-
-.title:hover {
-  color: var(--accent);
-}
-
-.leadCard .title {
-  font-size: clamp(18px, 2.2vw, 21px);
-}
-
-.summary {
-  font-size: 13.5px;
-  color: var(--ink-secondary);
-  line-height: 1.5;
-  margin-top: 8px;
+  margin: 4px 0 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  min-height: 44px;
+  transition: color 0.15s ease;
+}
+
+.title a,
+.title a:visited {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.card:hover .title a,
+.title a:hover {
+  color: var(--accent);
+}
+
+.leadCard .title {
+  font-size: 16.5px;
+}
+
+.summary {
+  font-size: 13px;
+  color: var(--ink-secondary);
+  line-height: 1.5;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 38px;
 }
 
 .byline {
   font-size: 11.5px;
   color: var(--ink-muted);
   margin-top: auto;
-  padding-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #F1F5F9;
   display: flex;
   align-items: center;
   gap: 6px;

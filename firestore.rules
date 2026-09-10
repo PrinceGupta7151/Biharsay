@@ -1,0 +1,74 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      // Admin check: custom claim 'admin' == true or specific authorized editorial UID
+      return isAuthenticated() && (
+        request.auth.token.admin == true ||
+        request.auth.token.email == "neehar@biharsay.com"
+      );
+    }
+
+    function isAuthor(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // 1. Stories Collection — Publicly readable, admin editable
+    match /stories/{storyId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 2. Story Submissions — Anyone can submit as 'pending'; only admins can moderate/approve
+    match /submissions/{submissionId} {
+      allow create: if request.resource.data.status == 'pending'
+                    && request.resource.data.title is string
+                    && request.resource.data.content is string;
+      allow read, update, delete: if isAdmin();
+    }
+    match /story_submissions/{submissionId} {
+      allow create: if request.resource.data.status == 'pending'
+                    && request.resource.data.title is string
+                    && request.resource.data.content is string;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // 3. Comments Collection — Publicly readable; create with validation; delete by author or admin
+    match /comments/{commentId} {
+      allow read: if true;
+      allow create: if request.resource.data.content is string
+                    && request.resource.data.content.size() > 0
+                    && request.resource.data.content.size() <= 2000;
+      allow update, delete: if isAdmin() || (
+        isAuthenticated() && resource.data.userId == request.auth.uid
+      );
+    }
+
+    // 4. Business & Commercial Queries — Anyone can inquire; confidential to admins
+    match /business_queries/{queryId} {
+      allow create: if request.resource.data.service is string
+                    && (request.resource.data.email is string || request.resource.data.phone is string);
+      allow read, update, delete: if isAdmin();
+    }
+
+    // 5. Newsletter Subscribers — Anyone can subscribe; list is confidential to admins
+    match /newsletter_subscribers/{subscriberId} {
+      allow create: if request.resource.data.contact is string
+                    && request.resource.data.channel in ['email', 'whatsapp'];
+      allow read, update, delete: if isAdmin();
+    }
+
+    // 6. Reactions (Likes, Applauds) — Anyone can read; incrementable
+    match /reactions/{storyId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if isAdmin();
+    }
+  }
+}

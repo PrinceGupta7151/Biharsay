@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Mail, MapPin, Heart, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { Mail, MapPin, Heart, Facebook, Instagram, Linkedin, Youtube, MessageCircle } from 'lucide-react';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -45,14 +45,35 @@ export default function Footer() {
             <ul className={styles.contactList}>
               <li>
                 <Mail size={15} color="#8FC6FF" />
-                <a href="mailto:ask@biharsay.com">ask@biharsay.com</a>
+                <div>
+                  <span className={styles.contactLabel}>Official Email</span>
+                  <a href="mailto:neehar@biharsay.com">neehar@biharsay.com</a>
+                </div>
+              </li>
+              <li>
+                <MessageCircle size={15} color="#25D366" />
+                <div>
+                  <span className={styles.contactLabel}>WhatsApp Support &amp; Editorial</span>
+                  <a 
+                    href="https://wa.me/918050083233" 
+                    target="_blank" 
+                    rel="noreferrer noopener"
+                    className={styles.whatsappLink}
+                    title="Chat on WhatsApp"
+                  >
+                    +91 8050083233
+                  </a>
+                </div>
               </li>
               <li>
                 <MapPin size={15} color="#8FC6FF" />
-                <span>
-                  14A, Kailash Enclave, Shivpuri,<br />
-                  Boring Road, Patna – 800023, Bihar
-                </span>
+                <div>
+                  <span className={styles.contactLabel}>Head Office</span>
+                  <span>
+                    14A, Kailash Enclave, Shivpuri,<br />
+                    Boring Road, Patna – 800023, Bihar
+                  </span>
+                </div>
               </li>
             </ul>
           </div>
@@ -62,8 +83,23 @@ export default function Footer() {
         <div className={styles.bottomBar}>
           <div className={styles.copy} suppressHydrationWarning>
             © {new Date().getFullYear()} Bihar Say Media Network. All rights reserved.
+            <span className={styles.legalLinks}>
+              <Link href="/privacy-policy">Privacy Policy</Link>
+              <span>·</span>
+              <Link href="/terms-of-service">Terms of Service</Link>
+            </span>
           </div>
           <div className={styles.socialRow}>
+            <a 
+              href="https://wa.me/918050083233" 
+              target="_blank" 
+              rel="noreferrer noopener" 
+              aria-label="WhatsApp"
+              className={styles.whatsappSocial}
+            >
+              <MessageCircle size={13} /> <span>WhatsApp</span>
+            </a>
+            <span>·</span>
             <a href="https://www.facebook.com/BsayBihar?mibextid=LQQJ4d" target="_blank" rel="noreferrer" aria-label="Facebook">
               <Facebook size={13} /> <span>Facebook</span>
             </a>

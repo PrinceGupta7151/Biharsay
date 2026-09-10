@@ -81,7 +81,7 @@ export default function BusinessInquiryModal({
     const text = encodeURIComponent(
       `Hi Bihar Say Team! I would like to inquire about *${activeServiceObj.label}*.\n\nMy Name: ${name || '[My Name]'}\nCompany: ${company || '[My Brand]'}\nContact: ${phone || '[My Phone]'}`
     );
-    window.open(`https://api.whatsapp.com/send?phone=918969000000&text=${text}`, '_blank');
+    window.open(`https://api.whatsapp.com/send?phone=918050083233&text=${text}`, '_blank');
   };
 
   return (
@@ -238,6 +238,17 @@ export default function BusinessInquiryModal({
                   <MessageSquare size={15} />
                   <span>Chat on WhatsApp</span>
                 </button>
+              </div>
+
+              <div className={styles.directContactFooter}>
+                <span>Or reach us directly:</span>
+                <a href="https://wa.me/918050083233" target="_blank" rel="noopener noreferrer">
+                  WhatsApp: +91 8050083233
+                </a>
+                <span className={styles.sepDot}>•</span>
+                <a href="mailto:neehar@biharsay.com">
+                  neehar@biharsay.com
+                </a>
               </div>
             </form>
           </>

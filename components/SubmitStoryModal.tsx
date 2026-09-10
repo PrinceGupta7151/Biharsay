@@ -58,10 +58,7 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
         setTitle('');
         setContent('');
         closeSubmitModal();
-        if (typeof window !== 'undefined') {
-          window.location.reload();
-        }
-      }, 1200);
+      }, 2000);
     } catch (err: any) {
       setError(err.message || 'Failed to submit story. Please try again.');
     } finally {
@@ -85,8 +82,8 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
         {success ? (
           <div className={styles.successBox}>
             <CheckCircle size={44} color="#10B981" />
-            <h4>Story Published Successfully!</h4>
-            <p>Your contribution is now live in the Bihar Say community feed.</p>
+            <h4>Story Submitted for Review!</h4>
+            <p>Thank you for contributing! Our editorial team reviews every submission to ensure journalistic quality. Your story will appear once approved.</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className={styles.form}>

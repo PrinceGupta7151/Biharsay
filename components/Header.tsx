@@ -15,6 +15,7 @@ export default function Header() {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
   const [activeSlug, setActiveSlug] = useState('home');
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const profileRef = useRef<HTMLDivElement>(null);
   const moreDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -146,12 +147,19 @@ export default function Header() {
               >
                 Partners
               </Link>
+              <Link 
+                href="/#about-us" 
+                onClick={(e) => handleNavClick(e, 'about-us')}
+                className={activeSlug === 'about-us' ? styles.activeLink : ''}
+              >
+                About Bihar Say
+              </Link>
 
               {/* More Topics Dropdown */}
               <div className={styles.moreDropdownWrapper} ref={moreDropdownRef}>
                 <button
                   type="button"
-                  className={`${styles.moreTriggerBtn} ${['education-social', 'industry-innovation', 'sports', 'commercial-services', 'about-us'].includes(activeSlug) ? styles.activeLink : ''}`}
+                  className={`${styles.moreTriggerBtn} ${['education-social', 'industry-innovation', 'sports', 'commercial-services'].includes(activeSlug) ? styles.activeLink : ''}`}
                   onClick={() => setIsMoreDropdownOpen(!isMoreDropdownOpen)}
                   aria-expanded={isMoreDropdownOpen}
                 >
@@ -159,6 +167,7 @@ export default function Header() {
                   <ChevronDown 
                     size={14} 
                     className={`${styles.moreChevron} ${isMoreDropdownOpen ? styles.moreChevronRotated : ''}`} 
+                    aria-hidden="true"
                   />
                 </button>
 
@@ -204,16 +213,6 @@ export default function Header() {
                     >
                       <span className="dot startup" style={{ background: '#F59E0B' }} /> Commercial Services
                     </Link>
-                    <Link
-                      href="/#about-us"
-                      onClick={(e) => {
-                        handleNavClick(e, 'about-us');
-                        setIsMoreDropdownOpen(false);
-                      }}
-                      className={styles.moreDropdownItem}
-                    >
-                      <span className="dot culture" style={{ background: '#10B981' }} /> About Bihar Say
-                    </Link>
                   </div>
                 )}
               </div>
@@ -221,16 +220,6 @@ export default function Header() {
 
             {/* Right: Actions (Join / Profile / Mobile Toggle) */}
             <div className={styles.actions}>
-              <a 
-                href="https://seller.frootex.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.msmeNavPill}
-                title="Register your business on Frootex Seller Platform"
-              >
-                <span className={styles.msmeNavDot} />
-                <span>Sell on Frootex ↗</span>
-              </a>
               {mounted && user ? (
                 <div className={styles.userActions}>
                   <button 
@@ -283,8 +272,9 @@ export default function Header() {
                         <button 
                           className={styles.dropdownItem}
                           onClick={() => {
-                            alert('Your saved stories are synchronized with your account.');
+                            setToastMessage('Your saved stories are synchronized with your account.');
                             setIsProfileDropdownOpen(false);
+                            setTimeout(() => setToastMessage(null), 3500);
                           }}
                         >
                           <Bookmark size={15} />
@@ -327,6 +317,14 @@ export default function Header() {
           </div>
         </div>
       </header>
+
+      {/* Floating In-Page Toast Notification */}
+      {toastMessage && (
+        <div className={styles.toastNotice} role="status">
+          <Bookmark size={15} color="#38BDF8" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
 
       {/* Mobile Slide-out Menu */}
       <MobileNav 

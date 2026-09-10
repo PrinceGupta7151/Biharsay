@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <rect width="100" height="100" rx="22" fill="#F0FDF4"/>
+  <defs>
+    <linearGradient id="ecoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#16A34A"/>
+      <stop offset="100%" stop-color="#15803D"/>
+    </linearGradient>
+  </defs>
+  <!-- Yarn Spool / Fiber Loop & Banana Leaf Motif -->
+  <ellipse cx="50" cy="50" rx="30" ry="18" fill="none" stroke="#86EFAC" stroke-width="2.5" stroke-dasharray="4 2"/>
+  <ellipse cx="50" cy="50" rx="22" ry="12" fill="none" stroke="#4ADE80" stroke-width="2"/>
+  <!-- Leaf Stem & Eco Sprout -->
+  <path d="M50 24 C58 32 64 44 50 74 C36 44 42 32 50 24 Z" fill="url(#ecoGrad)"/>
+  <path d="M50 32 V66" stroke="#BBF7D0" stroke-width="2" stroke-linecap="round"/>
+  <!-- Golden Fiber Spindle / Yarn Thread -->
+  <circle cx="50" cy="24" r="3.5" fill="#EAB308"/>
+  <path d="M30 64 Q50 80 70 64" fill="none" stroke="#CA8A04" stroke-width="3" stroke-linecap="round"/>
+</svg>

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
-import { X, Sparkles, PlusCircle, LogOut, Bookmark, User, Compass } from 'lucide-react';
+import { X, Sparkles, PlusCircle, LogOut, Bookmark, User, Compass, MessageCircle, Mail } from 'lucide-react';
 import styles from './MobileNav.module.css';
 
 interface MobileNavProps {
@@ -88,53 +88,64 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
               All Stories (Home)
             </Link>
             <Link 
+              href="/#about-us" 
+              onClick={(e) => handleNavClick(e, 'about-us')} 
+              className={`${styles.linkItem} ${styles.linkItemFeatured}`}
+            >
+              <span className="dot culture" style={{ background: '#2563EB' }} />
+              <div className={styles.aboutTextWrap}>
+                <span className={styles.aboutTitle}>About Bihar Say</span>
+                <span className={styles.aboutSubtitle}>Mission, Vision &amp; Reach</span>
+              </div>
+            </Link>
+            <Link 
               href="/#culture-heritage" 
               onClick={(e) => handleNavClick(e, 'culture-heritage')} 
               className={styles.linkItem}
             >
-              <span className="dot culture" /> Culture & Heritage
-            </Link>
-            <Link 
-              href="/#education-social" 
-              onClick={(e) => handleNavClick(e, 'education-social')} 
-              className={styles.linkItem}
-            >
-              <span className="dot edu" /> Education & Social
+              <span className="dot culture" /> Culture &amp; Heritage
             </Link>
             <Link 
               href="/#entrepreneurship-startups" 
               onClick={(e) => handleNavClick(e, 'entrepreneurship-startups')} 
               className={styles.linkItem}
             >
-              <span className="dot startup" /> Startups & Innovation
-            </Link>
-            <Link 
-              href="/#industry-innovation" 
-              onClick={(e) => handleNavClick(e, 'industry-innovation')} 
-              className={styles.linkItem}
-            >
-              <span className="dot industry" /> Industry & Tech
-            </Link>
-            <Link 
-              href="/#sports" 
-              onClick={(e) => handleNavClick(e, 'sports')} 
-              className={styles.linkItem}
-            >
-              <span className="dot sports" /> Sports
+              <span className="dot startup" /> Startups &amp; Innovation
             </Link>
             <Link 
               href="/#investments-economic" 
               onClick={(e) => handleNavClick(e, 'investments-economic')} 
               className={styles.linkItem}
             >
-              <span className="dot invest" /> Investments & Economy
+              <span className="dot invest" /> Investments &amp; Economy
+            </Link>
+            <Link 
+              href="/#education-social" 
+              onClick={(e) => handleNavClick(e, 'education-social')} 
+              className={styles.linkItem}
+            >
+              <span className="dot edu" /> Education &amp; Social
+            </Link>
+            <Link 
+              href="/#industry-innovation" 
+              onClick={(e) => handleNavClick(e, 'industry-innovation')} 
+              className={styles.linkItem}
+            >
+              <span className="dot industry" /> Industry &amp; Tech
+            </Link>
+            <Link 
+              href="/#sports" 
+              onClick={(e) => handleNavClick(e, 'sports')} 
+              className={styles.linkItem}
+            >
+              <span className="dot sports" /> Sports &amp; Youth
             </Link>
             <Link 
               href="/#commercial-services" 
               onClick={(e) => handleNavClick(e, 'commercial-services')} 
               className={styles.linkItem}
             >
-              <span className="dot startup" style={{ background: '#F59E0B' }} /> Commercial & Services
+              <span className="dot startup" style={{ background: '#F59E0B' }} /> Commercial &amp; Services
             </Link>
             <Link 
               href="/#partner-brands" 
@@ -143,44 +154,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
             >
               <span className="dot edu" style={{ background: '#2563EB' }} /> Associated Brands &amp; Partners
             </Link>
-            <Link 
-              href="/#msme-community" 
-              onClick={(e) => handleNavClick(e, 'msme-community')} 
-              className={styles.linkItem}
-            >
-              <span className="dot startup" style={{ background: '#10B981' }} /> MSME Community (Frootex)
-            </Link>
-            <Link 
-              href="/#about-us" 
-              onClick={(e) => handleNavClick(e, 'about-us')} 
-              className={styles.linkItem}
-            >
-              <span className="dot culture" style={{ background: '#10B981' }} /> About & Media Reach
-            </Link>
           </nav>
-        </div>
-
-        {/* Highlight MSME Card in Mobile Drawer */}
-        <div className={styles.msmeMobileCard}>
-          <div className={styles.msmeMobileHeader}>
-            <span className={styles.msmeMobileDot} />
-            <span>Targeting MSMEs Across Bihar</span>
-          </div>
-          <div className={styles.msmeMobileTitle}>
-            Register on seller.frootex.com
-          </div>
-          <p className={styles.msmeMobileDesc}>
-            Join Bihar&apos;s largest B2B business community with 0% commission &amp; pan-India buyer demand.
-          </p>
-          <a 
-            href="https://seller.frootex.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.msmeMobileBtn}
-            onClick={onClose}
-          >
-            Open Seller Portal ↗
-          </a>
         </div>
 
         {/* Action Buttons in Drawer */}
@@ -209,6 +183,27 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
               <span>Sign Out</span>
             </button>
           )}
+        </div>
+
+        {/* Direct Contact Card */}
+        <div className={styles.drawerContactCard}>
+          <div className={styles.drawerContactTitle}>Official Connect</div>
+          <a
+            href="https://wa.me/918050083233?text=Hi%20Bihar%20Say%20Team!%20Reaching%20out%20via%20mobile%20website."
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.drawerWhatsAppLink}
+          >
+            <MessageCircle size={16} color="#25D366" />
+            <span>WhatsApp: +91 8050083233</span>
+          </a>
+          <a
+            href="mailto:neehar@biharsay.com"
+            className={styles.drawerEmailLink}
+          >
+            <Mail size={15} color="#60A5FA" />
+            <span>neehar@biharsay.com</span>
+          </a>
         </div>
 
         <div className={styles.drawerFooter}>

@@ -13,9 +13,8 @@ interface CategorySectionProps {
 export default function CategorySection({ category, stories }: CategorySectionProps) {
   if (!stories || stories.length === 0) return null;
 
-  // The newest story in the category takes the lead position
-  const leadStory = stories[0];
-  const otherStories = stories.slice(1);
+  // Display up to 3 stories in a uniform balanced grid
+  const displayStories = stories.slice(0, 3);
 
   return (
     <section id={category.slug} className={`${styles.section} reveal`}>
@@ -28,10 +27,7 @@ export default function CategorySection({ category, stories }: CategorySectionPr
       </div>
 
       <div className={styles.cardRow}>
-        {leadStory && (
-          <StoryCard story={leadStory} isLead={true} />
-        )}
-        {otherStories.map((story) => (
+        {displayStories.map((story) => (
           <StoryCard key={story.id} story={story} />
         ))}
       </div>

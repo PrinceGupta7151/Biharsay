@@ -21,7 +21,7 @@ const SERVICES: ServiceCategory[] = [
     id: 'editorial',
     inquiryId: 'founder-story',
     name: 'Brand & Founder Stories',
-    tagline: 'Authentic editorial feature on Bihar Say website, weekly newsletter, and 13K+ community.',
+    tagline: 'Authentic editorial feature on Bihar Say website, weekly newsletter, and 15,000+ community.',
     icon: Newspaper,
     accentColor: '#2563EB',
     points: ['In-depth Founder Interview', 'Permanent SEO-indexed Article', 'WhatsApp & Social Broadcast'],

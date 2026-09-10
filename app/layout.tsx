@@ -12,11 +12,12 @@ import BackToTop from '@/components/BackToTop';
 
 export const metadata: Metadata = {
   title: 'Bihar Say — Inspiring Stories, Culture, Startups & Progress',
-  description: 'Join over 13,000+ members and 8.5 Lakh+ monthly readers worldwide. Discover grassroots innovation, cultural pride, economic resurgence, and inspiring change across Bihar.',
+  description: 'Join over 15,000+ members and 8.5 Lakh+ monthly readers worldwide. Discover grassroots innovation, cultural pride, economic resurgence, and inspiring change across Bihar.',
   keywords: ['Bihar Say', 'Bihar News', 'Bihar Startups', 'Patna', 'Bihar Culture', 'Bihari Diaspora', 'Makhana', 'Neehar R'],
   icons: {
-    icon: 'https://biharsay.com/wp-content/uploads/2024/09/cropped-logo-1-270x270.webp',
-    apple: 'https://biharsay.com/wp-content/uploads/2024/09/cropped-logo-1-270x270.webp',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.png',
+    apple: '/apple-touch-icon.png',
   },
   openGraph: {
     title: 'Bihar Say — Stories Setting the Pace for Bihar',
@@ -27,15 +28,18 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://biharsay.com/wp-content/uploads/2024/09/cropped-logo-1-270x270.webp',
+        url: 'https://biharsay.com/og-banner.png',
         width: 1200,
         height: 630,
-        alt: 'Bihar Say Media Network',
+        alt: 'Bihar Say Media Network — Stories Setting the Pace for Bihar',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
+    title: 'Bihar Say — Inspiring Stories, Culture, Startups & Progress',
+    description: 'Join over 15,000+ members and 8.5 Lakh+ monthly readers worldwide.',
+    images: ['https://biharsay.com/og-banner.png'],
     site: '@bsaybihar',
     creator: '@bsaybihar',
   },

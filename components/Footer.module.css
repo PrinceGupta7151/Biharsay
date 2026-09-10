@@ -15,17 +15,18 @@
 }
 
 .brandTitle {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 26px;
+  font-family: 'Calibri', 'Candara', 'Segoe UI', Arial, sans-serif;
+  font-size: 27px;
   font-weight: 700;
   color: #FFFFFF;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   margin-bottom: 12px;
 }
 
 .brandTitle em {
   font-style: italic;
   color: var(--sky);
+  font-weight: 700;
 }
 
 .aboutText {
@@ -102,6 +103,35 @@
   text-decoration: underline;
 }
 
+.contactLabel {
+  display: block;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748B;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.whatsappLink {
+  color: #4ADE80 !important;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.whatsappLink:hover {
+  color: #86EFAC !important;
+}
+
+.whatsappSocial {
+  color: #25D366 !important;
+  font-weight: 600;
+}
+
+.whatsappSocial:hover {
+  color: #4ADE80 !important;
+}
+
 .bottomBar {
   display: flex;
   justify-content: space-between;
@@ -111,6 +141,28 @@
   opacity: 0.75;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+.legalLinks {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 14px;
+}
+
+.legalLinks a {
+  color: #CBD5E1;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease;
+}
+
+.legalLinks a:hover {
+  color: #FFFFFF;
+}
+
+.legalLinks span {
+  margin: 0 6px;
+  color: #64748B;
 }
 
 .socialRow {

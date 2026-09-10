@@ -225,6 +225,34 @@
   transform: translateY(-1px);
 }
 
+.directContactFooter {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 12px;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.directContactFooter a {
+  color: #1D6FD8;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.directContactFooter a:hover {
+  color: #2563EB;
+  text-decoration: underline;
+}
+
+.sepDot {
+  color: #CBD5E1;
+}
+
 .successView {
   text-align: center;
   padding: 24px 8px;

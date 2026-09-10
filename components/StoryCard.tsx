@@ -84,7 +84,7 @@ export default function StoryCard({ story, isLead = false, priority = false }: S
           <Link href={`/article/${story.id}`}>{story.title}</Link>
         </h4>
 
-        {isLead && story.summary && (
+        {story.summary && (
           <p className={styles.summary}>{story.summary}</p>
         )}
 

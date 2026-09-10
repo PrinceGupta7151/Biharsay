@@ -13,28 +13,21 @@
 
 .cardRow {
   display: grid;
-  grid-template-columns: 1.35fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  align-items: stretch;
 }
 
 @media (max-width: 1024px) {
   .cardRow {
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-  }
-  
-  .cardRow > article:first-child {
-    grid-column: span 2;
+    gap: 20px;
   }
 }
 
 @media (max-width: 680px) {
   .cardRow {
     grid-template-columns: 1fr;
-    gap: 24px;
-  }
-  
-  .cardRow > article:first-child {
-    grid-column: span 1;
+    gap: 20px;
   }
 }

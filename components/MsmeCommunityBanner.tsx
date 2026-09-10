@@ -131,11 +131,11 @@ export default function MsmeCommunityBanner({ onInquire }: MsmeCommunityBannerPr
                 <div className={styles.statsRow}>
                   <div className={styles.statCard}>
                     <div className={styles.statNumber}>5,000+</div>
-                    <div className={styles.statLabel}>Active Sellers</div>
+                    <div className={styles.statLabel}>Target MSMEs</div>
                   </div>
                   <div className={styles.statCard}>
-                    <div className={styles.statNumber}>38</div>
-                    <div className={styles.statLabel}>Bihar Districts</div>
+                    <div className={styles.statNumber}>38/38</div>
+                    <div className={styles.statLabel}>Districts Network</div>
                   </div>
                   <div className={styles.statCard}>
                     <div className={styles.statNumber}>100%</div>

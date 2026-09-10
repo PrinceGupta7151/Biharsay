@@ -91,7 +91,7 @@ export default function AuthModal() {
 
           <div className={styles.tagline}>
             {mode === 'signup' 
-              ? 'Connect with over 13,000+ Biharis shaping culture, enterprise, and progress.' 
+              ? 'Connect with over 15,000+ Biharis shaping culture, enterprise, and progress.' 
               : 'Welcome back to your Bihar Say community feed.'}
           </div>
 

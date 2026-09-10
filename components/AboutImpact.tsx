@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { Users, Eye, BookOpen, Rocket, Globe2, Linkedin, Sparkles, ArrowRight, ShieldCheck, TrendingUp } from 'lucide-react';
+import { Users, Eye, BookOpen, Rocket, Globe2, Linkedin, Sparkles, ArrowRight, ShieldCheck, TrendingUp, Mail, MessageCircle } from 'lucide-react';
 import styles from './AboutImpact.module.css';
 
 interface AboutImpactProps {
@@ -41,7 +41,7 @@ const METRICS: MetricItem[] = [
   },
   {
     icon: Users,
-    target: 13000,
+    target: 15000,
     suffix: '+',
     isLocale: true,
     label: 'Global Bihari Network',
@@ -176,16 +176,38 @@ export default function AboutImpact({ onInquire }: AboutImpactProps) {
             <h4>Neehar R</h4>
             <span>Founder & CEO · Bihar Say</span>
           </div>
-          <a
-            href="https://www.linkedin.com/in/neehar-r-49760417/"
-            target="_blank"
-            rel="noreferrer noopener"
-            className={styles.linkedinBtn}
-            title="Connect with Neehar on LinkedIn"
-          >
-            <Linkedin size={15} />
-            <span>Connect on LinkedIn ↗</span>
-          </a>
+          <div className={styles.founderConnectStack}>
+            <a
+              href="https://www.linkedin.com/in/neehar-r-49760417/"
+              target="_blank"
+              rel="noreferrer noopener"
+              className={styles.linkedinBtn}
+              title="Connect with Neehar on LinkedIn"
+            >
+              <Linkedin size={13} />
+              <span>LinkedIn</span>
+            </a>
+
+            <a
+              href="https://wa.me/918050083233?text=Hi%20Neehar%2C%20reaching%20out%20via%20Bihar%20Say"
+              target="_blank"
+              rel="noreferrer noopener"
+              className={styles.whatsappFounderBtn}
+              title="Chat with Neehar on WhatsApp (+91 8050083233)"
+            >
+              <MessageCircle size={13} color="#25D366" />
+              <span>WhatsApp: +91 8050083233</span>
+            </a>
+
+            <a
+              href="mailto:neehar@biharsay.com"
+              className={styles.emailFounderBtn}
+              title="Email Neehar directly: neehar@biharsay.com"
+            >
+              <Mail size={13} color="#60A5FA" />
+              <span>neehar@biharsay.com</span>
+            </a>
+          </div>
         </div>
 
         <div className={styles.founderBio}>

@@ -17,84 +17,76 @@ export interface BrandPartner {
 
 export const PARTNER_BRANDS: BrandPartner[] = [
   {
+    id: 'kuiklo',
+    name: 'Kuiklo',
+    category: 'Hyperlocal Quick Logistics',
+    logoUrl: '/logos/kuiklo.png',
+    accentBg: '#090D16',
+    accentColor: '#FFFFFF',
+  },
+  {
+    id: 'toymie',
+    name: 'TOYMIE',
+    category: 'Creative Toys & Play Learning',
+    logoUrl: '/logos/toymie.png',
+    accentBg: '#FFFFFF',
+    accentColor: '#E11D48',
+  },
+  {
+    id: 'bfc',
+    name: 'BFC',
+    category: 'Bihari Founders Club · Network',
+    logoUrl: '/logos/bfc.png',
+    accentBg: '#0F172A',
+    accentColor: '#F59E0B',
+  },
+  {
+    id: 'ecoban-yarn',
+    name: 'Ecoban Yarn',
+    category: 'Sustainable Banana Agro-Fiber',
+    logoUrl: '/logos/ecoban-yarn.png',
+    accentBg: '#FFFFFF',
+    accentColor: '#16A34A',
+  },
+  {
+    id: 'manpasand',
+    name: 'Manpasand',
+    category: 'FMCG & Pure Flavors',
+    logoUrl: '/logos/manpasand.jpg',
+    accentBg: '#FAF8F5',
+    accentColor: '#5D3A1A',
+  },
+  {
+    id: 'miraluk',
+    name: 'MIRALUK',
+    category: 'Media, Branding & Signage',
+    logoUrl: '/logos/miraluk.png',
+    accentBg: '#FFFFFF',
+    accentColor: '#E11D48',
+  },
+  {
     id: 'frootex',
-    name: 'Frootex',
+    name: 'FrooteX',
     category: 'B2B Agro Supply & Commerce',
     logoUrl: '/logos/frootex.png',
     accentBg: '#E0F2FE',
     accentColor: '#0284C7',
   },
   {
-    id: 'biharsay',
-    name: 'Bihar Say',
-    category: 'Digital Media & Storytelling',
-    logoUrl: '/logos/biharsay.webp',
-    accentBg: '#FEE2E2',
-    accentColor: '#DC2626',
+    id: 'reevoly',
+    name: 'Reevoly',
+    category: 'Next-Gen Commerce & Retail',
+    logoUrl: '/logos/reevoly.png',
+    accentBg: '#FFFFFF',
+    accentColor: '#F97316',
   },
   {
-    id: 'bihariceo',
-    name: 'Bihari CEO Club',
-    category: 'Founders & Leadership Network',
-    logoUrl: '/logos/bihariceo.png',
-    accentBg: '#FFEDE5',
-    accentColor: '#D97757',
-  },
-  {
-    id: 'mithila-naturals',
-    name: 'Mithila Naturals',
-    category: 'GI Mithila Makhana Exporters',
-    logoUrl: '/logos/mithila-naturals.svg',
-    accentBg: '#DCFCE7',
-    accentColor: '#16A34A',
-  },
-  {
-    id: 'dehaat',
-    name: 'DeHaat',
-    category: 'Agritech & Market Linkages',
-    logoUrl: '/logos/dehaat.svg',
-    accentBg: '#D1FAE5',
-    accentColor: '#059669',
-  },
-  {
-    id: 'bihar-angels',
-    name: 'Bihar Angels',
-    category: 'Seed & Early Capital Network',
-    logoUrl: '/logos/biharangels.svg',
-    accentBg: '#EEF2FF',
-    accentColor: '#4F46E5',
-  },
-  {
-    id: 'patna-startups',
-    name: 'Patna Startups Hub',
-    category: 'Incubation & Co-Working',
-    logoUrl: '/logos/patnastartups.svg',
-    accentBg: '#FFEDD5',
-    accentColor: '#EA580C',
-  },
-  {
-    id: 'zoff-foods',
-    name: 'Zoff Spices',
-    category: 'Modern FMCG Manufacturing',
-    logoUrl: '/logos/zoff.svg',
-    accentBg: '#FFE4E6',
-    accentColor: '#E11D48',
-  },
-  {
-    id: 'agastya-farm',
-    name: 'Agastya Biofarms',
-    category: 'Sustainable Farm-To-Fork',
-    logoUrl: '/logos/agastya.svg',
-    accentBg: '#ECFCCB',
-    accentColor: '#65A30D',
-  },
-  {
-    id: 'super-30',
-    name: 'Super 30 Network',
-    category: 'Education & Mentorship',
-    logoUrl: '/logos/super30.svg',
-    accentBg: '#DBEAFE',
-    accentColor: '#2563EB',
+    id: 'kridanta',
+    name: 'KRIDANTA',
+    category: 'Activewear & Sports Gear',
+    logoUrl: '/logos/kridanta.png',
+    accentBg: '#FFFFFF',
+    accentColor: '#1D4ED8',
   },
 ];
 
@@ -129,18 +121,25 @@ export default function PartnerBrandsTicker() {
 
   return (
     <section className={styles.tickerSection} id="partner-brands">
+      {/* Glowing Top Accent Bar */}
+      <div className={styles.topAccentBar} aria-hidden="true" />
+
       {/* Edge gradient masks for seamless infinite blend */}
       <div className={styles.maskLeft} aria-hidden="true" />
       <div className={styles.maskRight} aria-hidden="true" />
 
-      {/* Top Header Row (Styled cleanly like bihariceo.club) */}
-      <div className={styles.headerRow}>
-        <span className={styles.accentLine} />
-        <span className={styles.sectionLabel}>
-          <span className={styles.labelDot} />
-          Associated Brands &amp; Ecosystem Partners
-        </span>
-        <span className={styles.accentLine} />
+      {/* Highlighted Section Header */}
+      <div className={styles.headerBlock}>
+        <div className={styles.headerBadge}>
+          <span className={styles.badgeSparkle}>✦</span>
+          <span>TRUSTED ECOSYSTEM &amp; STRATEGIC PARTNERS</span>
+        </div>
+        <h3 className={styles.headingTitle}>
+          Associated Brands &amp; Bihar&apos;s Growing Enterprises
+        </h3>
+        <p className={styles.headingSubtitle}>
+          Collaborating with leading innovators, agritech pioneers, investor networks &amp; grassroots founders
+        </p>
       </div>
 
       {/* Continuous Marquee Ticker Track */}

@@ -8,8 +8,8 @@ import {
   query, 
   where, 
   orderBy, 
-  limit, 
-  serverTimestamp 
+  serverTimestamp,
+  updateDoc 
 } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from './firebase';
 import { INITIAL_STORIES } from '@/data/seedStories';
@@ -28,7 +28,7 @@ let localReactions: Record<string, { likesCount: number; likedBy: string[] }> = 
 
 const BROKEN_IMG_MAP: Record<string, string> = {
   'photo-1523050854058-8df90110c9f1': 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80',
-  'Bihar-Say-Website-40.png': 'https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=800&q=80',
+  'Bihar-Say-Website-40.png': 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80',
   'photo-1508098682722-e99c43a406b2': 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80',
 };
 
@@ -41,7 +41,9 @@ export function sanitizeStory(story: Story): Story {
       break;
     }
   }
-  return { ...story, imageUrl: img };
+  let title = story.title ? story.title.replace(/13[kK]/g, '15K').replace(/13,000/g, '15,000') : story.title;
+  let summary = story.summary ? story.summary.replace(/13[kK]/g, '15K').replace(/13,000/g, '15,000') : story.summary;
+  return { ...story, title, summary, imageUrl: img };
 }
 
 /**
@@ -56,14 +58,8 @@ export async function getAllStories(): Promise<Story[]> {
         const rawStories = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Story));
         const stories = rawStories.map(sanitizeStory);
         
-        // Sort stories so newest submissions appear first
+        // Sort stories chronologically
         return stories.sort((a, b) => {
-          // Prioritize user stories or sort by createdAt desc
-          const isUserA = a.id.startsWith('user-story') || a.id.startsWith('local');
-          const isUserB = b.id.startsWith('user-story') || b.id.startsWith('local');
-          if (isUserA && !isUserB) return -1;
-          if (!isUserA && isUserB) return 1;
-
           const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
           const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
           return timeB - timeA;
@@ -150,12 +146,13 @@ export async function getStoriesByCategory(categorySlug: CategorySlug): Promise<
 
 /**
  * Submit a community story to Firestore.
+ * Submissions default to 'pending' and require editorial approval before appearing in public feeds.
  */
 export async function submitStory(submission: Omit<StorySubmission, 'createdAt' | 'status'>): Promise<string> {
   const fullSubmission: StorySubmission = {
     ...submission,
     createdAt: new Date().toISOString(),
-    status: 'approved', // Auto-approved for demonstration/immediate display
+    status: 'pending', // Pending editorial moderation before publishing
   };
 
   if (isFirebaseConfigured() && db) {
@@ -164,45 +161,59 @@ export async function submitStory(submission: Omit<StorySubmission, 'createdAt' 
         ...fullSubmission,
         serverTimestamp: serverTimestamp(),
       });
-      // Also add to stories collection so it shows immediately on site!
-      const storyId = `user-story-${docRef.id}`;
-      await setDoc(doc(db, STORIES_COLLECTION, storyId), {
-        id: storyId,
-        title: submission.title,
-        summary: submission.content.slice(0, 160) + '...',
-        content: submission.content,
-        category: submission.category,
-        categorySlug: submission.categorySlug,
-        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-        author: submission.authorName,
-        readTime: '3 min read',
-        views: 1,
-        imageUrl: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80',
-        createdAt: new Date().toISOString(),
-      });
+      // Story stays in SUBMISSIONS_COLLECTION with status 'pending'
+      // until reviewed and approved by Bihar Say editorial moderation.
       return docRef.id;
     } catch (err) {
       console.warn('Failed saving submission to Firestore, saving to local state:', err);
     }
   }
 
-  // Fallback local persistence
+  // Fallback local persistence (held in pending submissions list)
   localSubmissions.push(fullSubmission);
-  const localId = `local-${Date.now()}`;
-  INITIAL_STORIES.unshift({
-    id: localId,
-    title: submission.title,
-    summary: submission.content.slice(0, 160) + '...',
-    content: submission.content,
-    category: submission.category,
-    categorySlug: submission.categorySlug,
-    date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-    author: submission.authorName,
-    readTime: '3 min read',
-    views: 1,
-    imageUrl: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80',
-  });
+  const localId = `pending-local-${Date.now()}`;
   return localId;
+}
+
+/**
+ * Editorial helper: Approve a pending community submission and publish it to the live feed.
+ */
+export async function approveStorySubmission(submissionId: string): Promise<boolean> {
+  if (isFirebaseConfigured() && db) {
+    try {
+      const subDocRef = doc(db, SUBMISSIONS_COLLECTION, submissionId);
+      const subSnap = await getDoc(subDocRef);
+      if (!subSnap.exists()) return false;
+
+      const data = subSnap.data() as StorySubmission;
+      const storyId = `story-${submissionId}`;
+
+      // Mark submission as approved
+      await updateDoc(subDocRef, { status: 'approved' });
+
+      // Publish to public stories collection
+      await setDoc(doc(db, STORIES_COLLECTION, storyId), {
+        id: storyId,
+        title: data.title,
+        summary: data.content.slice(0, 160) + '...',
+        content: data.content,
+        category: data.category,
+        categorySlug: data.categorySlug,
+        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        author: data.authorName,
+        readTime: '3 min read',
+        views: 1,
+        imageUrl: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80',
+        createdAt: new Date().toISOString(),
+      });
+
+      return true;
+    } catch (err) {
+      console.error('Error approving story submission:', err);
+      return false;
+    }
+  }
+  return false;
 }
 
 /**
@@ -443,6 +454,51 @@ export async function saveBusinessInquiry(
       localStorage.setItem('biharsay_business_queries', JSON.stringify(existing));
     } catch (e) {
       console.error('Local business query storage error:', e);
+    }
+  }
+
+  return { success: true, id: localId };
+}
+
+export interface NewsletterSubscriber {
+  id?: string;
+  contact: string;
+  channel: 'email' | 'whatsapp';
+  createdAt: string;
+  status: 'active' | 'unsubscribed';
+}
+
+const NEWSLETTER_COLLECTION = 'newsletter_subscribers';
+
+export async function subscribeNewsletter(data: {
+  contact: string;
+  channel: 'email' | 'whatsapp';
+}): Promise<{ success: boolean; id: string }> {
+  const subscriber: NewsletterSubscriber = {
+    contact: data.contact.trim(),
+    channel: data.channel,
+    createdAt: new Date().toISOString(),
+    status: 'active',
+  };
+
+  const localId = `sub-${Date.now()}`;
+
+  if (isFirebaseConfigured() && db) {
+    try {
+      const docRef = await addDoc(collection(db, NEWSLETTER_COLLECTION), subscriber);
+      return { success: true, id: docRef.id };
+    } catch (err) {
+      console.warn('Firestore newsletter subscription failed, saving locally:', err);
+    }
+  }
+
+  if (typeof window !== 'undefined') {
+    try {
+      const existing = JSON.parse(localStorage.getItem('biharsay_subscribers') || '[]');
+      existing.unshift({ id: localId, ...subscriber });
+      localStorage.setItem('biharsay_subscribers', JSON.stringify(existing));
+    } catch (e) {
+      console.error('Local subscriber storage error:', e);
     }
   }
 

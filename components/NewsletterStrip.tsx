@@ -2,32 +2,33 @@
 
 import React, { useState } from 'react';
 import { Mail, MessageCircle, CheckCircle2, ArrowRight, Sparkles, ShieldCheck } from 'lucide-react';
+import { subscribeNewsletter } from '@/lib/db';
 import styles from './NewsletterStrip.module.css';
 
 export default function NewsletterStrip() {
   const [channel, setChannel] = useState<'email' | 'whatsapp'>('email');
   const [contactValue, setContactValue] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!contactValue.trim()) return;
+    if (!contactValue.trim() || isSubmitting) return;
 
-    if (typeof window !== 'undefined') {
-      try {
-        const existing = JSON.parse(localStorage.getItem('biharsay_subscribers') || '[]');
-        existing.push({
-          channel,
-          value: contactValue.trim(),
-          date: new Date().toISOString()
-        });
-        localStorage.setItem('biharsay_subscribers', JSON.stringify(existing));
-      } catch {
-        // localStorage fallback
-      }
+    setIsSubmitting(true);
+    try {
+      await subscribeNewsletter({
+        contact: contactValue.trim(),
+        channel,
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.warn('Newsletter submission error:', err);
+      // Still show success with local fallback so user gets immediate response
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setSubmitted(true);
   };
 
   return (
@@ -91,7 +92,7 @@ export default function NewsletterStrip() {
 
               <div className={styles.trustNote}>
                 <ShieldCheck size={14} color="#10B981" />
-                <span>Join 13,000+ founders & professionals · Free forever · 1-click unsubscribe</span>
+                <span>Join 15,000+ founders & professionals · Free forever · 1-click unsubscribe</span>
               </div>
             </>
           )}

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <rect width="100" height="100" rx="22" fill="#FFF1F2"/>
+  <defs>
+    <linearGradient id="kridGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E11D48"/>
+      <stop offset="100%" stop-color="#BE123C"/>
+    </linearGradient>
+  </defs>
+  <!-- Athletic Shield & Victory Wing -->
+  <path d="M50 20 L74 32 C74 56 62 72 50 80 C38 72 26 56 26 32 Z" fill="none" stroke="#FDA4AF" stroke-width="2"/>
+  <path d="M50 26 L68 36 C68 54 58 66 50 72 C42 66 32 54 32 36 Z" fill="url(#kridGrad)"/>
+  <!-- Stylized Dynamic 'K' / Athletic Runner Chevron in White & Gold -->
+  <path d="M42 38 V62 M42 50 L56 38 M47 46 L58 62" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="50" cy="30" r="3" fill="#FBBF24"/>
+</svg>

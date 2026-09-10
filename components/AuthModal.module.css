@@ -9,17 +9,18 @@
 }
 
 .brandTitle {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 22px;
+  font-family: 'Calibri', 'Candara', 'Segoe UI', Arial, sans-serif;
+  font-size: 23px;
   font-weight: 700;
   color: var(--ink);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 .brandTitle em {
   font-style: italic;
   color: var(--accent);
-  margin-left: 1px;
+  font-weight: 700;
+  margin-left: 2px;
 }
 
 .closeBtn {
