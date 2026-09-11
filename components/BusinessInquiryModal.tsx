@@ -243,7 +243,7 @@ export default function BusinessInquiryModal({
               <div className={styles.directContactFooter}>
                 <span>Or reach us directly:</span>
                 <a href="https://wa.me/918050083233" target="_blank" rel="noopener noreferrer">
-                  WhatsApp: +91 8050083233
+                  Chat on WhatsApp
                 </a>
                 <span className={styles.sepDot}>•</span>
                 <a href="mailto:neehar@biharsay.com">

@@ -40,7 +40,7 @@ export default function TopStrip() {
               href="https://wa.me/918050083233" 
               target="_blank" 
               rel="noreferrer noopener"
-              title="Chat on WhatsApp (+91 8050083233)"
+              title="Chat on WhatsApp"
               aria-label="WhatsApp"
               className={`${styles.socialDot} ${styles.socialWhatsApp}`}
             >

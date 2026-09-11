@@ -29,6 +29,7 @@ export interface Story {
   featuredOrder?: number;
   readTime?: string;
   views?: number;
+  legacyId?: number;
   createdAt?: string;
 }
 

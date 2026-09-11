@@ -17,8 +17,8 @@ export default function PartnerFloatingFAB({ onOpen }: PartnerFloatingFABProps) 
         target="_blank"
         rel="noopener noreferrer"
         className={styles.fabWhatsAppBtn}
-        aria-label="Chat with Bihar Say on WhatsApp (+91 8050083233)"
-        title="Chat on WhatsApp (+91 8050083233)"
+        aria-label="Chat with Bihar Say on WhatsApp"
+        title="Chat on WhatsApp"
       >
         <MessageCircle size={17} />
         <span className={styles.whatsAppText}>WhatsApp</span>

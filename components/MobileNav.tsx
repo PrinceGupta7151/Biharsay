@@ -195,7 +195,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
             className={styles.drawerWhatsAppLink}
           >
             <MessageCircle size={16} color="#25D366" />
-            <span>WhatsApp: +91 8050083233</span>
+            <span>Chat on WhatsApp</span>
           </a>
           <a
             href="mailto:neehar@biharsay.com"

@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Story } from '@/types';
-import { TrendingUp, Clock, Eye } from 'lucide-react';
+import { TrendingUp, Clock } from 'lucide-react';
 import styles from './HeroPicks.module.css';
 
 interface HeroPicksProps {
@@ -13,6 +13,8 @@ interface HeroPicksProps {
 }
 
 export default function HeroPicks({ featuredStory, sideStories }: HeroPicksProps) {
+  const [mainImgError, setMainImgError] = React.useState(false);
+
   return (
     <section className={styles.heroSection}>
       <div className="section-head">
@@ -27,7 +29,7 @@ export default function HeroPicks({ featuredStory, sideStories }: HeroPicksProps
         {/* Main Large Feature */}
         <Link href={`/article/${featuredStory.id}`} className={styles.featureMain}>
           <div className={styles.mainImgWrap}>
-            {featuredStory.imageUrl && (
+            {featuredStory.imageUrl && !mainImgError ? (
               <Image
                 src={featuredStory.imageUrl}
                 alt={featuredStory.title}
@@ -35,7 +37,10 @@ export default function HeroPicks({ featuredStory, sideStories }: HeroPicksProps
                 priority
                 sizes="(max-width: 900px) 100vw, 65vw"
                 className={styles.mainImg}
+                onError={() => setMainImgError(true)}
               />
+            ) : (
+              <div className={styles.sideFallback} />
             )}
           </div>
 

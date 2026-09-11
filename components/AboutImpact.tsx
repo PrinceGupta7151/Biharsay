@@ -193,10 +193,10 @@ export default function AboutImpact({ onInquire }: AboutImpactProps) {
               target="_blank"
               rel="noreferrer noopener"
               className={styles.whatsappFounderBtn}
-              title="Chat with Neehar on WhatsApp (+91 8050083233)"
+              title="Chat with Neehar on WhatsApp"
             >
               <MessageCircle size={13} color="#25D366" />
-              <span>WhatsApp: +91 8050083233</span>
+              <span>WhatsApp</span>
             </a>
 
             <a

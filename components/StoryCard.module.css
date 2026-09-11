@@ -179,10 +179,3 @@
   align-items: center;
   gap: 6px;
 }
-
-.views {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}

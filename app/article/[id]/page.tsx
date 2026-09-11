@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getStoryById, getStoriesByCategory } from '@/lib/db';
-import { ArrowLeft, Clock, Eye } from 'lucide-react';
+import { ArrowLeft, Clock } from 'lucide-react';
 import StoryCard from '@/components/StoryCard';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import ShareBar from '@/components/ShareBar';
@@ -95,14 +95,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 <div className={styles.authorName}>{story.author}</div>
                 <div className={styles.publishDate}>Published {story.date}</div>
               </div>
-            </div>
-
-            <div className={styles.articleStats}>
-              {story.views && (
-                <span className={styles.statItem}>
-                  <Eye size={14} /> {story.views.toLocaleString()} reads
-                </span>
-              )}
             </div>
           </div>
 

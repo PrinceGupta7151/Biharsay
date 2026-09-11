@@ -107,16 +107,32 @@ async function run() {
   const allPosts = Array.from(allPostsMap.values());
   console.log(`Total unique live posts fetched: ${allPosts.length}`);
 
-  // Resolve media IDs
+  // Resolve media IDs and media attachments
   const mediaIds = allPosts.map(p => p.featured_media).filter(Boolean);
   const mediaMap = {};
-  if (mediaIds.length > 0) {
-    const chunkIds = Array.from(new Set(mediaIds)).slice(0, 100);
-    const mediaList = await fetchJson(`https://biharsay.com/wp-json/wp/v2/media?include=${chunkIds.join(',')}&per_page=100`);
-    mediaList.forEach(m => {
-      mediaMap[m.id] = m.source_url || m.media_details?.sizes?.medium_large?.source_url || '';
-    });
-  }
+  const postMediaMap = {};
+  const slugMediaMap = {};
+
+  // Fetch media from pages 1 and 2 of WordPress media API
+  const [mediaP1, mediaP2] = await Promise.all([
+    fetchJson('https://biharsay.com/wp-json/wp/v2/media?per_page=100&_fields=id,post,source_url,link,slug'),
+    fetchJson('https://biharsay.com/wp-json/wp/v2/media?per_page=100&page=2&_fields=id,post,source_url,link,slug'),
+  ]);
+  const allMedia = [...(Array.isArray(mediaP1) ? mediaP1 : []), ...(Array.isArray(mediaP2) ? mediaP2 : [])];
+  allMedia.forEach(m => {
+    if (m.id && m.source_url) {
+      mediaMap[m.id] = m.source_url;
+    }
+    if (m.post && m.source_url && !postMediaMap[m.post]) {
+      postMediaMap[m.post] = m.source_url;
+    }
+    if (m.link && m.source_url) {
+      const slugMatch = m.link.match(/biharsay\.com\/\d{4}\/\d{2}\/\d{2}\/([^\/]+)\//);
+      if (slugMatch && slugMatch[1] && !slugMediaMap[slugMatch[1]]) {
+        slugMediaMap[slugMatch[1]] = m.source_url;
+      }
+    }
+  });
 
   const categoryCounters = {
     'culture-heritage': 0,
@@ -160,7 +176,7 @@ async function run() {
       year: 'numeric'
     });
 
-    let imageUrl = mediaMap[post.featured_media] || '';
+    let imageUrl = mediaMap[post.featured_media] || postMediaMap[post.id] || slugMediaMap[post.slug] || '';
     if (!imageUrl && post.content?.rendered) {
       const match = post.content.rendered.match(/src="([^"]+\.(jpg|jpeg|png|webp))"/i);
       if (match) imageUrl = match[1];

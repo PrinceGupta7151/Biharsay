@@ -51,7 +51,7 @@ export const PARTNER_BRANDS: BrandPartner[] = [
   {
     id: 'manpasand',
     name: 'Manpasand',
-    category: 'FMCG & Pure Flavors',
+    category: 'Thekua',
     logoUrl: '/logos/manpasand.jpg',
     accentBg: '#FAF8F5',
     accentColor: '#5D3A1A',
@@ -83,7 +83,7 @@ export const PARTNER_BRANDS: BrandPartner[] = [
   {
     id: 'kridanta',
     name: 'KRIDANTA',
-    category: 'Activewear & Sports Gear',
+    category: 'Sports',
     logoUrl: '/logos/kridanta.png',
     accentBg: '#FFFFFF',
     accentColor: '#1D4ED8',

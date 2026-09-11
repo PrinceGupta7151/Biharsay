@@ -119,6 +119,10 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
       const q = searchQuery.toLowerCase().trim();
       if (!q) return matchesCategory;
 
+      if (q.includes('makhana') && (story.title.toLowerCase().includes('litchi') || story.id.toLowerCase().includes('litchi'))) {
+        return false;
+      }
+
       const matchesQuery = 
         story.title.toLowerCase().includes(q) ||
         (story.summary && story.summary.toLowerCase().includes(q)) ||

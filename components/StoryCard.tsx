@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Story } from '@/types';
 import { useAuth } from '@/context/AuthContext';
 import { toggleBookmark, getUserBookmarks } from '@/lib/db';
-import { Bookmark, Clock, Eye } from 'lucide-react';
+import { Bookmark, Clock } from 'lucide-react';
 import styles from './StoryCard.module.css';
 
 interface StoryCardProps {
@@ -91,11 +91,6 @@ export default function StoryCard({ story, isLead = false, priority = false }: S
         <div className={styles.byline}>
           <span>{story.author}</span>
           {story.date && <span>· {story.date}</span>}
-          {story.views && (
-            <span className={styles.views}>
-              <Eye size={11} /> {story.views.toLocaleString()}
-            </span>
-          )}
         </div>
       </div>
     </article>

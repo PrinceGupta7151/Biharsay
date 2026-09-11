@@ -27,23 +27,145 @@ let localComments: StoryComment[] = [];
 let localReactions: Record<string, { likesCount: number; likedBy: string[] }> = {};
 
 const BROKEN_IMG_MAP: Record<string, string> = {
-  'photo-1523050854058-8df90110c9f1': 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80',
-  'Bihar-Say-Website-40.png': 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80',
-  'photo-1508098682722-e99c43a406b2': 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80',
+  'photo-1523050854058-8df90110c9f1': '/legacy-images/Bihar-Say-Website-3.png',
+  'photo-1508098682722-e99c43a406b2': '/legacy-images/Bihar-Say-Website-81.png',
+  'photo-1486406146926-c627a92ad1ab': '/legacy-images/WhatsApp-Image-2026-09-01-at-5.23.42-PM.jpeg',
+  'shahi-litchi-solar-cold-storage': '/legacy-images/shahi-litchi-muzaffarpur.jpg',
 };
+
+// Canonical image mapping from authentic locally hosted legacy media
+const CANONICAL_IMAGE_MAP: Record<string, string> = {};
+const TITLE_IMAGE_MAP: Record<string, string> = {};
+
+// Prototype & standalone stories image mapping
+const PROTOTYPE_IMAGE_MAP: Record<string, string> = {
+  'foxconn-eyes-bihar-electronics': '/legacy-images/foxconn-electronics-manufacturing.jpg',
+  'bihar-gov-dbt-flood-relief': '/legacy-images/Bihar-Say-Website-80.png',
+  'bihar-ai-growth-2026-gcc-policy': '/legacy-images/Bihar-Say-Website-75.png',
+  'asian-womens-hockey-championship-rajgir': '/legacy-images/asian-womens-hockey-rajgir.jpg',
+  'rajgirs-first-sports-academy': '/legacy-images/rajgir-sports-academy.jpg',
+  'vaibhav-suryavanshi-ipl-auction': '/legacy-images/vaibhav-suryavanshi-ipl.jpg',
+  'gomini-cow-care-startup': '/legacy-images/gomini-cow-care.jpg',
+  'patna-high-tech-stadium': '/legacy-images/patna-indoor-sports-stadium.jpg',
+  'bihar-makhana-boom-migration': '/legacy-images/WhatsApp-Image-2026-09-01-at-5.23.42-PM.jpeg',
+  'bihar-say-community-milestone': '/legacy-images/bihar-say-community.jpg',
+  'user-story-4jPUG42kgNtRShfZNp5R': '/legacy-images/shahi-litchi-muzaffarpur.jpg',
+  'user-story-FuTHCYIkVKvugbaonRdp': '/legacy-images/shahi-litchi-muzaffarpur.jpg',
+  'sonpur-mela-special-trains': '/legacy-images/sonpur-mela-special-trains-travel.jpg',
+  'sonpur-mela-2025-special-trains-full-list-timings-travel-guide': '/legacy-images/sonpur-mela-special-trains-travel.jpg',
+};
+
+function normalizeTitle(title: string): string {
+  return (title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+INITIAL_STORIES.forEach(s => {
+  if (s.imageUrl) {
+    if (s.id) CANONICAL_IMAGE_MAP[s.id] = s.imageUrl;
+    if (s.legacyId) CANONICAL_IMAGE_MAP[String(s.legacyId)] = s.imageUrl;
+    if (s.title) TITLE_IMAGE_MAP[normalizeTitle(s.title)] = s.imageUrl;
+  }
+});
 
 export function sanitizeStory(story: Story): Story {
   if (!story) return story;
   let img = story.imageUrl || '';
+
+  // 1. Resolve canonical local image by id or title
+  const canonical = 
+    PROTOTYPE_IMAGE_MAP[story.id] ||
+    CANONICAL_IMAGE_MAP[story.id] || 
+    (story.legacyId ? CANONICAL_IMAGE_MAP[String(story.legacyId)] : undefined) ||
+    (story.title ? TITLE_IMAGE_MAP[normalizeTitle(story.title)] : undefined);
+
+  if (canonical) {
+    // If the image is external, empty, or wrongly set to border pillars / LPG for other stories, enforce canonical
+    if (
+      !img ||
+      img.startsWith('http://') ||
+      img.startsWith('https://') ||
+      img.includes('biharsay.com') ||
+      img.includes('images.unsplash.com') ||
+      (img.includes('Bihar-Say-Website.png') && !story.id?.includes('border-pillar') && !story.title?.toLowerCase().includes('border pillar')) ||
+      (img.includes('Bihar-Say-Website-84.png') && !story.id?.includes('lpg') && !story.title?.toLowerCase().includes('lpg') && !story.title?.includes('एलपीजी'))
+    ) {
+      img = canonical;
+    }
+  }
+
+  // 2. Specific guard for Foxconn
+  if (
+    (story.id && story.id.includes('foxconn')) ||
+    (story.title && story.title.toLowerCase().includes('foxconn'))
+  ) {
+    img = '/legacy-images/foxconn-electronics-manufacturing.jpg';
+  }
+
+  // 3. Specific guard for Makhana stories: ensure authentic local Makhana image
+  if (
+    (story.id && story.id.toLowerCase().includes('makhana')) ||
+    (story.title && story.title.toLowerCase().includes('makhana'))
+  ) {
+    if (!img || img.includes('biharsay.com') || img.includes('images.unsplash.com') || img.includes('Bihar-Say-Website.png') || img.includes('Bihar-Say-Website-84.png')) {
+      img = canonical || '/legacy-images/WhatsApp-Image-2026-09-01-at-5.23.42-PM.jpeg';
+    }
+  }
+
+  // 3b. Specific guard for Shahi Litchi stories: ensure authentic local Litchi image
+  if (
+    (story.id && story.id.toLowerCase().includes('litchi')) ||
+    (story.title && (story.title.toLowerCase().includes('litchi') || story.title.toLowerCase().includes('shahi litchi')))
+  ) {
+    img = '/legacy-images/shahi-litchi-muzaffarpur.jpg';
+  }
+
+  // 3c. Specific guard for Sonpur Mela stories: ensure authentic Sonpur Mela image
+  if (
+    (story.id && story.id.toLowerCase().includes('sonpur')) ||
+    (story.title && story.title.toLowerCase().includes('sonpur'))
+  ) {
+    img = '/legacy-images/sonpur-mela-special-trains-travel.jpg';
+  }
+
+  // 4. Prevent border pillar image from leaking into other stories
+  const isBorderPillarStory = 
+    (story.id && (story.id.includes('border-pillar') || story.id.includes('5000'))) ||
+    (story.title && story.title.toLowerCase().includes('border pillar'));
+
+  if (!isBorderPillarStory && img.endsWith('/legacy-images/Bihar-Say-Website.png')) {
+    img = canonical || '/legacy-images/bihar-industrial-investment-growth.jpg';
+  }
+
+  // 5. Prevent LPG crisis image from leaking into other stories
+  const isLpgStory = 
+    (story.id && (story.id.includes('lpg') || story.id.includes('एलपीजी') || story.id.includes('84'))) ||
+    (story.title && (story.title.toLowerCase().includes('lpg') || story.title.includes('एलपीजी')));
+
+  if (!isLpgStory && img.includes('Bihar-Say-Website-84.png')) {
+    img = canonical || PROTOTYPE_IMAGE_MAP[story.id] || '/legacy-images/bihar-industrial-investment-growth.jpg';
+  }
+
+  // 6. Fallback for any other external URLs to local assets
+  if (!img || img.includes('biharsay.com') || img.includes('images.unsplash.com')) {
+    img = canonical || '/legacy-images/bihar-industrial-investment-growth.jpg';
+  }
+
+  // 5. Broken image fallbacks
   for (const [broken, replacement] of Object.entries(BROKEN_IMG_MAP)) {
     if (img.includes(broken)) {
       img = replacement;
       break;
     }
   }
+
   let title = story.title ? story.title.replace(/13[kK]/g, '15K').replace(/13,000/g, '15,000') : story.title;
   let summary = story.summary ? story.summary.replace(/13[kK]/g, '15K').replace(/13,000/g, '15,000') : story.summary;
-  return { ...story, title, summary, imageUrl: img };
+  let content = story.content;
+  if (title && title.toLowerCase().includes('litchi') && content) {
+    content = content.replace(/mango and makhana clusters/gi, 'mango and regional horticulture clusters')
+                     .replace(/makhana/gi, 'horticulture');
+  }
+  return { ...story, title, summary, content, imageUrl: img };
 }
 
 /**
@@ -57,6 +179,15 @@ export async function getAllStories(): Promise<Story[]> {
       if (!snapshot.empty) {
         const rawStories = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Story));
         const stories = rawStories.map(sanitizeStory);
+        
+        // Background sync to update any outdated Firestore image URLs with authentic media
+        snapshot.docs.forEach(docSnap => {
+          const raw = docSnap.data() as Story;
+          const clean = sanitizeStory({ ...raw, id: docSnap.id });
+          if (clean.imageUrl && clean.imageUrl !== raw.imageUrl && db) {
+            updateDoc(doc(db, STORIES_COLLECTION, docSnap.id), { imageUrl: clean.imageUrl }).catch(() => {});
+          }
+        });
         
         // Sort stories chronologically
         return stories.sort((a, b) => {

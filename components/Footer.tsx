@@ -61,7 +61,7 @@ export default function Footer() {
                     className={styles.whatsappLink}
                     title="Chat on WhatsApp"
                   >
-                    +91 8050083233
+                    Chat with Us
                   </a>
                 </div>
               </li>
