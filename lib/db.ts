@@ -1,4 +1,4 @@
-﻿import {
+import {
   collection,
   doc,
   getDocs,
@@ -69,31 +69,69 @@ INITIAL_STORIES.forEach(s => {
 export function cleanArticleContent(rawContent: string): string {
   if (!rawContent) return '';
 
-  let html = rawContent;
+  let text = rawContent;
 
-  // 1. Remove all data-start, data-end, data-section-id, data-turn-id and other data-* attributes
-  html = html.replace(/\s*data-[a-z\-]+="[^"]*"/gi, '');
-  html = html.replace(/\s*data-[a-z\-]+='[^']*'/gi, '');
+  // 1. Repair common UTF-8 / Mojibake encoding corruptions
+  text = text
+    .replace(/â€™/g, "'")
+    .replace(/â€˜/g, "'")
+    .replace(/â€œ/g, '"')
+    .replace(/â€ /g, '"')
+    .replace(/â€“/g, '–')
+    .replace(/â€”/g, '—')
+    .replace(/â€¦/g, '…')
+    .replace(/Â/g, '')
+    .replace(/\b(\w+)\?\?\?s\b/gi, "$1's") // fixes "Bihar???s" -> "Bihar's"
+    .replace(/\?\?\?/g, '—');
 
-  // 2. Remove inline class and style attributes from scraped DOM elements
-  html = html.replace(/\s*class="[^"]*"/gi, '');
-  html = html.replace(/\s*style="[^"]*"/gi, '');
-
-  // 3. Convert markdown headers (## Header, ### Header) to HTML <h2> / <h3>
-  html = html.replace(/^###\s+(.+)$/gm, '<h3>$1</h3>');
-  html = html.replace(/^##\s+(.+)$/gm, '<h2>$1</h2>');
-  html = html.replace(/^#\s+(.+)$/gm, '<h1>$1</h1>');
-
-  // 4. Clean up self-closing br tags
-  html = html.replace(/<br\s*\/?>/gi, '<br />');
-
-  // 5. Wrap plain text paragraphs if no HTML wrapper tags are present
-  if (!/<(p|h1|h2|h3|h4|ul|ol|blockquote)/i.test(html)) {
-    const paras = html.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
-    html = paras.map(p => `<p>${p}</p>`).join('\n');
+  // 2. Decode escaped HTML entities if present (&lt;strong...&gt;)
+  if (text.includes('&lt;') && text.includes('&gt;')) {
+    text = text
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&apos;/g, "'")
+      .replace(/&amp;/g, '&');
   }
 
-  return html.trim();
+  // 3. Strip scraper tracking/chunk attributes like data-start="123", data-end="456", data-is-last-node, etc.
+  text = text.replace(/\s*data-[a-zA-Z0-9\-]+(?:="[^"]*"|='[^']*'|=[^\s>]+)?/gi, '');
+
+  // 4. Remove inline class and style attributes from raw scraped DOM elements
+  text = text.replace(/\s*class="[^"]*"/gi, '');
+  text = text.replace(/\s*style="[^"]*"/gi, '');
+
+  // 5. Normalize newlines
+  text = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+  // 6. Convert markdown headers (####, ###, ##, #) to proper HTML tags
+  text = text.replace(/^[ \t]*####[ \t]+(.+)$/gm, '<h4>$1</h4>');
+  text = text.replace(/^[ \t]*###[ \t]+(.+)$/gm, '<h3>$1</h3>');
+  text = text.replace(/^[ \t]*##[ \t]+(.+)$/gm, '<h2>$1</h2>');
+  text = text.replace(/^[ \t]*#[ \t]+(.+)$/gm, '<h1>$1</h1>');
+
+  // 7. Convert markdown bold and italic if raw
+  text = text.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
+  text = text.replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g, '<em>$1</em>');
+
+  // 8. Clean up self-closing br tags and empty tags
+  text = text.replace(/<br\s*\/?>/gi, '<br />');
+  text = text.replace(/<(p|div|span)[^>]*>\s*<\/\1>/gi, '');
+
+  // 9. Ensure proper semantic paragraph wrapping
+  const blocks = text.split(/\n\s*\n+/).map(b => b.trim()).filter(Boolean);
+  const formattedBlocks = blocks.map(block => {
+    // If block is already a block-level HTML element, keep as is
+    if (/^<(h[1-6]|p|blockquote|ul|ol|li|div|figure|table|section)/i.test(block)) {
+      return block;
+    }
+    // Replace single newlines within a paragraph with <br />
+    const inner = block.replace(/\n/g, '<br />');
+    return `<p>${inner}</p>`;
+  });
+
+  return formattedBlocks.join('\n\n').trim();
 }
 
 export function sanitizeStory(story: Story): Story {

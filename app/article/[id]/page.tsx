@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getStoryById, getStoriesByCategory } from '@/lib/db';
+import { getStoryById, getStoriesByCategory, cleanArticleContent } from '@/lib/db';
 import { ArrowLeft, Clock } from 'lucide-react';
 import StoryCard from '@/components/StoryCard';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
@@ -120,7 +120,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         {story.content ? (
           <div
             className={styles.bodyContent}
-            dangerouslySetInnerHTML={{ __html: story.content }}
+            dangerouslySetInnerHTML={{ __html: cleanArticleContent(story.content) }}
           />
         ) : (
           <div className={styles.bodyContent}>
