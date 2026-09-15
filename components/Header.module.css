@@ -359,6 +359,7 @@
   .desktopNav {
     display: none;
   }
+
   .hamburgerBtn {
     display: flex;
     align-items: center;
@@ -370,16 +371,20 @@
   .brandTitle {
     font-size: 20px;
   }
+
   .logoMark {
     width: 34px;
     height: 34px;
   }
+
   .btnSubmitStory span {
     display: none;
   }
+
   .btnSubmitStory {
     padding: 7px 9px;
   }
+
   .actions {
     gap: 8px;
   }
@@ -409,6 +414,7 @@
     opacity: 0;
     transform: translateY(-12px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

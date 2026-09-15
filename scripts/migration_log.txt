@@ -1,0 +1,596 @@
+
+Reading biharsay_content.json...
+   Found 100 articles
+   285 images already downloaded
+
+
+[1/100] ID:5624 -- BharatNet to Bring Fiber Internet to Bihar Villages...
+   Extracted 6488 chars of clean text (5 min read)
+   Scraping live page for image: https://biharsay.com/2026/09/10/bharatnet-to-bring-fiber-internet-to-bihar-villages/
+   Scraped OG image: svg%3E
+   FAILED download: Protocol "data:" not supported. Expected "http:"
+
+[2/100] ID:5621 -- Prime Group to invest ₹1,500 crore in Bihar real estate, targeting 5 m...
+   Extracted 5035 chars of clean text (4 min read)
+   Scraping live page for image: https://biharsay.com/2026/09/09/prime-group-to-invest-%e2%82%b91500-crore-in-bihar-real-estate-targeting-5-million-sq-ft-projects/
+   Scraped OG image: svg%3E
+   FAILED download: Protocol "data:" not supported. Expected "http:"
+
+[3/100] ID:5619 -- Bihar’s Food Processing Story Is Going Global: What the New Bihar–UAE ...
+   Extracted 7184 chars of clean text (5 min read)
+   Scraping live page for image: https://biharsay.com/2026/09/08/bihars-food-processing-story-is-going-global-what-the-new-bihar-uae-partnership-could-unlock/
+   Scraped OG image: svg%3E
+   FAILED download: Protocol "data:" not supported. Expected "http:"
+
+[4/100] ID:5617 -- Why Is Patna Metro Changing Its Plan Near Patna Zoo? 4 TBMs Hold the A...
+   Extracted 7397 chars of clean text (6 min read)
+   Scraping live page for image: https://biharsay.com/2026/09/08/why-is-patna-metro-changing-its-plan-near-patna-zoo-4-tbms-hold-the-answer/
+   Scraped OG image: svg%3E
+   FAILED download: Protocol "data:" not supported. Expected "http:"
+
+[5/100] ID:5615 -- Patna to Get High-Tech ₹21 Crore Indoor Stadium...
+   Extracted 6347 chars of clean text (5 min read)
+   Scraping live page for image: https://biharsay.com/2026/09/07/patna-to-get-high-tech-%e2%82%b921-crore-indoor-stadium/
+   Scraped OG image: svg%3E
+   FAILED download: Protocol "data:" not supported. Expected "http:"
+
+[6/100] ID:5613 -- India-Nepal Travel Is About to Get Easier: Jaynagar Set to Get a New I...
+   Extracted 6109 chars of clean text (4 min read)
+   Scraping live page for image: https://biharsay.com/2026/09/05/india-nepal-travel-is-about-to-get-easier-jaynagar-set-to-get-a-new-immigration-post/
+   Scraped OG image: svg%3E
+   FAILED download: Protocol "data:" not supported. Expected "http:"
+
+[7/100] ID:5611 -- ₹59,000 crore is heading to Bihar — and that may not be the biggest st...
+   Extracted 11217 chars of clean text (8 min read)
+   Scraping live page for image: https://biharsay.com/2026/09/03/%e2%82%b959000-crore-is-heading-to-bihar-and-that-may-not-be-the-biggest-story/
+   Scraped OG image: svg%3E
+   FAILED download: Protocol "data:" not supported. Expected "http:"
+
+[8/100] ID:5609 -- When Nepal Floods Trapped 106 Pilgrims, Bihar Became Their Way Home ❤️...
+   Extracted 4976 chars of clean text (4 min read)
+   Scraping live page for image: https://biharsay.com/2026/09/02/when-nepal-floods-trapped-106-pilgrims-bihar-became-their-way-home-%e2%9d%a4%ef%b8%8f%f0%9f%87%ae%f0%9f%87%b3/
+   Scraped OG image: svg%3E
+   FAILED download: Protocol "data:" not supported. Expected "http:"
+
+[9/100] ID:5606 -- Bihar Makhana Boom and the Hidden Cost of Migration...
+   Extracted 6075 chars of clean text (4 min read)
+   Scraping live page for image: https://biharsay.com/2026/09/01/bihars-makhana-business-is-booming-so-why-are-the-people-who-know-it-best-still-being-forced-to-migrate/
+   Scraped OG image: svg%3E
+   FAILED download: Protocol "data:" not supported. Expected "http:"
+
+[10/100] ID:5602 -- Bihar DElEd Admission 2026: 20 Aug Merit List, Dates & Admission Detai...
+   Extracted 6992 chars of clean text (5 min read)
+   Scraping live page for image: https://biharsay.com/2026/08/10/bihar-deled-admission-2026-20-aug-merit-list-dates-admission-details/
+   Scraped OG image: svg%3E
+   FAILED download: Protocol "data:" not supported. Expected "http:"
+
+[11/100] ID:5594 -- Wheat Procurement in Bihar 2026 Begins April 1...
+   Extracted 3220 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-8.png
+   Downloaded: 5594_Bihar-Say-Website-8.png
+
+[12/100] ID:5591 -- Bihar approves 10MW solar power plant on Son Canal....
+   Extracted 3752 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-7.png
+   Downloaded: 5591_Bihar-Say-Website-7.png
+
+[13/100] ID:5588 -- Munger Records India’s Cleanest Air : Bihar AQI 2026 Update...
+   Extracted 3903 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-6.png
+   Downloaded: 5588_Bihar-Say-Website-6.png
+
+[14/100] ID:5585 -- Bihar Board 10th Result 2026 Declared...
+   Extracted 3106 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-4.png
+   Downloaded: 5585_Bihar-Say-Website-4.png
+
+[15/100] ID:5581 -- Bihar to Open Degree Colleges in 360 Blocks...
+   Extracted 3774 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-3.png
+   Downloaded: 5581_Bihar-Say-Website-3.png
+
+[16/100] ID:5578 -- New Policy to Launch International Flights from Patna and Gaya...
+   Extracted 3806 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-1.png
+   Downloaded: 5578_Bihar-Say-Website-1.png
+
+[17/100] ID:5575 -- India & Nepal Agree Joint Plan to Repair & Maintain 5,000 Border Pilla...
+   Extracted 3540 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website.png
+   Downloaded: 5575_Bihar-Say-Website.png
+
+[18/100] ID:5571 -- बिहार में एलपीजी संकट नहीं, अफवाहों से बचने की अपील...
+   Extracted 2840 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-84.png
+   Downloaded: 5571_Bihar-Say-Website-84.png
+
+[19/100] ID:5568 -- Sportstar Aces Awards 2026: खेलों के प्रचार में बिहार को मिला Best Sta...
+   Extracted 3864 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-82.png
+   Downloaded: 5568_Bihar-Say-Website-82.png
+
+[20/100] ID:5560 -- JBC Kabaddi League: Uniting Jharkhand, Bihar, and Chhattisgarh for a K...
+   Extracted 5707 chars of clean text (4 min read)
+   OG image from JSON: Bihar-Say-Website-81.png
+   Downloaded: 5560_Bihar-Say-Website-81.png
+
+[21/100] ID:5557 -- Bihar Gov Transfers ₹113 Crore to Flood-Affected Farmers via DBT...
+   Extracted 4638 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-80.png
+   Downloaded: 5557_Bihar-Say-Website-80.png
+
+[22/100] ID:5554 -- Bihar Cabinet approves  ₹1,302 crore Sonepur International Airport...
+   Extracted 5513 chars of clean text (4 min read)
+   OG image from JSON: Bihar-Say-Website-79.png
+   Downloaded: 5554_Bihar-Say-Website-79.png
+
+[23/100] ID:5551 -- Bihar Declared Naxal-Free After Suresh Koda’s Surrender in Munger...
+   Extracted 3676 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-78.png
+   Downloaded: 5551_Bihar-Say-Website-78.png
+
+[24/100] ID:5548 -- Sasaram Gets ₹7 Billion Rail Boost with North Junction and Line Doubli...
+   Extracted 5742 chars of clean text (4 min read)
+   OG image from JSON: Bihar-Say-Website-77.png
+   Downloaded: 5548_Bihar-Say-Website-77.png
+
+[25/100] ID:5545 -- Bihar AI Growth 2026 : MoUs, GCC Policy & Tech Push at India AI Impact...
+   Extracted 5957 chars of clean text (4 min read)
+   OG image from JSON: Bihar-Say-Website-75.png
+   Downloaded: 5545_Bihar-Say-Website-75.png
+
+[26/100] ID:5541 -- JK Cement Crosses 31 MTA With New Buxar Plant in Bihar...
+   Extracted 4059 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-74.png
+   Downloaded: 5541_Bihar-Say-Website-74.png
+
+[27/100] ID:5538 -- PM-Kisan Samman Nidhi: How Digital Reform Can Empower Every Farmer...
+   Extracted 3761 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-73.png
+   Downloaded: 5538_Bihar-Say-Website-73.png
+
+[28/100] ID:5534 -- Nalanda & Dongguk University Revive Ancient Buddhist Knowledge Corrido...
+   Extracted 4779 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-72.png
+   Downloaded: 5534_Bihar-Say-Website-72.png
+
+[29/100] ID:5531 -- BPSC TRE-1 Teachers Get Salary Hike...
+   Extracted 4275 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-71.png
+   Downloaded: 5531_Bihar-Say-Website-71.png
+
+[30/100] ID:5526 -- Bihar introduces 149 new deluxe BSRTC buses before Holi...
+   Extracted 4643 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-70.png
+   Downloaded: 5526_Bihar-Say-Website-70.png
+
+[31/100] ID:5523 --  Last Queen of Darbhanga Raj : Maharani Kamsundari Devi Passes Away at...
+   Extracted 4187 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-69.png
+   Downloaded: 5523_Bihar-Say-Website-69.png
+
+[32/100] ID:5519 -- World’s Largest Shivlinga Reaches Bihar | Gopalganj to Virat Ramayan M...
+   Extracted 4169 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-68.png
+   Downloaded: 5519_Bihar-Say-Website-68.png
+
+[33/100] ID:5516 -- Bihar’s GI-Tagged Products Get Global Spotlight at Dubai Food Festival...
+   Extracted 3727 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-67.png
+   Downloaded: 5516_Bihar-Say-Website-67.png
+
+[34/100] ID:5513 -- Bihar Bhumi Live Land Verification: See Your Property Before Registry...
+   Extracted 2956 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-66.png
+   Downloaded: 5513_Bihar-Say-Website-66.png
+
+[35/100] ID:5510 -- Bihar Factories Double in 19 Years: A Positive Shift in Industrial Gro...
+   Extracted 3985 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-65.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-65.png
+   Using existing fallback: 5172_bihar-say-website-65.png
+
+[36/100] ID:5506 -- Bihar Makhana Farming Subsidy 2026: ₹72,750 Per Hectare for Farmers...
+   Extracted 4235 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-64.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-64.png
+   Using existing fallback: 5170_bihar-say-website-64.png
+
+[37/100] ID:5503 -- Bihar's All Departments to Use AI | Education, Health, Agriculture to ...
+   Extracted 5400 chars of clean text (4 min read)
+   OG image from JSON: Bihar-Say-Website-63.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-63.png
+   Using existing fallback: 5158_bihar-say-website-63.png
+
+[38/100] ID:5499 -- Patna to Delhi & Kolkata Train Fare Increased...
+   Extracted 3676 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-62.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-62.png
+   Using existing fallback: 5155_bihar-say-website-62.png
+
+[39/100] ID:5496 -- Bihar PETC Scheme: Free Coaching + ₹3,000 Monthly for Competitive Exam...
+   Extracted 3851 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-61.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-61.png
+   Using existing fallback: 5152_bihar-say-website-61.png
+
+[40/100] ID:5491 -- Bihar Sports Scholarship 2026: ₹20 Lakh Aid for Athletes...
+   Extracted 5173 chars of clean text (4 min read)
+   OG image from JSON: Bihar-Say-Website-60.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-60.png
+   Using existing fallback: 5150_bihar-say-website-60.png
+
+[41/100] ID:5488 -- Bihar IPS Promotion 2025: 22 Officers of 2012 Batch Promoted to DIG...
+   Extracted 3190 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-59.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-59.png
+   Using existing fallback: 5145_bihar-say-website-59.png
+
+[42/100] ID:5485 -- Bihar Creates World Record With 574/6 in Vijay Hazare Trophy...
+   Extracted 4268 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-58.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-58.png
+   Using existing fallback: 5142_bihar-say-website-58.png
+
+[43/100] ID:5482 -- Bihar Enters Top 10 Egg Producing States...
+   Extracted 5053 chars of clean text (4 min read)
+   OG image from JSON: Bihar-Say-Website-57-1.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-57-1.png
+   Using existing fallback: bihar-say-website-57-1.png
+
+[44/100] ID:5477 -- Patna to Get 25 Vending Zones, GIS Mapping for Water & Drainage...
+   Extracted 3616 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-57.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-57.png
+   Using existing fallback: 5137_bihar-say-website-57.png
+
+[45/100] ID:5474 -- Purnia's Sarthak Ranjan to make IPL debut with Kolkata Knight Riders i...
+   Extracted 3507 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-56.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-56.png
+   Using existing fallback: 5133_bihar-say-website-56.png
+
+[46/100] ID:5470 -- Over 1,000 Civil Servants Compete in National Athletics Championship i...
+   Extracted 4003 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-55.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-55.png
+   Using existing fallback: 5129_bihar-say-website-55.png
+
+[47/100] ID:5467 -- Purnea Airport to Connect with NH-31:Committee Formed for DPR...
+   Extracted 4991 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-54-1.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-54-1.png
+   Using existing fallback: bihar-say-website-54-1.png
+
+[48/100] ID:5463 -- Patna to Build India’s First Power Museum at Karbighaiya...
+   Extracted 3803 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-53-1.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-53-1.png
+   Using existing fallback: bihar-say-website-53-1.png
+
+[49/100] ID:5460 -- Bihar cabinet approves creation of three new departments...
+   Extracted 4492 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-52-1.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-52-1.png
+   Using existing fallback: bihar-say-website-52-1.png
+
+[50/100] ID:5457 -- Patna–Delhi & Darbhanga–Delhi Special Trains Announced...
+   Extracted 3607 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-54.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-54.png
+   Using existing fallback: 5126_bihar-say-website-54.png
+
+[51/100] ID:5454 -- Extra Coaches Added on Delhi-Bound Bihar Trains amid Indigo Crisis...
+   Extracted 3417 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-53.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-53.png
+   Using existing fallback: 5123_bihar-say-website-53.png
+
+[52/100] ID:5451 -- Bihar Fixes 227 Black Spots: Mega Road Safety Plan to Reduce Accidents...
+   Extracted 3563 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-52.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-52.png
+   Using existing fallback: 5120_bihar-say-website-52.png
+
+[53/100] ID:5447 -- Bihar Gov Announces One Crore Jobs in Five Years...
+   Extracted 4191 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-51.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/12/Bihar-Say-Website-51.png
+   Using existing fallback: 5117_bihar-say-website-51.png
+
+[54/100] ID:5442 -- Mihir Kumar Singh Appointed as Bihar’s New Development Commissioner...
+   Extracted 4640 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-50.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-50.png
+   Using existing fallback: 5114_bihar-say-website-50.png
+
+[55/100] ID:5439 -- 11 New Satellite Cities in Bihar: Government Plans Greenfield Urban Ex...
+   Extracted 3860 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-49.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-49.png
+   Using existing fallback: 5109_bihar-say-website-49.png
+
+[56/100] ID:5434 -- Gaya Junction: 50 Train Route Changed & Station Upgrade Updates...
+   Extracted 3784 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-48.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-48.png
+   Using existing fallback: 5106_bihar-say-website-48.png
+
+[57/100] ID:5431 -- BCECEB Declares Bihar NEET PG 2025 Round 1 Seat Allotment Result decla...
+   Extracted 3368 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-46.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-46.png
+   Using existing fallback: 5096_bihar-say-website-46.png
+
+[58/100] ID:5425 -- 3 New Centers of Excellence to Boost Youth Skills & Sports Dreams in B...
+   Extracted 3655 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-45-1024x576.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-45-1024x576.png
+
+[59/100] ID:5422 -- Bihar Gov. Announces Subsidy for Montha-Affected Farmers...
+   Extracted 3592 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-43.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-43.png
+   Using existing fallback: 5085_bihar-say-website-43.png
+
+[60/100] ID:5418 -- Bihar Plans 25 New Sugar Mills in a Major Industrial Expansion...
+   Extracted 3210 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-42.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-42.png
+   Using existing fallback: 5068_bihar-say-website-42.png
+
+[61/100] ID:5415 -- Bihar health Dept. announces drive to fill 46,000 vacancies...
+   Extracted 4287 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-41.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-41.png
+   Using existing fallback: 5064_bihar-say-website-41.png
+
+[62/100] ID:5410 -- Singhada:The Superfood That Boosts Immunity, Beauty & Everyday Energy...
+   Extracted 3585 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-40.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-40.png
+   Using existing fallback: 5062_bihar-say-website-40.png
+
+[63/100] ID:5406 -- Bihar Pathologist Dr Prabhat Ranjan Receives Commonwealth Medical Asso...
+   Extracted 2282 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-39.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-39.png
+   Using existing fallback: bihar-say-website-39.png
+
+[64/100] ID:5403 -- Bihar Teacher New Transfer Rules 2025: Relief for 22,732 Teacher...
+   Extracted 3767 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-38.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-38.png
+   Using existing fallback: 5059_bihar-say-website-38.png
+
+[65/100] ID:5400 -- Bihar Introduces New 2025 Renewable Tariff Regulations...
+   Extracted 4366 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-37.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-37.png
+   Using existing fallback: bihar-say-website-37.png
+
+[66/100] ID:5393 -- WCDC Chief and ADRI Researchers Call for Modern Career Pathways for Bi...
+   Extracted 3943 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-36.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-36.png
+   Using existing fallback: 5055_bihar-say-website-36.png
+
+[67/100] ID:5390 -- Bihar Cabinet Ministers List 2025 – Names, Parties & Roles Explained...
+   Extracted 4362 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-34-1.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-34-1.png
+   Using existing fallback: bihar-say-website-34-1.png
+
+[68/100] ID:5387 -- BPSC 71st Prelims Results 2025 Out : 14,261 Candidates Qualify for Mai...
+   Extracted 3738 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-35.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-35.png
+   Using existing fallback: 5051_bihar-say-website-35.png
+
+[69/100] ID:5384 -- Oath ceremony of the Bihar's new CM is scheduled for tomorrow...
+   Extracted 4096 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-34.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-34.png
+   Using existing fallback: 5046_bihar-say-website-34.png
+
+[70/100] ID:5380 -- The Stunning Sand Art by Ashok Kumar That Ruled Sonepur Mela 2025...
+   Extracted 3414 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-33.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-33.png
+   Using existing fallback: 5038_bihar-say-website-33.png
+
+[71/100] ID:5377 -- Muzaffarpur’s ₹213.25-Crore Marine Drive-Style Lake Front to Open This...
+   Extracted 3472 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-32.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-32.png
+   Using existing fallback: 5034_bihar-say-website-32.png
+
+[72/100] ID:5373 -- BSEB Sakshamta Pariksha Phase 4-5 Answer Key 2025 Out...
+   Extracted 4000 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-31.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-31.png
+   Using existing fallback: 5025_bihar-say-website-31.png
+
+[73/100] ID:5370 -- Sonpur Mela 2025 Special Trains: Full List, Timings & Travel Guide...
+   Extracted 3469 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-30.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-30.png
+   Using existing fallback: bihar-say-website-30.png
+
+[74/100] ID:5367 -- Bihar Land Survey Upgrade: Free 3-Month Installation & Diploma Course ...
+   Extracted 4036 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-29.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-29.png
+   Using existing fallback: bihar-say-website-29.png
+
+[75/100] ID:5364 -- Assembly Elections: Bihar set for Vote Counting tomorrow across 46 cen...
+   Extracted 3045 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-28.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-28.png
+   Using existing fallback: bihar-say-website-28.png
+
+[76/100] ID:5360 -- Siwan’s Railway Heroes Win Safety Star Award...
+   Extracted 2974 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-27.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-27.png
+   Using existing fallback: bihar-say-website-27.png
+
+[77/100] ID:5357 -- Bihar to Establish Skill University on SVSU Model...
+   Extracted 5468 chars of clean text (4 min read)
+   OG image from JSON: Bihar-Say-Website-26.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-26.png
+   Using existing fallback: bihar-say-website-26.png
+
+[78/100] ID:5354 -- Bihar Election 2025 Phase 2 witnessed a record 68.76% turnout across 1...
+   Extracted 3471 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-24.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-24.png
+   Using existing fallback: bihar-say-website-24.png
+
+[79/100] ID:5351 -- Patna’s APEDA Office Opens Global Doors for Bihar’s Agricultural Expor...
+   Extracted 4699 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-23.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-23.png
+   Using existing fallback: bihar-say-website-23.png
+
+[80/100] ID:5348 -- Discover how NIOS and IHCNBT are reviving Nalanda’s legacy in modern e...
+   Extracted 4102 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-22.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-22.png
+   Using existing fallback: bihar-say-website-22.png
+
+[81/100] ID:5345 -- Adani Power secures Bihar’s 2,400 MW Bhagalpur project with ₹30,000 cr...
+   Extracted 4771 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-21.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-21.png
+   Using existing fallback: bihar-say-website-21.png
+
+[82/100] ID:5340 -- Indian Railways launches two special trains between Kolkata and Siwan ...
+   Extracted 4092 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-20.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-20.png
+   Using existing fallback: bihar-say-website-20.png
+
+[83/100] ID:5336 -- East Champaran’s Horse Race Pond to Get ₹50-Crore Makeover...
+   Extracted 3842 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-19.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-19.png
+   Using existing fallback: bihar-say-website-19.png
+
+[84/100] ID:5332 -- Bihar Sees Highest-Ever Voter Turnout Of 64.66% In Phase 1...
+   Extracted 3437 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-18-1.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-18-1.png
+   Using existing fallback: bihar-say-website-18-1.png
+
+[85/100] ID:5329 -- Bihar Assembly Elections 2025 – Phase 1 Polling in 121 Constituencies ...
+   Extracted 3901 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-17-1.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-17-1.png
+   Using existing fallback: bihar-say-website-17-1.png
+
+[86/100] ID:5326 -- AIIMS Patna Doctors Remove 3.1 Kg Spleen From Six-Year-Old in Rare Sur...
+   Extracted 3298 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-16.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-16.png
+   Using existing fallback: 4979_bihar-say-website-16.png
+
+[87/100] ID:5322 -- Patna Municipal Corporation Launches Massive Anti-Dengue Drive...
+   Extracted 4298 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-15.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-15.png
+   Using existing fallback: 4975_bihar-say-website-15.png
+
+[88/100] ID:5319 -- Patna Women’s College Hosts Golden Jubilee Reunion...
+   Extracted 3786 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-18.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-18.png
+   Using existing fallback: 4985_bihar-say-website-18.png
+
+[89/100] ID:5314 -- OpenAI Offers 'ChatGPT Go' Free For 1 Year To Users In India From Nove...
+   Extracted 4052 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-17.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/11/Bihar-Say-Website-17.png
+   Using existing fallback: 4982_bihar-say-website-17.png
+
+[90/100] ID:5311 -- Patna to Get Multi-Modal Hub, Model Vending Zone & Elevated Road Near ...
+   Extracted 4446 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-16.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/10/Bihar-Say-Website-16.png
+   Using existing fallback: 4979_bihar-say-website-16.png
+
+[91/100] ID:5308 -- Patna Municipal Corporation’s ‘Pink Innovation’ Wins Global Spotlight ...
+   Extracted 3769 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-15.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/10/Bihar-Say-Website-15.png
+   Using existing fallback: 4975_bihar-say-website-15.png
+
+[92/100] ID:5305 -- Bihar EOU blocks over 20,000 mobile numbers in cybercrime crackdown...
+   Extracted 3731 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-14.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/10/Bihar-Say-Website-14.png
+   Using existing fallback: 4972_bihar-say-website-14.png
+
+[93/100] ID:5302 -- Patna Physician Unveils Doxycycline’s STI Prevention Potential at IDWe...
+   Extracted 4464 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-13.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/10/Bihar-Say-Website-13.png
+   Using existing fallback: 4966_bihar-say-website-13.png
+
+[94/100] ID:5299 -- Bihar to launch AI & Semiconductor Cluster...
+   Extracted 4521 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-12.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/10/Bihar-Say-Website-12.png
+   Using existing fallback: 4963_bihar-say-website-12.png
+
+[95/100] ID:5296 -- Back to Work After Chhath Puja? 8 Special Trains from Bihar Make Retur...
+   Extracted 2994 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-11.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/10/Bihar-Say-Website-11.png
+   Using existing fallback: 4957_bihar-say-website-11.png
+
+[96/100] ID:5292 -- IIT Patna & Amity University sign MoU to Revolutionize Teacher Educati...
+   Extracted 3963 chars of clean text (3 min read)
+   OG image from JSON: Bihar-Say-Website-10.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/10/Bihar-Say-Website-10.png
+   Using existing fallback: 4954_bihar-say-website-10.png
+
+[97/100] ID:5288 -- Patna Sahib Eco-Friendly Diwali 2025 – 11,000 Diyas to Light Up Takht ...
+   Extracted 2589 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-9.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/10/Bihar-Say-Website-9.png
+   Using existing fallback: 4950_bihar-say-website-9.png
+
+[98/100] ID:5285 -- Bihar’s First Acute Stroke Care Unit to Open at AIIMS Patna...
+   Extracted 3277 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-8.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/10/Bihar-Say-Website-8.png
+   Using existing fallback: 4947_bihar-say-website-8.png
+
+[99/100] ID:5282 -- ECI Declares Paid Holiday for All Employees in Bihar on Polling Days...
+   Extracted 2846 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-7.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/10/Bihar-Say-Website-7.png
+   Using existing fallback: 4944_bihar-say-website-7.png
+
+[100/100] ID:5279 -- 166 Additional Flights to Patna for Diwali & Chhath 2025...
+   Extracted 2890 chars of clean text (2 min read)
+   OG image from JSON: Bihar-Say-Website-6.png
+   FAILED download: HTTP 404 for https://biharsay.com/wp-content/uploads/2025/10/Bihar-Say-Website-6.png
+   Using existing fallback: 4941_bihar-say-website-6.png
+
+============================================================
+Writing /data/articles.json...
+Saved 100 articles to D:\biharsay\data\articles.json
+
+External biharsay.com image refs in output: 0
+
+============================================================
+  Migration Complete
+------------------------------------------------------------
+  Total articles processed:  100
+  Images downloaded (new):   24
+  Images failed:             76
+  Live pages scraped:        10
+  External refs remaining:   0
+============================================================

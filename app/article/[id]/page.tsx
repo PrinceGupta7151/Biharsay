@@ -117,19 +117,18 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         )}
 
         {/* Article Body */}
-        <div className={styles.bodyContent}>
-          {story.content ? (
-            story.content.split('\n\n').map((paragraph, idx) => (
-              <p key={idx} className={styles.paragraph}>
-                {paragraph}
-              </p>
-            ))
-          ) : (
+        {story.content ? (
+          <div
+            className={styles.bodyContent}
+            dangerouslySetInnerHTML={{ __html: story.content }}
+          />
+        ) : (
+          <div className={styles.bodyContent}>
             <p className={styles.paragraph}>
               Read the latest developments and inspiring progress in this report from Bihar Say.
             </p>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* In-Article Google AdSense / Sponsor Slot */}
         <GoogleAdSlot format="inArticle" />

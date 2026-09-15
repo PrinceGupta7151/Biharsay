@@ -60,7 +60,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
               </div>
             </div>
           ) : (
-            <button 
+            <button
               className={styles.btnMobileJoin}
               onClick={() => {
                 onClose();
@@ -80,16 +80,16 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
             <span>Categories</span>
           </h4>
           <nav className={styles.linksList}>
-            <Link 
-              href="/" 
-              onClick={(e) => handleNavClick(e, 'home')} 
+            <Link
+              href="/"
+              onClick={(e) => handleNavClick(e, 'home')}
               className={styles.linkItem}
             >
               All Stories (Home)
             </Link>
-            <Link 
-              href="/#about-us" 
-              onClick={(e) => handleNavClick(e, 'about-us')} 
+            <Link
+              href="/#about-us"
+              onClick={(e) => handleNavClick(e, 'about-us')}
               className={`${styles.linkItem} ${styles.linkItemFeatured}`}
             >
               <span className="dot culture" style={{ background: '#2563EB' }} />
@@ -98,58 +98,58 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                 <span className={styles.aboutSubtitle}>Mission, Vision &amp; Reach</span>
               </div>
             </Link>
-            <Link 
-              href="/#culture-heritage" 
-              onClick={(e) => handleNavClick(e, 'culture-heritage')} 
+            <Link
+              href="/#culture-heritage"
+              onClick={(e) => handleNavClick(e, 'culture-heritage')}
               className={styles.linkItem}
             >
               <span className="dot culture" /> Culture &amp; Heritage
             </Link>
-            <Link 
-              href="/#entrepreneurship-startups" 
-              onClick={(e) => handleNavClick(e, 'entrepreneurship-startups')} 
+            <Link
+              href="/#entrepreneurship-startups"
+              onClick={(e) => handleNavClick(e, 'entrepreneurship-startups')}
               className={styles.linkItem}
             >
               <span className="dot startup" /> Startups &amp; Innovation
             </Link>
-            <Link 
-              href="/#investments-economic" 
-              onClick={(e) => handleNavClick(e, 'investments-economic')} 
+            <Link
+              href="/#investments-economic"
+              onClick={(e) => handleNavClick(e, 'investments-economic')}
               className={styles.linkItem}
             >
               <span className="dot invest" /> Investments &amp; Economy
             </Link>
-            <Link 
-              href="/#education-social" 
-              onClick={(e) => handleNavClick(e, 'education-social')} 
+            <Link
+              href="/#education-social"
+              onClick={(e) => handleNavClick(e, 'education-social')}
               className={styles.linkItem}
             >
               <span className="dot edu" /> Education &amp; Social
             </Link>
-            <Link 
-              href="/#industry-innovation" 
-              onClick={(e) => handleNavClick(e, 'industry-innovation')} 
+            <Link
+              href="/#industry-innovation"
+              onClick={(e) => handleNavClick(e, 'industry-innovation')}
               className={styles.linkItem}
             >
               <span className="dot industry" /> Industry &amp; Tech
             </Link>
-            <Link 
-              href="/#sports" 
-              onClick={(e) => handleNavClick(e, 'sports')} 
+            <Link
+              href="/#sports"
+              onClick={(e) => handleNavClick(e, 'sports')}
               className={styles.linkItem}
             >
               <span className="dot sports" /> Sports &amp; Youth
             </Link>
-            <Link 
-              href="/#commercial-services" 
-              onClick={(e) => handleNavClick(e, 'commercial-services')} 
+            <Link
+              href="/#commercial-services"
+              onClick={(e) => handleNavClick(e, 'commercial-services')}
               className={styles.linkItem}
             >
               <span className="dot startup" style={{ background: '#F59E0B' }} /> Commercial &amp; Services
             </Link>
-            <Link 
-              href="/#partner-brands" 
-              onClick={(e) => handleNavClick(e, 'partner-brands')} 
+            <Link
+              href="/#partner-brands"
+              onClick={(e) => handleNavClick(e, 'partner-brands')}
               className={styles.linkItem}
             >
               <span className="dot edu" style={{ background: '#2563EB' }} /> Associated Brands &amp; Partners
@@ -159,7 +159,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
 
         {/* Action Buttons in Drawer */}
         <div className={styles.drawerActions}>
-          <button 
+          <button
             className={styles.actionBtnPrimary}
             onClick={() => {
               onClose();
@@ -172,7 +172,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
           </button>
 
           {user && (
-            <button 
+            <button
               className={styles.actionBtnDanger}
               onClick={() => {
                 logout();

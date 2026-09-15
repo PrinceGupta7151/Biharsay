@@ -90,8 +90,8 @@ export default function Header() {
         <div className="wrap">
           <div className={styles.navRow}>
             {/* Left: Brand Logo & Title */}
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className={styles.brand}
               onClick={(e) => handleNavClick(e, 'home')}
             >
@@ -112,61 +112,68 @@ export default function Header() {
 
             {/* Middle: Desktop Navigation Links */}
             <nav className={styles.desktopNav}>
-              <Link 
-                href="/" 
+              <Link
+                href="/"
                 onClick={(e) => handleNavClick(e, 'home')}
                 className={activeSlug === 'home' ? styles.activeLink : ''}
               >
                 Home
               </Link>
-              <Link 
-                href="/#culture-heritage" 
+              <Link
+                href="/#culture-heritage"
                 onClick={(e) => handleNavClick(e, 'culture-heritage')}
                 className={activeSlug === 'culture-heritage' ? styles.activeLink : ''}
               >
                 Culture
               </Link>
-              <Link 
-                href="/#entrepreneurship-startups" 
+              <Link
+                href="/#education-social"
+                onClick={(e) => handleNavClick(e, 'education-social')}
+                className={activeSlug === 'education-social' ? styles.activeLink : ''}
+              >
+                Education
+              </Link>
+              <Link
+                href="/#entrepreneurship-startups"
                 onClick={(e) => handleNavClick(e, 'entrepreneurship-startups')}
                 className={activeSlug === 'entrepreneurship-startups' ? styles.activeLink : ''}
               >
                 Startups
               </Link>
-              <Link 
-                href="/#investments-economic" 
+              <Link
+                href="/#industry-innovation"
+                onClick={(e) => handleNavClick(e, 'industry-innovation')}
+                className={activeSlug === 'industry-innovation' ? styles.activeLink : ''}
+              >
+                Industry
+              </Link>
+              <Link
+                href="/#sports"
+                onClick={(e) => handleNavClick(e, 'sports')}
+                className={activeSlug === 'sports' ? styles.activeLink : ''}
+              >
+                Sports
+              </Link>
+              <Link
+                href="/#investments-economic"
                 onClick={(e) => handleNavClick(e, 'investments-economic')}
                 className={activeSlug === 'investments-economic' ? styles.activeLink : ''}
               >
                 Investments
-              </Link>
-              <Link 
-                href="/#partner-brands" 
-                onClick={(e) => handleNavClick(e, 'partner-brands')}
-                className={activeSlug === 'partner-brands' ? styles.activeLink : ''}
-              >
-                Partners
-              </Link>
-              <Link 
-                href="/#about-us" 
-                onClick={(e) => handleNavClick(e, 'about-us')}
-                className={activeSlug === 'about-us' ? styles.activeLink : ''}
-              >
-                About Bihar Say
               </Link>
 
               {/* More Topics Dropdown */}
               <div className={styles.moreDropdownWrapper} ref={moreDropdownRef}>
                 <button
                   type="button"
-                  className={`${styles.moreTriggerBtn} ${['education-social', 'industry-innovation', 'sports', 'commercial-services'].includes(activeSlug) ? styles.activeLink : ''}`}
+                  className={`${styles.moreTriggerBtn} ${['partner-brands', 'video-series', 'about-us', 'commercial-services'].includes(activeSlug) ? styles.activeLink : ''}`}
                   onClick={() => setIsMoreDropdownOpen(!isMoreDropdownOpen)}
                   aria-expanded={isMoreDropdownOpen}
                 >
                   <span>More</span>
-                  <ChevronDown 
-                    size={14} 
-                    className={`${styles.moreChevron} ${isMoreDropdownOpen ? styles.moreChevronRotated : ''}`} 
+                  <ChevronDown
+                    size={14}
+                    className={`${styles.moreChevron} ${isMoreDropdownOpen ? styles.moreChevronRotated : ''}`}
                     aria-hidden="true"
                   />
                 </button>
@@ -174,34 +181,24 @@ export default function Header() {
                 {isMoreDropdownOpen && (
                   <div className={styles.moreDropdownMenu}>
                     <Link
-                      href="/#education-social"
+                      href="/#partner-brands"
                       onClick={(e) => {
-                        handleNavClick(e, 'education-social');
+                        handleNavClick(e, 'partner-brands');
                         setIsMoreDropdownOpen(false);
                       }}
                       className={styles.moreDropdownItem}
                     >
-                      <span className="dot edu" /> Education &amp; Social
+                      <span className="dot startup" /> Brand Partners
                     </Link>
                     <Link
-                      href="/#industry-innovation"
+                      href="/#video-series"
                       onClick={(e) => {
-                        handleNavClick(e, 'industry-innovation');
+                        handleNavClick(e, 'video-series');
                         setIsMoreDropdownOpen(false);
                       }}
                       className={styles.moreDropdownItem}
                     >
-                      <span className="dot industry" /> Industry &amp; Tech
-                    </Link>
-                    <Link
-                      href="/#sports"
-                      onClick={(e) => {
-                        handleNavClick(e, 'sports');
-                        setIsMoreDropdownOpen(false);
-                      }}
-                      className={styles.moreDropdownItem}
-                    >
-                      <span className="dot sports" /> Sports &amp; Youth
+                      <span className="dot edu" /> Original Videos
                     </Link>
                     <Link
                       href="/#commercial-services"
@@ -211,7 +208,17 @@ export default function Header() {
                       }}
                       className={styles.moreDropdownItem}
                     >
-                      <span className="dot startup" style={{ background: '#F59E0B' }} /> Commercial Services
+                      <span className="dot industry" /> Business Solutions
+                    </Link>
+                    <Link
+                      href="/#about-us"
+                      onClick={(e) => {
+                        handleNavClick(e, 'about-us');
+                        setIsMoreDropdownOpen(false);
+                      }}
+                      className={styles.moreDropdownItem}
+                    >
+                      <span className="dot invest" /> About Bihar Say
                     </Link>
                   </div>
                 )}
@@ -222,7 +229,7 @@ export default function Header() {
             <div className={styles.actions}>
               {mounted && user ? (
                 <div className={styles.userActions}>
-                  <button 
+                  <button
                     className={styles.btnSubmitStory}
                     onClick={openSubmitModal}
                     title="Publish an article to Bihar Say"
@@ -232,17 +239,17 @@ export default function Header() {
                   </button>
 
                   <div className={styles.profileWrapper} ref={profileRef}>
-                    <button 
+                    <button
                       className={styles.avatarBtn}
                       onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
                       aria-label="User account"
                     >
                       {user.photoURL ? (
-                        <Image 
-                          src={user.photoURL} 
-                          alt={user.displayName || 'User'} 
-                          width={34} 
-                          height={34} 
+                        <Image
+                          src={user.photoURL}
+                          alt={user.displayName || 'User'}
+                          width={34}
+                          height={34}
                           className={styles.avatarImg}
                         />
                       ) : (
@@ -259,7 +266,7 @@ export default function Header() {
                           <p className={styles.dropdownEmail}>{user.email}</p>
                         </div>
                         <div className={styles.dropdownDivider} />
-                        <button 
+                        <button
                           className={styles.dropdownItem}
                           onClick={() => {
                             openSubmitModal();
@@ -269,7 +276,7 @@ export default function Header() {
                           <PlusCircle size={15} />
                           <span>Submit a Story</span>
                         </button>
-                        <button 
+                        <button
                           className={styles.dropdownItem}
                           onClick={() => {
                             setToastMessage('Your saved stories are synchronized with your account.');
@@ -281,7 +288,7 @@ export default function Header() {
                           <span>Saved Articles</span>
                         </button>
                         <div className={styles.dropdownDivider} />
-                        <button 
+                        <button
                           className={`${styles.dropdownItem} ${styles.danger}`}
                           onClick={() => {
                             logout();
@@ -296,8 +303,8 @@ export default function Header() {
                   </div>
                 </div>
               ) : (
-                <button 
-                  className="btn-join" 
+                <button
+                  className="btn-join"
                   onClick={openAuthModal}
                 >
                   <Sparkles size={15} color="#38BDF8" />
@@ -327,9 +334,9 @@ export default function Header() {
       )}
 
       {/* Mobile Slide-out Menu */}
-      <MobileNav 
-        isOpen={isMobileMenuOpen} 
-        onClose={() => setIsMobileMenuOpen(false)} 
+      <MobileNav
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
       />
     </>
   );

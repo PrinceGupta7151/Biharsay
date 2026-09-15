@@ -123,7 +123,7 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
         return false;
       }
 
-      const matchesQuery = 
+      const matchesQuery =
         story.title.toLowerCase().includes(q) ||
         (story.summary && story.summary.toLowerCase().includes(q)) ||
         (story.content && story.content.toLowerCase().includes(q)) ||
@@ -167,7 +167,8 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
         isFiltering={isFiltering}
       />
 
-      {/* When filtering or searching: show instant results grid */}
+
+
       {isFiltering ? (
         <section style={{ padding: '16px 0 64px' }}>
           {filteredStories.length > 0 ? (
@@ -205,9 +206,9 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
         /* Default Editorial Layout */
         <>
           {/* Top Picks Hero */}
-          <HeroPicks 
-            featuredStory={featuredStory} 
-            sideStories={sideStories.length > 0 ? sideStories : initialStories.slice(1, 4)} 
+          <HeroPicks
+            featuredStory={featuredStory}
+            sideStories={sideStories.length > 0 ? sideStories : initialStories.slice(1, 4)}
           />
 
           {/* Associated Brands Moving Ticker (Infinite Banner) */}
@@ -235,15 +236,15 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
           )}
 
           {/* Category: Culture & Heritage */}
-          <CategorySection 
-            category={getCategoryMeta('culture-heritage')} 
-            stories={getCategoryStories('culture-heritage')} 
+          <CategorySection
+            category={getCategoryMeta('culture-heritage')}
+            stories={getCategoryStories('culture-heritage')}
           />
 
           {/* Category: Education & Social */}
-          <CategorySection 
-            category={getCategoryMeta('education-social')} 
-            stories={getCategoryStories('education-social')} 
+          <CategorySection
+            category={getCategoryMeta('education-social')}
+            stories={getCategoryStories('education-social')}
           />
 
           {/* Mid-Feed Display Google AdSense / Native Sponsor Unit */}
@@ -256,30 +257,30 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
           <CommunityStrip />
 
           {/* Category: Entrepreneurship & Startups */}
-          <CategorySection 
-            category={getCategoryMeta('entrepreneurship-startups')} 
-            stories={getCategoryStories('entrepreneurship-startups')} 
+          <CategorySection
+            category={getCategoryMeta('entrepreneurship-startups')}
+            stories={getCategoryStories('entrepreneurship-startups')}
           />
 
           {/* Flagship MSME Business Community Banner (seller.frootex.com) */}
           <MsmeCommunityBanner onInquire={handleOpenInquiry} />
 
           {/* Category: Industry & Innovation */}
-          <CategorySection 
-            category={getCategoryMeta('industry-innovation')} 
-            stories={getCategoryStories('industry-innovation')} 
+          <CategorySection
+            category={getCategoryMeta('industry-innovation')}
+            stories={getCategoryStories('industry-innovation')}
           />
 
           {/* Category: Sports */}
-          <CategorySection 
-            category={getCategoryMeta('sports')} 
-            stories={getCategoryStories('sports')} 
+          <CategorySection
+            category={getCategoryMeta('sports')}
+            stories={getCategoryStories('sports')}
           />
 
           {/* Category: Investments & Economic */}
-          <CategorySection 
-            category={getCategoryMeta('investments-economic')} 
-            stories={getCategoryStories('investments-economic')} 
+          <CategorySection
+            category={getCategoryMeta('investments-economic')}
+            stories={getCategoryStories('investments-economic')}
           />
 
           {/* Commercial Solutions & Services Showcase */}
@@ -292,9 +293,9 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
           <AboutImpact onInquire={handleOpenInquiry} />
 
           {/* Sidebar Widget Strip */}
-          <WidgetStrip 
-            topStories={topStories} 
-            popularStories={popularStories} 
+          <WidgetStrip
+            topStories={topStories}
+            popularStories={popularStories}
           />
         </>
       )}

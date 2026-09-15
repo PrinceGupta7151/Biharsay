@@ -100,6 +100,9 @@ function SideItem({ story }: { story: Story }) {
         <h4 className={styles.sideTitle}>
           <Link href={`/article/${story.id}`}>{story.title}</Link>
         </h4>
+        {story.summary && (
+          <p className={styles.sideSummary}>{story.summary}</p>
+        )}
         <div className={styles.sideMeta}>
           <span>{story.author}</span>
           {story.date && <span>· {story.date}</span>}

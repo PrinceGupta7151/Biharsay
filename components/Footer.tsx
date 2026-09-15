@@ -54,9 +54,9 @@ export default function Footer() {
                 <MessageCircle size={15} color="#25D366" />
                 <div>
                   <span className={styles.contactLabel}>WhatsApp Support &amp; Editorial</span>
-                  <a 
-                    href="https://wa.me/918050083233" 
-                    target="_blank" 
+                  <a
+                    href="https://wa.me/918050083233"
+                    target="_blank"
                     rel="noreferrer noopener"
                     className={styles.whatsappLink}
                     title="Chat on WhatsApp"
@@ -90,10 +90,10 @@ export default function Footer() {
             </span>
           </div>
           <div className={styles.socialRow}>
-            <a 
-              href="https://wa.me/918050083233" 
-              target="_blank" 
-              rel="noreferrer noopener" 
+            <a
+              href="https://wa.me/918050083233"
+              target="_blank"
+              rel="noreferrer noopener"
               aria-label="WhatsApp"
               className={styles.whatsappSocial}
             >

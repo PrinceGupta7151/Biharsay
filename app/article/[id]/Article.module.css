@@ -211,9 +211,11 @@
   .container {
     padding: 20px 0 48px;
   }
+
   .communityCallout {
     padding: 20px 18px;
   }
+
   .relatedGrid {
     grid-template-columns: 1fr;
   }

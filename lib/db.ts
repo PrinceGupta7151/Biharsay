@@ -1,15 +1,15 @@
-import { 
-  collection, 
-  doc, 
-  getDocs, 
-  getDoc, 
-  setDoc, 
-  addDoc, 
-  query, 
-  where, 
-  orderBy, 
+﻿import {
+  collection,
+  doc,
+  getDocs,
+  getDoc,
+  setDoc,
+  addDoc,
+  query,
+  where,
+  orderBy,
   serverTimestamp,
-  updateDoc 
+  updateDoc
 } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from './firebase';
 import { INITIAL_STORIES } from '@/data/seedStories';
@@ -49,7 +49,6 @@ const PROTOTYPE_IMAGE_MAP: Record<string, string> = {
   'patna-high-tech-stadium': '/legacy-images/patna-indoor-sports-stadium.jpg',
   'bihar-makhana-boom-migration': '/legacy-images/WhatsApp-Image-2026-09-01-at-5.23.42-PM.jpeg',
   'bihar-say-community-milestone': '/legacy-images/bihar-say-community.jpg',
-  'user-story-4jPUG42kgNtRShfZNp5R': '/legacy-images/shahi-litchi-muzaffarpur.jpg',
   'user-story-FuTHCYIkVKvugbaonRdp': '/legacy-images/shahi-litchi-muzaffarpur.jpg',
   'sonpur-mela-special-trains': '/legacy-images/sonpur-mela-special-trains-travel.jpg',
   'sonpur-mela-2025-special-trains-full-list-timings-travel-guide': '/legacy-images/sonpur-mela-special-trains-travel.jpg',
@@ -67,19 +66,48 @@ INITIAL_STORIES.forEach(s => {
   }
 });
 
+export function cleanArticleContent(rawContent: string): string {
+  if (!rawContent) return '';
+
+  let html = rawContent;
+
+  // 1. Remove all data-start, data-end, data-section-id, data-turn-id and other data-* attributes
+  html = html.replace(/\s*data-[a-z\-]+="[^"]*"/gi, '');
+  html = html.replace(/\s*data-[a-z\-]+='[^']*'/gi, '');
+
+  // 2. Remove inline class and style attributes from scraped DOM elements
+  html = html.replace(/\s*class="[^"]*"/gi, '');
+  html = html.replace(/\s*style="[^"]*"/gi, '');
+
+  // 3. Convert markdown headers (## Header, ### Header) to HTML <h2> / <h3>
+  html = html.replace(/^###\s+(.+)$/gm, '<h3>$1</h3>');
+  html = html.replace(/^##\s+(.+)$/gm, '<h2>$1</h2>');
+  html = html.replace(/^#\s+(.+)$/gm, '<h1>$1</h1>');
+
+  // 4. Clean up self-closing br tags
+  html = html.replace(/<br\s*\/?>/gi, '<br />');
+
+  // 5. Wrap plain text paragraphs if no HTML wrapper tags are present
+  if (!/<(p|h1|h2|h3|h4|ul|ol|blockquote)/i.test(html)) {
+    const paras = html.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
+    html = paras.map(p => `<p>${p}</p>`).join('\n');
+  }
+
+  return html.trim();
+}
+
 export function sanitizeStory(story: Story): Story {
   if (!story) return story;
   let img = story.imageUrl || '';
 
   // 1. Resolve canonical local image by id or title
-  const canonical = 
+  const canonical =
     PROTOTYPE_IMAGE_MAP[story.id] ||
-    CANONICAL_IMAGE_MAP[story.id] || 
+    CANONICAL_IMAGE_MAP[story.id] ||
     (story.legacyId ? CANONICAL_IMAGE_MAP[String(story.legacyId)] : undefined) ||
     (story.title ? TITLE_IMAGE_MAP[normalizeTitle(story.title)] : undefined);
 
   if (canonical) {
-    // If the image is external, empty, or wrongly set to border pillars / LPG for other stories, enforce canonical
     if (
       !img ||
       img.startsWith('http://') ||
@@ -93,7 +121,6 @@ export function sanitizeStory(story: Story): Story {
     }
   }
 
-  // 2. Specific guard for Foxconn
   if (
     (story.id && story.id.includes('foxconn')) ||
     (story.title && story.title.toLowerCase().includes('foxconn'))
@@ -101,7 +128,6 @@ export function sanitizeStory(story: Story): Story {
     img = '/legacy-images/foxconn-electronics-manufacturing.jpg';
   }
 
-  // 3. Specific guard for Makhana stories: ensure authentic local Makhana image
   if (
     (story.id && story.id.toLowerCase().includes('makhana')) ||
     (story.title && story.title.toLowerCase().includes('makhana'))
@@ -111,7 +137,6 @@ export function sanitizeStory(story: Story): Story {
     }
   }
 
-  // 3b. Specific guard for Shahi Litchi stories: ensure authentic local Litchi image
   if (
     (story.id && story.id.toLowerCase().includes('litchi')) ||
     (story.title && (story.title.toLowerCase().includes('litchi') || story.title.toLowerCase().includes('shahi litchi')))
@@ -119,7 +144,6 @@ export function sanitizeStory(story: Story): Story {
     img = '/legacy-images/shahi-litchi-muzaffarpur.jpg';
   }
 
-  // 3c. Specific guard for Sonpur Mela stories: ensure authentic Sonpur Mela image
   if (
     (story.id && story.id.toLowerCase().includes('sonpur')) ||
     (story.title && story.title.toLowerCase().includes('sonpur'))
@@ -127,8 +151,7 @@ export function sanitizeStory(story: Story): Story {
     img = '/legacy-images/sonpur-mela-special-trains-travel.jpg';
   }
 
-  // 4. Prevent border pillar image from leaking into other stories
-  const isBorderPillarStory = 
+  const isBorderPillarStory =
     (story.id && (story.id.includes('border-pillar') || story.id.includes('5000'))) ||
     (story.title && story.title.toLowerCase().includes('border pillar'));
 
@@ -136,8 +159,7 @@ export function sanitizeStory(story: Story): Story {
     img = canonical || '/legacy-images/bihar-industrial-investment-growth.jpg';
   }
 
-  // 5. Prevent LPG crisis image from leaking into other stories
-  const isLpgStory = 
+  const isLpgStory =
     (story.id && (story.id.includes('lpg') || story.id.includes('एलपीजी') || story.id.includes('84'))) ||
     (story.title && (story.title.toLowerCase().includes('lpg') || story.title.includes('एलपीजी')));
 
@@ -145,12 +167,10 @@ export function sanitizeStory(story: Story): Story {
     img = canonical || PROTOTYPE_IMAGE_MAP[story.id] || '/legacy-images/bihar-industrial-investment-growth.jpg';
   }
 
-  // 6. Fallback for any other external URLs to local assets
   if (!img || img.includes('biharsay.com') || img.includes('images.unsplash.com')) {
     img = canonical || '/legacy-images/bihar-industrial-investment-growth.jpg';
   }
 
-  // 5. Broken image fallbacks
   for (const [broken, replacement] of Object.entries(BROKEN_IMG_MAP)) {
     if (img.includes(broken)) {
       img = replacement;
@@ -160,10 +180,10 @@ export function sanitizeStory(story: Story): Story {
 
   let title = story.title ? story.title.replace(/13[kK]/g, '15K').replace(/13,000/g, '15,000') : story.title;
   let summary = story.summary ? story.summary.replace(/13[kK]/g, '15K').replace(/13,000/g, '15,000') : story.summary;
-  let content = story.content;
+  let content = story.content ? cleanArticleContent(story.content) : story.content;
   if (title && title.toLowerCase().includes('litchi') && content) {
     content = content.replace(/mango and makhana clusters/gi, 'mango and regional horticulture clusters')
-                     .replace(/makhana/gi, 'horticulture');
+      .replace(/makhana/gi, 'horticulture');
   }
   return { ...story, title, summary, content, imageUrl: img };
 }
@@ -179,16 +199,16 @@ export async function getAllStories(): Promise<Story[]> {
       if (!snapshot.empty) {
         const rawStories = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Story));
         const stories = rawStories.map(sanitizeStory);
-        
+
         // Background sync to update any outdated Firestore image URLs with authentic media
         snapshot.docs.forEach(docSnap => {
           const raw = docSnap.data() as Story;
           const clean = sanitizeStory({ ...raw, id: docSnap.id });
           if (clean.imageUrl && clean.imageUrl !== raw.imageUrl && db) {
-            updateDoc(doc(db, STORIES_COLLECTION, docSnap.id), { imageUrl: clean.imageUrl }).catch(() => {});
+            updateDoc(doc(db, STORIES_COLLECTION, docSnap.id), { imageUrl: clean.imageUrl }).catch(() => { });
           }
         });
-        
+
         // Sort stories chronologically
         return stories.sort((a, b) => {
           const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
@@ -229,6 +249,17 @@ export async function seedFirestoreStories(): Promise<void> {
  * Get single story by ID.
  */
 export async function getStoryById(id: string): Promise<Story | null> {
+  const safeDecode = (str: string) => {
+    try {
+      return decodeURIComponent(str || '');
+    } catch {
+      return str || '';
+    }
+  };
+
+  const decodedId = safeDecode(id);
+  const normalize = (str: string) => safeDecode(str).toLowerCase().replace(/[^a-z0-9]/g, '');
+
   if (isFirebaseConfigured() && db) {
     try {
       const docRef = doc(db, STORIES_COLLECTION, id);
@@ -236,11 +267,25 @@ export async function getStoryById(id: string): Promise<Story | null> {
       if (snapshot.exists()) {
         return sanitizeStory({ id: snapshot.id, ...snapshot.data() } as Story);
       }
+      // Check with decodedId if exact id not found
+      if (decodedId !== id) {
+        const decodedDocRef = doc(db, STORIES_COLLECTION, decodedId);
+        const decodedSnapshot = await getDoc(decodedDocRef);
+        if (decodedSnapshot.exists()) {
+          return sanitizeStory({ id: decodedSnapshot.id, ...decodedSnapshot.data() } as Story);
+        }
+      }
     } catch (err) {
       console.warn(`Firestore getStoryById(${id}) fallback:`, err);
     }
   }
-  const found = INITIAL_STORIES.find(s => s.id === id);
+
+  const targetNorm = normalize(id);
+  const found = INITIAL_STORIES.find(s => {
+    if (s.id === id || s.id === decodedId) return true;
+    return normalize(s.id) === targetNorm;
+  });
+
   return found ? sanitizeStory(found) : null;
 }
 
@@ -352,7 +397,7 @@ export async function approveStorySubmission(submissionId: string): Promise<bool
  */
 export async function toggleBookmark(userId: string, storyId: string): Promise<boolean> {
   if (typeof window === 'undefined') return false;
-  
+
   // Local storage cache for instant UI feedback
   const storageKey = `biharsay_bookmarks_${userId}`;
   const raw = localStorage.getItem(storageKey);
@@ -504,8 +549,8 @@ export async function toggleStoryLike(storyId: string, userId: string): Promise<
       }
 
       const alreadyLiked = likedBy.includes(userId);
-      const updatedLikedBy = alreadyLiked 
-        ? likedBy.filter(id => id !== userId) 
+      const updatedLikedBy = alreadyLiked
+        ? likedBy.filter(id => id !== userId)
         : [...likedBy, userId];
       const updatedCount = alreadyLiked ? Math.max(0, likesCount - 1) : likesCount + 1;
 
@@ -531,7 +576,7 @@ export async function toggleStoryLike(storyId: string, userId: string): Promise<
   }
   const local = localReactions[storyId];
   const alreadyLiked = local.likedBy.includes(userId);
-  local.likedBy = alreadyLiked 
+  local.likedBy = alreadyLiked
     ? local.likedBy.filter(id => id !== userId)
     : [...local.likedBy, userId];
   local.likesCount = alreadyLiked ? Math.max(0, local.likesCount - 1) : local.likesCount + 1;
