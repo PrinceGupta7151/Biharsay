@@ -1,4 +1,15 @@
-﻿import { Story, CategoryMeta } from '@/types';
+import { Story } from '@/types';
+
+export interface CategoryMeta {
+  slug: string;
+  name: string;
+  tagline?: string;
+  subtitle?: string;
+  iconName?: string;
+  accentColor?: string;
+  dotClass?: string;
+  color?: string;
+}
 
 export const CATEGORIES: CategoryMeta[] = [
   {

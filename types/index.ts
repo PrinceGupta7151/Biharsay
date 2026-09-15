@@ -9,9 +9,23 @@ export type CategorySlug =
 export interface CategoryInfo {
   slug: CategorySlug;
   name: string;
-  subtitle: string;
-  dotClass: string;
-  color: string;
+  subtitle?: string;
+  tagline?: string;
+  dotClass?: string;
+  color?: string;
+  iconName?: string;
+  accentColor?: string;
+}
+
+export interface CategoryMeta {
+  slug: CategorySlug;
+  name: string;
+  tagline?: string;
+  subtitle?: string;
+  iconName?: string;
+  accentColor?: string;
+  dotClass?: string;
+  color?: string;
 }
 
 export interface Story {
@@ -19,10 +33,10 @@ export interface Story {
   title: string;
   summary?: string;
   content?: string;
-  category: string;
+  category?: string;
   categorySlug: CategorySlug;
-  date: string;
-  author: string;
+  date?: string;
+  author?: string;
   imageUrl?: string;
   isLead?: boolean;
   isFeatured?: boolean;
@@ -31,6 +45,19 @@ export interface Story {
   views?: number;
   legacyId?: number;
   createdAt?: string;
+
+  // Additional fields from seed stories & scrapers
+  publishedDate?: string;
+  readingTimeMinutes?: number;
+  authorName?: string;
+  categoryName?: string;
+  likesCount?: number;
+  viewsCount?: number;
+  url?: string;
+  isHero?: boolean;
+  isTrending?: boolean;
+  isEditorPick?: boolean;
+  [key: string]: any;
 }
 
 export interface UserProfile {
