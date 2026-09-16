@@ -17,16 +17,7 @@ export interface CategoryInfo {
   accentColor?: string;
 }
 
-export interface CategoryMeta {
-  slug: CategorySlug | string;
-  name: string;
-  tagline?: string;
-  subtitle?: string;
-  iconName?: string;
-  accentColor?: string;
-  dotClass?: string;
-  color?: string;
-}
+export type CategoryMeta = CategoryInfo;
 
 export interface Story {
   id: string;

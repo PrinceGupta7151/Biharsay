@@ -127,8 +127,8 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
         story.title.toLowerCase().includes(q) ||
         (story.summary && story.summary.toLowerCase().includes(q)) ||
         (story.content && story.content.toLowerCase().includes(q)) ||
-        story.author.toLowerCase().includes(q) ||
-        story.category.toLowerCase().includes(q);
+        (story.author && story.author.toLowerCase().includes(q)) ||
+        (story.category && story.category.toLowerCase().includes(q));
 
       return matchesCategory && matchesQuery;
     });
