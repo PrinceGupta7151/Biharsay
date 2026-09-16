@@ -84,15 +84,30 @@ export function cleanArticleContent(rawContent: string): string {
     .replace(/\b(\w+)\?\?\?s\b/gi, "$1's") // fixes "Bihar???s" -> "Bihar's"
     .replace(/\?\?\?/g, '—');
 
-  // 2. Decode escaped HTML entities if present (&lt;strong...&gt;)
-  if (text.includes('&lt;') && text.includes('&gt;')) {
+  // 2. Comprehensive HTML Entity Decoding (handles single, double, and numeric escaping like &amp;lt;h1&amp;gt;)
+  for (let pass = 0; pass < 4; pass++) {
+    if (!/&(?:amp|lt|gt|quot|apos|#39|#x27|nbsp|#8211|#8212|#8216|#8217|#8220|#8221|#038|#\d+|#x[0-9a-fA-F]+);/i.test(text) &&
+        !/&lt;|&gt;|&amp;/i.test(text)) {
+      break;
+    }
     text = text
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&quot;/g, '"')
-      .replace(/&#39;/g, "'")
-      .replace(/&apos;/g, "'")
-      .replace(/&amp;/g, '&');
+      .replace(/&amp;/gi, '&')
+      .replace(/&lt;/gi, '<')
+      .replace(/&gt;/gi, '>')
+      .replace(/&quot;/gi, '"')
+      .replace(/&#39;/gi, "'")
+      .replace(/&#x27;/gi, "'")
+      .replace(/&apos;/gi, "'")
+      .replace(/&nbsp;/gi, ' ')
+      .replace(/&#8211;/g, '–')
+      .replace(/&#8212;/g, '—')
+      .replace(/&#8216;/g, '‘')
+      .replace(/&#8217;/g, '’')
+      .replace(/&#8220;/g, '“')
+      .replace(/&#8221;/g, '”')
+      .replace(/&#038;/g, '&')
+      .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)))
+      .replace(/&#x([0-9a-fA-F]+);/gi, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
   }
 
   // 3. Strip scraper tracking/chunk attributes like data-start="123", data-end="456", data-is-last-node, etc.
@@ -109,7 +124,7 @@ export function cleanArticleContent(rawContent: string): string {
   text = text.replace(/^[ \t]*####[ \t]+(.+)$/gm, '<h4>$1</h4>');
   text = text.replace(/^[ \t]*###[ \t]+(.+)$/gm, '<h3>$1</h3>');
   text = text.replace(/^[ \t]*##[ \t]+(.+)$/gm, '<h2>$1</h2>');
-  text = text.replace(/^[ \t]*#[ \t]+(.+)$/gm, '<h1>$1</h1>');
+  text = text.replace(/^[ \t]*#[ \t]+(.+)$/gm, '<h2>$1</h2>');
 
   // 7. Convert markdown bold and italic if raw
   text = text.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
@@ -119,7 +134,10 @@ export function cleanArticleContent(rawContent: string): string {
   text = text.replace(/<br\s*\/?>/gi, '<br />');
   text = text.replace(/<(p|div|span)[^>]*>\s*<\/\1>/gi, '');
 
-  // 9. Ensure proper semantic paragraph wrapping
+  // 9. Convert any redundant <h1> tags in body to <h2> so page title <h1> remains unique
+  text = text.replace(/<h1(\s*|>)/gi, '<h2$1').replace(/<\/h1>/gi, '</h2>');
+
+  // 10. Ensure proper semantic paragraph wrapping
   const blocks = text.split(/\n\s*\n+/).map(b => b.trim()).filter(Boolean);
   const formattedBlocks = blocks.map(block => {
     // If block is already a block-level HTML element, keep as is
