@@ -18,7 +18,7 @@ export interface CategoryInfo {
 }
 
 export interface CategoryMeta {
-  slug: CategorySlug;
+  slug: CategorySlug | string;
   name: string;
   tagline?: string;
   subtitle?: string;
