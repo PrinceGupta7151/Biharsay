@@ -89,11 +89,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <div className={styles.bylineRow}>
             <div className={styles.authorInfo}>
               <div className={styles.authorAvatar}>
-                {story.author.charAt(0).toUpperCase()}
+                {(story.author || 'Bihar Say').charAt(0).toUpperCase()}
               </div>
               <div>
-                <div className={styles.authorName}>{story.author}</div>
-                <div className={styles.publishDate}>Published {story.date}</div>
+                <div className={styles.authorName}>{story.author || 'Bihar Say'}</div>
+                {story.date && <div className={styles.publishDate}>Published {story.date}</div>}
               </div>
             </div>
           </div>
