@@ -17,7 +17,10 @@ import BusinessInquiryModal from './BusinessInquiryModal';
 import NewsletterStrip from './NewsletterStrip';
 import GoogleAdSlot from './GoogleAdSlot';
 import PartnerBrandsTicker from './PartnerBrandsTicker';
+import RecentPostsSection from './RecentPostsSection';
 import MsmeCommunityBanner from './MsmeCommunityBanner';
+import { hasValidImage } from '@/lib/imageUtils';
+import Link from 'next/link';
 import { Sparkles, FileSearch, ArrowRight } from 'lucide-react';
 
 interface HomeFeedProps {
@@ -50,7 +53,7 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
         if (el) {
           const headerOffset = 84;
           const elementPosition = el.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
           window.scrollTo({
             top: Math.max(0, offsetPosition),
@@ -136,25 +139,86 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
 
   const isFiltering = Boolean(searchQuery.trim() || selectedCategory !== 'all');
 
-  // Community spotlight stories
-  const communityStories = useMemo(() => {
-    return initialStories.filter(s => s.id.startsWith('user-story') || s.id.startsWith('local'));
+  // Split all stories into two groups per requirement:
+  // articlesWithImages -> Existing image cards
+  // articlesWithoutImages -> Title-only "Recent Posts" list
+  const articlesWithImages = useMemo(() => {
+    return initialStories.filter((story) => hasValidImage(story));
   }, [initialStories]);
 
-  // Featured story for hero
-  const featuredStory = initialStories.find(s => s.isFeatured) || initialStories[0];
-  const sideStories = initialStories
-    .filter(s => s.featuredOrder !== undefined)
-    .sort((a, b) => (a.featuredOrder || 0) - (b.featuredOrder || 0))
-    .slice(0, 3);
+  const articlesWithoutImages = useMemo(() => {
+    return initialStories.filter((story) => !hasValidImage(story));
+  }, [initialStories]);
 
-  // Group stories by category slug
-  const getCategoryStories = (slug: CategorySlug) => initialStories.filter(s => s.categorySlug === slug);
-  const getCategoryMeta = (slug: CategorySlug) => CATEGORIES.find(c => c.slug === slug)!;
+  // Community spotlight stories with valid images
+  const communityStories = useMemo(() => {
+    return articlesWithImages.filter((s) => s.id.startsWith('user-story') || s.id.startsWith('local'));
+  }, [articlesWithImages]);
+
+  // Featured story for hero - prefers article with valid image, falls back safely
+  const featuredStory = useMemo(() => {
+    return (
+      articlesWithImages.find((s) => s.isFeatured) ||
+      articlesWithImages[0] ||
+      initialStories.find((s) => s.isFeatured) ||
+      initialStories[0]
+    );
+  }, [articlesWithImages, initialStories]);
+
+  const sideStories = useMemo(() => {
+    const pool = articlesWithImages.length >= 4 ? articlesWithImages : initialStories;
+    const customSide = pool
+      .filter((s) => s.featuredOrder !== undefined && s.id !== featuredStory?.id)
+      .sort((a, b) => (a.featuredOrder || 0) - (b.featuredOrder || 0))
+      .slice(0, 3);
+    if (customSide.length > 0) return customSide;
+    return pool.filter((s) => s.id !== featuredStory?.id).slice(0, 3);
+  }, [articlesWithImages, initialStories, featuredStory]);
+
+  // Set of story IDs featured in Hero to prevent repeating them immediately in categories
+  const heroStoryIds = useMemo(() => {
+    const ids = new Set<string>();
+    if (featuredStory?.id) ids.add(featuredStory.id);
+    sideStories.forEach((s) => {
+      if (s?.id) ids.add(s.id);
+    });
+    return ids;
+  }, [featuredStory, sideStories]);
+
+  // Group stories by category slug, strictly using articlesWithImages
+  const getCategoryStories = (slug: CategorySlug) => {
+    const categoryArticles = articlesWithImages.filter((s) => s.categorySlug === slug);
+    const filtered = categoryArticles.filter((s) => !heroStoryIds.has(s.id));
+    return filtered.length > 0 ? filtered : categoryArticles;
+  };
+
+  const getCategoryMeta = (slug: CategorySlug) => CATEGORIES.find((c) => c.slug === slug)!;
+
+  // Non-hero stories for widgets
+  const nonHeroStories = useMemo(() => {
+    const rest = articlesWithImages.filter((s) => !heroStoryIds.has(s.id));
+    return rest.length > 0 ? rest : articlesWithImages;
+  }, [articlesWithImages, heroStoryIds]);
 
   // Top & popular entries for widgets
-  const topStories = [...initialStories].sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 4);
-  const popularStories = [...initialStories].slice(0, 5);
+  const topStories = useMemo(() => {
+    return [...nonHeroStories].sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 4);
+  }, [nonHeroStories]);
+
+  const popularStories = useMemo(() => {
+    return [...nonHeroStories].slice(0, 5);
+  }, [nonHeroStories]);
+
+  // When filtering or searching, partition matching stories:
+  // 1. Articles WITH image -> Image card
+  // 2. Articles WITHOUT image -> Title only bullet list
+  const searchResultsWithImages = useMemo(() => {
+    return filteredStories.filter((story) => hasValidImage(story));
+  }, [filteredStories]);
+
+  const searchResultsWithoutImages = useMemo(() => {
+    return filteredStories.filter((story) => !hasValidImage(story));
+  }, [filteredStories]);
 
   return (
     <>
@@ -167,15 +231,84 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
         isFiltering={isFiltering}
       />
 
-
-
       {isFiltering ? (
         <section style={{ padding: '16px 0 64px' }}>
           {filteredStories.length > 0 ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}>
-              {filteredStories.map((story) => (
-                <StoryCard key={story.id} story={story} />
-              ))}
+            <div>
+              {/* 1. Articles WITH valid image -> Existing search card design */}
+              {searchResultsWithImages.length > 0 && (
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+                  gap: '24px',
+                  marginBottom: searchResultsWithoutImages.length > 0 ? '40px' : '0',
+                }}>
+                  {searchResultsWithImages.map((story) => (
+                    <StoryCard key={story.id} story={story} />
+                  ))}
+                </div>
+              )}
+
+              {/* 2. Articles WITHOUT image -> Simple title-only list */}
+              {searchResultsWithoutImages.length > 0 && (
+                <div style={{
+                  marginTop: searchResultsWithImages.length > 0 ? '32px' : '0',
+                  padding: '24px',
+                  background: 'var(--bg-subtle, #F9FAFB)',
+                  borderRadius: 'var(--radius-lg, 12px)',
+                  border: '1px solid var(--line, #E5E7EB)',
+                }}>
+                  <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <h3 style={{
+                      fontSize: '18px',
+                      fontWeight: 700,
+                      color: 'var(--ink, #111827)',
+                      margin: 0,
+                    }}>
+                      Articles & Updates
+                    </h3>
+                    <span style={{
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      background: 'var(--bg-card, #FFFFFF)',
+                      padding: '2px 8px',
+                      borderRadius: '9999px',
+                      border: '1px solid var(--line, #E5E7EB)',
+                      color: 'var(--ink-muted, #6B7280)',
+                    }}>
+                      {searchResultsWithoutImages.length}
+                    </span>
+                  </div>
+
+                  <ul style={{
+                    listStyle: 'none',
+                    padding: 0,
+                    margin: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px',
+                  }}>
+                    {searchResultsWithoutImages.map((story) => (
+                      <li key={story.id} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                        <span style={{ color: 'var(--primary, #2563EB)', fontSize: '18px', lineHeight: 1.4, flexShrink: 0 }}>•</span>
+                        <Link
+                          href={`/article/${story.id}`}
+                          style={{
+                            color: 'var(--ink, #1F2937)',
+                            fontSize: '15px',
+                            fontWeight: 500,
+                            lineHeight: 1.5,
+                            textDecoration: 'none',
+                            wordBreak: 'break-word',
+                          }}
+                        >
+                          {story.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           ) : (
             <div style={{
@@ -208,7 +341,7 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
           {/* Top Picks Hero */}
           <HeroPicks
             featuredStory={featuredStory}
-            sideStories={sideStories.length > 0 ? sideStories : initialStories.slice(1, 4)}
+            sideStories={sideStories}
           />
 
           {/* Associated Brands Moving Ticker (Infinite Banner) */}
@@ -282,6 +415,9 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
             category={getCategoryMeta('investments-economic')}
             stories={getCategoryStories('investments-economic')}
           />
+
+          {/* Title-Only "Recent Posts" Section for Articles Without Valid Images */}
+          <RecentPostsSection stories={articlesWithoutImages} />
 
           {/* Commercial Solutions & Services Showcase */}
           <ServicesShowcase onInquire={handleOpenInquiry} />

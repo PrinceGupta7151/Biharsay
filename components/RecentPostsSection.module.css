@@ -1,0 +1,123 @@
+.section {
+  padding: 32px 0 48px;
+  border-top: 1px solid var(--line, #E5E7EB);
+  margin-top: 24px;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.titleWrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ink, #111827);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.badge {
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--bg-subtle, #F3F4F6);
+  color: var(--ink-muted, #6B7280);
+  padding: 3px 10px;
+  border-radius: 9999px;
+  border: 1px solid var(--line, #E5E7EB);
+}
+
+.sub {
+  font-size: 14px;
+  color: var(--ink-muted, #6B7280);
+  margin-top: 4px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 32px;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line-subtle, rgba(0, 0, 0, 0.05));
+}
+
+.bullet {
+  color: var(--primary, #2563EB);
+  font-size: 18px;
+  line-height: 1.4;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.link {
+  color: var(--ink, #1F2937);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-decoration: none;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  transition: color 0.15s ease;
+}
+
+.link:hover {
+  color: var(--primary, #2563EB);
+  text-decoration: underline;
+}
+
+.actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.viewAllBtn {
+  background: var(--bg-card, #FFFFFF);
+  color: var(--ink, #1F2937);
+  border: 1px solid var(--line, #E5E7EB);
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.viewAllBtn:hover {
+  border-color: var(--primary, #2563EB);
+  color: var(--primary, #2563EB);
+  background: var(--bg-subtle, #F8FAFC);
+}
+
+@media (max-width: 768px) {
+  .list {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .link {
+    font-size: 14.5px;
+  }
+}

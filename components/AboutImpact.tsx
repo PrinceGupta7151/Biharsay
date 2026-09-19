@@ -166,6 +166,7 @@ export default function AboutImpact({ onInquire }: AboutImpactProps) {
                 height={116}
                 priority
                 className={styles.avatarImg}
+                style={{ width: 'auto', height: 'auto' }}
               />
             </div>
             <div className={styles.verifiedDot} title="Verified Founder">

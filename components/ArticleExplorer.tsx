@@ -260,28 +260,38 @@ export default function ArticleExplorer({ articles }: ArticleExplorerProps) {
 
 
 function getArticleImage(article: ArticleItem): string {
-  if (article.imageUrl && !article.imageUrl.includes('placeholder') && !article.imageUrl.startsWith('http://') && !article.imageUrl.startsWith('https://')) {
+  if (article.imageUrl && article.imageUrl.startsWith('/legacy-images/')) {
     return article.imageUrl;
   }
-  if (article.featuredImage) return article.featuredImage;
-
   const id = (article.id || '').toLowerCase();
   const title = (article.title || '').toLowerCase();
 
-  if (id.includes('prime-group') || title.includes('prime group')) return 'https://biharsay.com/wp-content/uploads/2026/09/Bihar-Say-Website-3.png';
-  if (id.includes('adani') || title.includes('adani') || title.includes('bhagalpur')) return '/legacy-images/bhagalpur-power-plant-adani.jpg';
-  if (id.includes('result') || title.includes('result') || title.includes('10th') || title.includes('exam')) return '/legacy-images/bpsc-prelims-results-examination.jpg';
-  if (id.includes('cleanest-air') || title.includes('cleanest air') || title.includes('aqi') || title.includes('munger')) return '/legacy-images/bihar-industrial-investment-growth.jpg';
-  if (id.includes('deled') || title.includes('deled') || title.includes('admission')) return '/legacy-images/bihar-skill-university-campus.jpg';
-  if (id.includes('flight') || id.includes('airport') || title.includes('flight') || title.includes('patna')) return '/legacy-images/patna-airport-diwali-chhath-flights.jpg';
-  if (id.includes('satellite') || title.includes('satellite') || title.includes('urban')) return '/legacy-images/bihar-new-satellite-cities-urban.jpg';
-  if (id.includes('litchi') || title.includes('litchi')) return '/legacy-images/shahi-litchi-muzaffarpur.jpg';
   if (id.includes('makhana') || title.includes('makhana')) return '/legacy-images/WhatsApp-Image-2026-09-01-at-5.23.42-PM.jpeg';
-  if (id.includes('foxconn') || title.includes('foxconn')) return '/legacy-images/foxconn-electronics-manufacturing.jpg';
-  if (id.includes('stadium') || title.includes('stadium')) return '/legacy-images/patna-indoor-sports-stadium.jpg';
-  if (id.includes('crore') || title.includes('crore') || title.includes('investment')) return '/legacy-images/bihar-industrial-investment-growth.jpg';
+  if (id.includes('deled') || title.includes('deled') || title.includes('admission')) return '/legacy-images/WhatsApp-Image-2026-08-10-at-11.38.54-PM.jpeg';
+  if (id.includes('wheat') || title.includes('wheat')) return '/legacy-images/Bihar-Say-Website-8.png';
+  if (id.includes('solar') || title.includes('solar')) return '/legacy-images/Bihar-Say-Website-7.png';
+  if (id.includes('cleanest-air') || title.includes('cleanest air') || title.includes('munger')) return '/legacy-images/Bihar-Say-Website-6.png';
+  if (id.includes('result') || title.includes('result') || title.includes('10th')) return '/legacy-images/Bihar-Say-Website-4.png';
+  if (id.includes('flight') || title.includes('flight') || title.includes('international flights')) return '/legacy-images/Bihar-Say-Website-1.png';
+  if (id.includes('border-pillar') || title.includes('border pillar')) return '/legacy-images/Bihar-Say-Website.png';
+  if (id.includes('lpg') || title.includes('lpg') || title.includes('एलपीजी')) return '/legacy-images/Bihar-Say-Website-84.png';
+  if (id.includes('sportstar') || title.includes('sportstar')) return '/legacy-images/Bihar-Say-Website-82.png';
+  if (id.includes('kabaddi') || title.includes('kabaddi')) return '/legacy-images/Bihar-Say-Website-81.png';
+  if (id.includes('flood') || title.includes('flood') || id.includes('dbt')) return '/legacy-images/Bihar-Say-Website-80.png';
+  if (id.includes('sonepur') || title.includes('sonepur')) return '/legacy-images/Bihar-Say-Website-79.png';
+  if (id.includes('naxal') || title.includes('naxal')) return '/legacy-images/Bihar-Say-Website-78.png';
+  if (id.includes('sasaram') || title.includes('sasaram')) return '/legacy-images/Bihar-Say-Website-77.png';
+  if (id.includes('ai-growth') || title.includes('gcc') || title.includes('impact summit')) return '/legacy-images/Bihar-Say-Website-75.png';
+  if (id.includes('cement') || title.includes('cement') || title.includes('buxar')) return '/legacy-images/Bihar-Say-Website-74.png';
+  if (id.includes('kisan') || title.includes('kisan')) return '/legacy-images/Bihar-Say-Website-73.png';
+  if (id.includes('nalanda') || title.includes('buddhist')) return '/legacy-images/Bihar-Say-Website-72.png';
+  if (id.includes('bpsc') || title.includes('teacher') || title.includes('salary')) return '/legacy-images/Bihar-Say-Website-71.png';
+  if (id.includes('bus') || title.includes('bsrtc')) return '/legacy-images/Bihar-Say-Website-70.png';
+  if (id.includes('darbhanga') || title.includes('queen') || title.includes('maharani')) return '/legacy-images/Bihar-Say-Website-69.png';
+  if (id.includes('shivlinga') || title.includes('shivlinga') || title.includes('ramayan')) return '/legacy-images/Bihar-Say-Website-68.png';
+  if (id.includes('dubai') || title.includes('food festival')) return '/legacy-images/Bihar-Say-Website-67.png';
+  if (id.includes('bhumi') || title.includes('land verification') || title.includes('property')) return '/legacy-images/Bihar-Say-Website-66.png';
 
-  if (article.imageUrl) return article.imageUrl;
   return '/legacy-images/Bihar-Say-Website-3.png';
 }
 

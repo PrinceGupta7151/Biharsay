@@ -19,6 +19,18 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
     setMounted(true);
   }, []);
 
+  // Lock body scroll when mobile drawer is open to prevent background scrolling
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, slug: string) => {

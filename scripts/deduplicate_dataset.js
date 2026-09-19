@@ -9,13 +9,23 @@ function normalizeTitle(str) {
 }
 
 function deduplicateDataset() {
+  const srcJsonPath = path.join(__dirname, '..', 'src', 'data', 'articles.json');
   const jsonPath = path.join(__dirname, '..', 'data', 'articles.json');
   const seedPath = path.join(__dirname, '..', 'data', 'seedStories.ts');
 
-  if (!fs.existsSync(jsonPath)) return;
+  let rawArticles = [];
+  if (fs.existsSync(srcJsonPath)) {
+    rawArticles = JSON.parse(fs.readFileSync(srcJsonPath, 'utf8'));
+  }
+  if (!rawArticles.length && fs.existsSync(jsonPath)) {
+    rawArticles = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+  }
 
-  const rawArticles = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
-  console.log('Original articles.json count:', rawArticles.length);
+  if (!Array.isArray(rawArticles) || rawArticles.length === 0) {
+    console.error('[ERROR] No articles found. Aborting deduplication.');
+    return;
+  }
+  console.log('Original articles count:', rawArticles.length);
 
   // 1. Deduplicate articles.json by normalized title
   const uniqueArticlesMap = new Map();

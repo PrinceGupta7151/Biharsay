@@ -12,26 +12,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1.0,
     },
     {
+      url: `${baseUrl}/about-us`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
       url: `${baseUrl}/privacy-policy`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.5,
+      priority: 0.3,
     },
     {
       url: `${baseUrl}/terms-of-service`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.5,
+      priority: 0.3,
     },
   ];
 
   try {
     const stories = await getAllStories();
     const storyRoutes: MetadataRoute.Sitemap = stories.map((story) => ({
-      url: `${baseUrl}/#${story.categorySlug || 'stories'}`,
+      url: `${baseUrl}/article/${encodeURIComponent(story.id)}`,
       lastModified: story.createdAt ? new Date(story.createdAt) : new Date(),
       changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: story.isFeatured ? 0.9 : 0.7,
     }));
 
     return [...staticRoutes, ...storyRoutes];

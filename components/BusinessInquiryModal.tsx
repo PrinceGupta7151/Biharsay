@@ -6,12 +6,13 @@ import { saveBusinessInquiry } from '@/lib/db';
 import styles from './BusinessInquiryModal.module.css';
 
 export const BUSINESS_SERVICES = [
+  { id: 'startup-fundraising', label: 'Startup Fundraising & Investor Pitching', category: 'Capital & Investment' },
+  { id: 'founder-story', label: 'Feature My Brand / Founder Story', category: 'Editorial' },
+  { id: 'performance-marketing', label: 'Performance Marketing & Google Ads', category: 'Growth & Ads' },
+  { id: 'influencer-marketing', label: 'Influencer & Creator Marketing', category: 'Branding' },
   { id: 'makhana-sample', label: 'Makhana Sample (Bulk Buy)', category: 'Sourcing' },
   { id: 'banana-fibre', label: 'Banana Fibre Bags', category: 'Eco-Packaging' },
   { id: 'digital-standee', label: 'Digital Standee Display', category: 'Event & Retail Tech' },
-  { id: 'performance-marketing', label: 'Performance Marketing & Google Ads', category: 'Growth & Ads' },
-  { id: 'influencer-marketing', label: 'Influencer & Creator Marketing', category: 'Branding' },
-  { id: 'founder-story', label: 'Feature My Brand / Founder Story', category: 'Editorial' },
 ];
 
 interface BusinessInquiryModalProps {

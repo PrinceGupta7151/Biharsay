@@ -35,11 +35,19 @@ if (typeof window !== 'undefined') {
     db = getFirestore(app);
     googleProvider = new GoogleAuthProvider();
 
-    isSupported().then((supported) => {
-      if (supported) {
-        analytics = getAnalytics(app);
-      }
-    });
+    isSupported()
+      .then((supported) => {
+        if (supported) {
+          try {
+            analytics = getAnalytics(app);
+          } catch {
+            // Analytics blocked by client (e.g. ad-blocker)
+          }
+        }
+      })
+      .catch(() => {
+        // Analytics blocked or unsupported
+      });
   } catch (error) {
     console.error('Firebase client setup error:', error);
   }

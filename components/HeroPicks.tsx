@@ -15,6 +15,8 @@ interface HeroPicksProps {
 export default function HeroPicks({ featuredStory, sideStories }: HeroPicksProps) {
   const [mainImgError, setMainImgError] = React.useState(false);
 
+  if (!featuredStory) return null;
+
   return (
     <section className={styles.heroSection}>
       <div className="section-head">

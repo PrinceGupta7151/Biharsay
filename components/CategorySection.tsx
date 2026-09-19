@@ -48,7 +48,7 @@ export default function CategorySection({ category, stories }: CategorySectionPr
     if (el) {
       const headerOffset = 84;
       const elementPosition = el.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
       window.scrollTo({ top: Math.max(0, offsetPosition), behavior: 'smooth' });
     }
   };

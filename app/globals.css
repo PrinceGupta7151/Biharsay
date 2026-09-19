@@ -263,3 +263,20 @@ a, button, [role="button"], select {
   }
 }
 
+/* ---------- Accessibility: Focus-Visible ---------- */
+:focus-visible {
+  outline: 2px solid #2563EB;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Remove focus outline for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ---------- Text Selection ---------- */
+::selection {
+  background: #DBEAFE;
+  color: #0F172A;
+}

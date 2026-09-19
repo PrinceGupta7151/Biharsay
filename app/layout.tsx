@@ -11,6 +11,7 @@ import ScrollRevealInit from '@/components/ScrollRevealInit';
 import BackToTop from '@/components/BackToTop';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://biharsay.com'),
   title: 'Bihar Say — Inspiring Stories, Culture, Startups & Progress',
   description: 'Join over 15,000+ members and 8.5 Lakh+ monthly readers worldwide. Discover grassroots innovation, cultural pride, economic resurgence, and inspiring change across Bihar.',
   keywords: ['Bihar Say', 'Bihar News', 'Bihar Startups', 'Patna', 'Bihar Culture', 'Bihari Diaspora', 'Makhana', 'Neehar R'],
@@ -53,7 +54,7 @@ export default function RootLayout({
   const adsenseClientId = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT_ID;
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
       <body suppressHydrationWarning>
         {adsenseClientId && (
           <Script

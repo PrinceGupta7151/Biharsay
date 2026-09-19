@@ -33,6 +33,7 @@ export default function ReadingProgressBar() {
         zIndex: 9999,
         transition: 'width 0.1s ease-out',
         boxShadow: '0 0 10px rgba(37, 99, 235, 0.4)',
+        pointerEvents: 'none',
       }}
       role="progressbar"
       aria-valuenow={Math.round(progress)}

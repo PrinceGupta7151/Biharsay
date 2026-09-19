@@ -1,5 +1,26 @@
-import { Story, CategoryMeta } from '@/types';
-import rawArticles from '@/src/data/articles.json';
+const fs = require('fs');
+const path = require('path');
+
+const srcArticlesPath = path.join(__dirname, '..', 'src', 'data', 'articles.json');
+const destArticlesPath = path.join(__dirname, '..', 'data', 'articles.json');
+
+let raw = '';
+if (fs.existsSync(srcArticlesPath)) {
+  raw = fs.readFileSync(srcArticlesPath, 'utf8').replace(/^\uFEFF/, '');
+} else if (fs.existsSync(destArticlesPath)) {
+  raw = fs.readFileSync(destArticlesPath, 'utf8').replace(/^\uFEFF/, '');
+}
+
+const articles = JSON.parse(raw);
+if (!Array.isArray(articles) || articles.length === 0) {
+  console.error('[ERROR] articles.json is empty or invalid. Refusing to overwrite seedStories.ts!');
+  process.exit(1);
+}
+
+// Ensure data/articles.json is synced with src/data/articles.json
+fs.writeFileSync(destArticlesPath, JSON.stringify(articles, null, 2), 'utf8');
+
+const categoriesBlock = `import { Story, CategoryMeta } from '@/types';
 
 export const CATEGORIES: CategoryMeta[] = [
   {
@@ -46,27 +67,9 @@ export const CATEGORIES: CategoryMeta[] = [
   },
 ];
 
-export const INITIAL_STORIES: Story[] = (rawArticles as any[]).map((a) => ({
-  id: a.id,
-  legacyId: a.legacyId,
-  title: a.title,
-  summary: a.summary || '',
-  content: a.content || '',
-  category: a.category,
-  categorySlug: a.categorySlug,
-  date: a.date,
-  author: a.author || 'Bihar Say Desk',
-  imageUrl: a.imageUrl,
-  readTime: a.readTime || '4 min read',
-  views: a.views || 1000,
-  isFeatured: a.isFeatured ?? false,
-  publishedDate: a.publishedDate || a.date || '2026-01-01',
-  readingTimeMinutes: a.readingTimeMinutes || parseInt(a.readTime) || 4,
-  authorName: a.authorName || a.author || 'Bihar Say Desk',
-  categoryName: a.categoryName || a.category,
-  viewsCount: a.viewsCount || a.views || 1000,
-  likesCount: a.likesCount || 25,
-  isHero: a.isFeatured ?? false,
-  isTrending: true,
-  isEditorPick: true,
-}));
+`;
+
+const ts = categoriesBlock + `export const INITIAL_STORIES: Story[] = ${JSON.stringify(articles, null, 2)};\n`;
+fs.writeFileSync(path.join(__dirname, '..', 'data', 'seedStories.ts'), ts, 'utf8');
+console.log(`Done. Wrote ${articles.length} stories to seedStories.ts and data/articles.json (CATEGORIES preserved)`);
+

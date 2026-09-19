@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Newspaper, TrendingUp, Users, PackageCheck, Tv, ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Newspaper, TrendingUp, Users, PackageCheck, Tv, ArrowRight, Sparkles, CheckCircle2, CircleDollarSign } from 'lucide-react';
 import styles from './ServicesShowcase.module.css';
 
 interface ServiceCategory {
@@ -27,6 +27,16 @@ const SERVICES: ServiceCategory[] = [
     points: ['In-depth Founder Interview', 'Permanent SEO-indexed Article', 'WhatsApp & Social Broadcast'],
     metrics: 'Avg. 15,000+ Reads per Feature',
     popular: true,
+  },
+  {
+    id: 'fundraising',
+    inquiryId: 'startup-fundraising',
+    name: 'Startup Fundraising & Pitching',
+    tagline: 'Connect with angel investors, VC syndicates, and Bihar government seed grants & innovation funds.',
+    icon: CircleDollarSign,
+    accentColor: '#059669',
+    points: ['Pitch Deck & Valuation Advisory', 'Direct Intros to Angel Networks & VCs', 'Bihar Startup Policy Seed Fund Guidance'],
+    metrics: 'Seed to Series A & Govt Grants',
   },
   {
     id: 'performance',
@@ -90,7 +100,7 @@ export default function ServicesShowcase({ onInquire }: ServicesShowcaseProps) {
         </div>
         <h2>Services Designed to Scale Your Brand in Bihar</h2>
         <p className={styles.subtext}>
-          From founder story features and regional performance marketing to bulk agro-sourcing and digital display kiosks.
+          From founder story features and startup fundraising to regional performance marketing, bulk agro-sourcing, and digital display kiosks.
         </p>
 
         {/* Filter Pills */}

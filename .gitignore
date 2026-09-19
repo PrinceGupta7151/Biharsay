@@ -1,6 +1,26 @@
-﻿node_modules/
+node_modules/
 .next/
 out/
 .env
 .env.local
 .env.*.local
+
+# Large data migration & scraping artifacts (not needed in version control)
+biharsay_2025_articles.csv
+biharsay_2025_articles.json
+biharsay_raw.html
+complete_valid_articles.csv
+complete_valid_articles.json
+all_article_image_matches.json
+matched_article_images.json
+matched_articles.json
+scripts/live_stories.json
+scripts/thumbnail_audit_report.csv
+scripts/thumbnail_audit_report.json
+scripts/migration_log.txt
+
+# Scratch directories
+scratch/
+
+# Build artifacts
+tsconfig.tsbuildinfo
