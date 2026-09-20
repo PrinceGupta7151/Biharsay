@@ -77,7 +77,7 @@ const PROTOTYPE_IMAGE_MAP: Record<string, string> = {
   'bihar-gov-dbt-flood-relief': '/legacy-images/Bihar-Say-Website-80.png',
   'bihar-ai-growth-2026-gcc-policy': '/legacy-images/Bihar-Say-Website-75.png',
   'bihar-makhana-boom-migration': '/legacy-images/WhatsApp-Image-2026-09-01-at-5.23.42-PM.jpeg',
-  '17-year-old-ethical-hacker-from-bihar-enters-nasas-hall-of-fame': 'https://biharsay.com/wp-content/uploads/2025/05/Bihar-Say-Website-2025-05-30T142446.563.png',
+  '17-year-old-ethical-hacker-from-bihar-enters-nasas-hall-of-fame': '/legacy-images/Bihar-Say-Website-2025-05-30T142446.563.png',
 };
 
 function normalizeTitle(title: string): string {
