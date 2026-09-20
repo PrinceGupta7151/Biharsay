@@ -14,13 +14,31 @@
   font-weight: 700;
   color: var(--ink);
   letter-spacing: -0.01em;
+  display: flex;
+  align-items: baseline;
 }
 
 .brandTitle em {
-  font-style: italic;
-  color: var(--accent);
-  font-weight: 700;
+  font-style: normal;
+  color: #D97706;
+  background: linear-gradient(135deg, #FDD302 0%, #D97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
   margin-left: 2px;
+  position: relative;
+  display: inline-block;
+}
+
+.brandTitle em::after {
+  content: '';
+  position: absolute;
+  left: 1px;
+  bottom: -2px;
+  width: 95%;
+  height: 2px;
+  background: linear-gradient(90deg, #FDD302 0%, #F59E0B 80%, transparent 100%);
+  border-radius: 2px;
 }
 
 .closeBtn {

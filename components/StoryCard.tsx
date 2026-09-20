@@ -43,8 +43,8 @@ export default function StoryCard({ story, isLead = false, priority = false }: S
   return (
     <article className={`${styles.card} ${isLead ? styles.leadCard : ''}`}>
       {story.imageUrl && !imgError && (
-        <Link href={`/article/${story.id}`} className={styles.thumbLink}>
-          <div className={styles.thumb}>
+        <div className={styles.thumb}>
+          <Link href={`/article/${story.id}`} className={styles.thumbLink}>
             <Image
               src={story.imageUrl}
               alt={story.title || 'Article thumbnail'}
@@ -54,16 +54,16 @@ export default function StoryCard({ story, isLead = false, priority = false }: S
               className={styles.img}
               onError={() => setImgError(true)}
             />
-            <button
-              className={`${styles.bookmarkBtn} ${isSaved ? styles.saved : ''}`}
-              onClick={handleBookmarkClick}
-              aria-label={isSaved ? 'Remove Bookmark' : 'Save Story'}
-              title={isSaved ? 'Saved to your profile' : 'Save story'}
-            >
-              <Bookmark size={15} fill={isSaved ? 'currentColor' : 'none'} />
-            </button>
-          </div>
-        </Link>
+          </Link>
+          <button
+            className={`${styles.bookmarkBtn} ${isSaved ? styles.saved : ''}`}
+            onClick={handleBookmarkClick}
+            aria-label={isSaved ? 'Remove Bookmark' : 'Save Story'}
+            title={isSaved ? 'Saved to your profile' : 'Save story'}
+          >
+            <Bookmark size={15} fill={isSaved ? 'currentColor' : 'none'} />
+          </button>
+        </div>
       )}
 
       <div className={styles.body}>

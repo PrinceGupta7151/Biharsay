@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useAuth } from '@/context/AuthContext';
 import { X, Sparkles, PlusCircle, LogOut, Bookmark, User, Compass, MessageCircle, Mail } from 'lucide-react';
 import styles from './MobileNav.module.css';
@@ -34,9 +35,13 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
   if (!isOpen) return null;
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, slug: string) => {
+    e.preventDefault();
     onClose();
-    if (typeof window !== 'undefined' && window.location.pathname === '/') {
-      e.preventDefault();
+
+    const element = document.getElementById(slug);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    } else {
       if (slug === 'home') {
         window.dispatchEvent(new CustomEvent('biharsay:navigate', { detail: { slug: 'home' } }));
         window.history.pushState(null, '', '/');
@@ -51,8 +56,19 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.drawer} onClick={(e) => e.stopPropagation()}>
         <div className={styles.drawerHeader}>
-          <div className={styles.brand}>
-            Bihar<em>Say</em>
+          <div className={styles.brandWrapper}>
+            <span className={styles.logoMark}>
+              <Image
+                src="/logos/biharsay-icon.png"
+                alt="Bihar Say"
+                width={30}
+                height={30}
+                className={styles.logoImg}
+              />
+            </span>
+            <div className={styles.brand}>
+              Bihar<em>Say</em>
+            </div>
           </div>
           <button className={styles.closeBtn} onClick={onClose} aria-label="Close menu">
             <X size={22} />

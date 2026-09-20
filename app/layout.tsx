@@ -54,7 +54,7 @@ export default function RootLayout({
   const adsenseClientId = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT_ID;
 
   return (
-    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
+    <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
         {adsenseClientId && (
           <Script

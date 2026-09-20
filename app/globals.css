@@ -13,13 +13,16 @@
   --primary: #0F172A;
   --accent: #2563EB;
   --accent-light: #EFF6FF;
+  --brand-yellow: #FDD302;
+  --brand-yellow-glow: rgba(253, 211, 2, 0.35);
+  --brand-yellow-dark: #D97706;
   
   /* Backward-compatible variable aliases */
   --ivory: #FFFFFF;
   --ivory-deep: #F8FAFC;
   --indigo: #0F172A;
   --indigo-deep: #020617;
-  --marigold: #2563EB;
+  --marigold: #FDD302;
   --sindoor: #DC2626;
   --sage: #0D9488;
   --sky: #38BDF8;

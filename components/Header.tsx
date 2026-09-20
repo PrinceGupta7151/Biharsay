@@ -97,13 +97,12 @@ export default function Header() {
             >
               <span className={styles.logoMark}>
                 <Image
-                  src="/logos/biharsay.webp"
+                  src="/logos/biharsay-icon.png"
                   alt="Bihar Say Logo"
                   width={38}
                   height={38}
                   priority
                   className={styles.logoImg}
-                  style={{ width: 'auto', height: 'auto' }}
                 />
               </span>
               <span className={styles.brandTitle}>

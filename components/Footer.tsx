@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Mail, MapPin, Heart, Facebook, Instagram, Linkedin, Youtube, MessageCircle } from 'lucide-react';
 import styles from './Footer.module.css';
 
@@ -12,8 +13,19 @@ export default function Footer() {
         <div className={styles.grid}>
           {/* Column 1: About */}
           <div className={styles.about}>
-            <div className={styles.brandTitle}>
-              Bihar<em>Say</em>
+            <div className={styles.brandRow}>
+              <span className={styles.logoMark}>
+                <Image
+                  src="/logos/biharsay-icon.png"
+                  alt="Bihar Say Logo"
+                  width={34}
+                  height={34}
+                  className={styles.logoImg}
+                />
+              </span>
+              <div className={styles.brandTitle}>
+                Bihar<em>Say</em>
+              </div>
             </div>
             <p className={styles.aboutText}>
               Empowering Bihar and Biharis across the world with stories of innovation, cultural pride, economic resurgence, and inspiring change.

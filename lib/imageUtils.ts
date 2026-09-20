@@ -22,6 +22,8 @@ const KNOWN_BROKEN_PATTERNS = [
   '2025/10/Bihar-Say-Website-14.png',
   '2025/10/Bihar-Say-Website-10.png',
   '2025/10/Bihar-Say-Website-9.png',
+  '2025/10/Bihar-Say-Website-77.png',
+  '2025/10/Bihar-Say-Website-2.png',
 ];
 
 /**
@@ -34,7 +36,22 @@ const KNOWN_BROKEN_PATTERNS = [
  * - image is a placeholder / generic box
  */
 export function hasValidImage(article?: Partial<Story> | null): boolean {
-  if (!article || !article.imageUrl) return false;
+  if (!article) return false;
+
+  // Exclude cards with no image content or mismatched image
+  if (
+    article.id === '57-new-kendriya-vidyalayas-to-be-opened-most-of-them-in-bihar' ||
+    article.id === 'aiims-patna-hosts-breast-cancer-awareness-program-2025' ||
+    article.id === 'bihar-womans-memoir-becomes-lesson-in-kerala-textbook' ||
+    article.id === 'meet-the-man-behind-indias-first-transgender-police-officer' ||
+    article.id === 'cbse-bihar-2025-toppers-meet-the-class-10-12-heroes-who-made-the-state-proud' ||
+    article.id === 'patna-to-host-annual-film-festival-celebrating-regional-talent' ||
+    article.id === 'the-story-of-patwatoli-bihars-iit-factory-biharcast-exclusive'
+  ) {
+    return false;
+  }
+
+  if (!article.imageUrl) return false;
 
   const url = String(article.imageUrl).trim();
   if (!url || url === 'no_url' || url === 'null' || url === 'undefined' || url === '""') {

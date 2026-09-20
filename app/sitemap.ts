@@ -33,12 +33,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     const stories = await getAllStories();
-    const storyRoutes: MetadataRoute.Sitemap = stories.map((story) => ({
-      url: `${baseUrl}/article/${encodeURIComponent(story.id)}`,
-      lastModified: story.createdAt ? new Date(story.createdAt) : new Date(),
-      changeFrequency: 'weekly',
-      priority: story.isFeatured ? 0.9 : 0.7,
-    }));
+    const storyRoutes: MetadataRoute.Sitemap = stories.map((story) => {
+      let cleanId = story.id;
+      try {
+        cleanId = decodeURIComponent(story.id);
+      } catch {}
+      return {
+        url: `${baseUrl}/article/${encodeURIComponent(cleanId)}`,
+        lastModified: story.createdAt ? new Date(story.createdAt) : new Date(),
+        changeFrequency: 'weekly',
+        priority: story.isFeatured ? 0.9 : 0.7,
+      };
+    });
 
     return [...staticRoutes, ...storyRoutes];
   } catch (e) {

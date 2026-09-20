@@ -27,7 +27,24 @@ interface HomeFeedProps {
   initialStories: Story[];
 }
 
+const REMOVED_CARD_IDS = new Set<string>([
+  '57-new-kendriya-vidyalayas-to-be-opened-most-of-them-in-bihar',
+  'aiims-patna-hosts-breast-cancer-awareness-program-2025',
+  'bihar-womans-memoir-becomes-lesson-in-kerala-textbook',
+  'meet-the-man-behind-indias-first-transgender-police-officer',
+  'cbse-bihar-2025-toppers-meet-the-class-10-12-heroes-who-made-the-state-proud',
+  'patna-to-host-annual-film-festival-celebrating-regional-talent',
+  'the-story-of-patwatoli-bihars-iit-factory-biharcast-exclusive',
+  '%e2%82%b9686-cr-boost-for-bihars-youth-artists-from-internships-to-guru-shishya-yojana',
+  '₹686-cr-boost-for-bihars-youth-artists-from-internships-to-guru-shishya-yojana',
+  '686-cr-boost-for-bihars-youth-artists-from-internships-to-guru-shishya-yojana',
+]);
+
 export default function HomeFeed({ initialStories }: HomeFeedProps) {
+  const stories = useMemo(() => {
+    return initialStories.filter((s) => !REMOVED_CARD_IDS.has(s.id));
+  }, [initialStories]);
+
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CategorySlug | 'all'>('all');
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
@@ -117,7 +134,7 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
 
   // Filtered stories memoized for performance
   const filteredStories = useMemo(() => {
-    return initialStories.filter((story) => {
+    return stories.filter((story) => {
       const matchesCategory = selectedCategory === 'all' || story.categorySlug === selectedCategory;
       const q = searchQuery.toLowerCase().trim();
       if (!q) return matchesCategory;
@@ -135,7 +152,7 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
 
       return matchesCategory && matchesQuery;
     });
-  }, [initialStories, searchQuery, selectedCategory]);
+  }, [stories, searchQuery, selectedCategory]);
 
   const isFiltering = Boolean(searchQuery.trim() || selectedCategory !== 'all');
 
@@ -143,12 +160,12 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
   // articlesWithImages -> Existing image cards
   // articlesWithoutImages -> Title-only "Recent Posts" list
   const articlesWithImages = useMemo(() => {
-    return initialStories.filter((story) => hasValidImage(story));
-  }, [initialStories]);
+    return stories.filter((story) => hasValidImage(story));
+  }, [stories]);
 
   const articlesWithoutImages = useMemo(() => {
-    return initialStories.filter((story) => !hasValidImage(story));
-  }, [initialStories]);
+    return stories.filter((story) => !hasValidImage(story));
+  }, [stories]);
 
   // Community spotlight stories with valid images
   const communityStories = useMemo(() => {
@@ -160,20 +177,20 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
     return (
       articlesWithImages.find((s) => s.isFeatured) ||
       articlesWithImages[0] ||
-      initialStories.find((s) => s.isFeatured) ||
-      initialStories[0]
+      stories.find((s) => s.isFeatured) ||
+      stories[0]
     );
-  }, [articlesWithImages, initialStories]);
+  }, [articlesWithImages, stories]);
 
   const sideStories = useMemo(() => {
-    const pool = articlesWithImages.length >= 4 ? articlesWithImages : initialStories;
+    const pool = articlesWithImages.length >= 4 ? articlesWithImages : stories;
     const customSide = pool
       .filter((s) => s.featuredOrder !== undefined && s.id !== featuredStory?.id)
       .sort((a, b) => (a.featuredOrder || 0) - (b.featuredOrder || 0))
       .slice(0, 3);
     if (customSide.length > 0) return customSide;
     return pool.filter((s) => s.id !== featuredStory?.id).slice(0, 3);
-  }, [articlesWithImages, initialStories, featuredStory]);
+  }, [articlesWithImages, stories, featuredStory]);
 
   // Set of story IDs featured in Hero to prevent repeating them immediately in categories
   const heroStoryIds = useMemo(() => {
