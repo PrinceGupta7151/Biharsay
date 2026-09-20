@@ -88,3 +88,24 @@ export interface StoryReactions {
   likesCount: number;
   likedBy: string[];
 }
+
+export interface BusinessInquiry {
+  id?: string;
+  service: string;
+  name?: string;
+  email?: string;
+  phone?: string;
+  company?: string;
+  message?: string;
+  budget?: string;
+  createdAt: string;
+  status: 'new' | 'contacted' | 'resolved';
+}
+
+export interface NewsletterSubscriber {
+  id?: string;
+  contact: string;
+  channel: 'email' | 'whatsapp';
+  subscribedAt: string;
+}
+
