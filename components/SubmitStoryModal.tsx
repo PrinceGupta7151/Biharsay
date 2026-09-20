@@ -2,20 +2,46 @@
 
 import React, { useState, useRef } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { submitStory } from '@/lib/db';
+import { submitStory, cleanArticleContent } from '@/lib/db';
 import { uploadStoryThumbnail } from '@/lib/storage';
 import { CATEGORIES } from '@/data/seedStories';
 import { CategorySlug } from '@/types';
-import { X, Send, CheckCircle, UploadCloud, ImageIcon, Trash2 } from 'lucide-react';
+import { 
+  X, 
+  Send, 
+  CheckCircle, 
+  UploadCloud, 
+  Trash2, 
+  Type, 
+  Bold, 
+  Italic, 
+  Underline, 
+  Quote, 
+  Heading1, 
+  Heading2, 
+  List, 
+  Eye, 
+  Edit3,
+  Sparkles
+} from 'lucide-react';
 import styles from './SubmitStoryModal.module.css';
 
 interface SubmitStoryModalProps {
   onStorySubmitted?: () => void;
 }
 
+const FONT_OPTIONS = [
+  { label: 'Modern Sans (Outfit / Inter)', value: "'Inter', -apple-system, sans-serif" },
+  { label: 'Editorial Serif (Playfair Display)', value: "'Playfair Display', Georgia, serif" },
+  { label: 'Hindi / Devanagari (Noto Sans)', value: "'Noto Sans Devanagari', 'Mangal', sans-serif" },
+  { label: 'Literary (Merriweather / Georgia)', value: "'Merriweather', Georgia, serif" },
+  { label: 'Monospace (Code / Data)', value: "Consolas, 'Courier New', monospace" },
+];
+
 export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalProps) {
   const { isSubmitModalOpen, closeSubmitModal, user } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
 
   const [title, setTitle] = useState('');
   const [categorySlug, setCategorySlug] = useState<CategorySlug>('culture-heritage');
@@ -26,6 +52,8 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedFont, setSelectedFont] = useState(FONT_OPTIONS[0].value);
+  const [editorTab, setEditorTab] = useState<'write' | 'preview'>('write');
 
   if (!isSubmitModalOpen) return null;
 
@@ -61,6 +89,79 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
     }
   };
 
+  const applyFontToSelection = (fontValue: string) => {
+    setSelectedFont(fontValue);
+    const textarea = contentRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selected = content.slice(start, end);
+
+    if (selected) {
+      const replacement = `<span style="font-family: ${fontValue};">${selected}</span>`;
+      const newContent = content.slice(0, start) + replacement + content.slice(end);
+      setContent(newContent);
+    } else {
+      const fontName = FONT_OPTIONS.find(f => f.value === fontValue)?.label.split(' ')[0] || 'Styled';
+      const replacement = `\n<p style="font-family: ${fontValue};">Write ${fontName} text here...</p>\n`;
+      const newContent = content.slice(0, start) + replacement + content.slice(end);
+      setContent(newContent);
+    }
+    setTimeout(() => textarea.focus(), 50);
+  };
+
+  const applyTagFormat = (tag: 'h1' | 'h2' | 'quote' | 'b' | 'i' | 'u' | 'list') => {
+    const textarea = contentRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selected = content.slice(start, end);
+
+    let replacement = '';
+    const fontStyle = ` style="font-family: ${selectedFont};"`;
+
+    switch (tag) {
+      case 'h1':
+        replacement = selected 
+          ? `<h1${fontStyle}>${selected}</h1>` 
+          : `\n<h1${fontStyle}>Main Section Title</h1>\n`;
+        break;
+      case 'h2':
+        replacement = selected 
+          ? `<h2${fontStyle}>${selected}</h2>` 
+          : `\n<h2${fontStyle}>Subheading Title</h2>\n`;
+        break;
+      case 'quote':
+        replacement = selected 
+          ? `<blockquote${fontStyle}>${selected}</blockquote>` 
+          : `\n<blockquote${fontStyle}>“Inspiring quote or key takeaway...”</blockquote>\n`;
+        break;
+      case 'b':
+        replacement = selected ? `<strong>${selected}</strong>` : `<strong>bold text</strong>`;
+        break;
+      case 'i':
+        replacement = selected ? `<em>${selected}</em>` : `<em>italic text</em>`;
+        break;
+      case 'u':
+        replacement = selected ? `<u>${selected}</u>` : `<u>underlined text</u>`;
+        break;
+      case 'list':
+        replacement = selected 
+          ? `\n<ul>\n  <li>${selected}</li>\n</ul>\n` 
+          : `\n<ul>\n  <li>Key point 1</li>\n  <li>Key point 2</li>\n</ul>\n`;
+        break;
+    }
+
+    const newContent = content.slice(0, start) + replacement + content.slice(end);
+    setContent(newContent);
+
+    setTimeout(() => {
+      textarea.focus();
+    }, 50);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !content.trim()) {
@@ -77,12 +178,13 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
     try {
       let imageUrl: string | undefined = undefined;
 
-      // Upload thumbnail to Firebase Storage if selected
+      // Upload/compress thumbnail
       if (thumbnailFile) {
         imageUrl = await uploadStoryThumbnail(thumbnailFile);
       }
 
-      await submitStory({
+      // Safe timeout guard so the submission never stays stuck indefinitely
+      const submissionPromise = submitStory({
         title: title.trim(),
         category: categoryName,
         categorySlug,
@@ -92,6 +194,12 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
         userId: user?.uid,
         imageUrl,
       });
+
+      const timeoutPromise = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('Submission connection timed out. Please check your internet and try again.')), 10000)
+      );
+
+      await Promise.race([submissionPromise, timeoutPromise]);
 
       setSuccess(true);
       if (onStorySubmitted) {
@@ -105,7 +213,8 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
         closeSubmitModal();
       }, 2000);
     } catch (err: any) {
-      setError(err.message || 'Failed to submit story. Please try again.');
+      console.error('Submit story error:', err);
+      setError(err?.message || 'Failed to submit story. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -175,14 +284,140 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
             </div>
 
             <div className={styles.field}>
-              <label>Story Content *</label>
-              <textarea
-                rows={5}
-                placeholder="Write the details of the story, key figures, locations in Bihar, and impact..."
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                required
-              />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+                <label style={{ margin: 0 }}>Story Content & Typography *</label>
+                <div className={styles.tabSwitch}>
+                  <button
+                    type="button"
+                    className={`${styles.tabSwitchBtn} ${editorTab === 'write' ? styles.activeTab : ''}`}
+                    onClick={() => setEditorTab('write')}
+                  >
+                    <Edit3 size={11} style={{ marginRight: 4, display: 'inline' }} />
+                    Write
+                  </button>
+                  <button
+                    type="button"
+                    className={`${styles.tabSwitchBtn} ${editorTab === 'preview' ? styles.activeTab : ''}`}
+                    onClick={() => setEditorTab('preview')}
+                  >
+                    <Eye size={11} style={{ marginRight: 4, display: 'inline' }} />
+                    Preview
+                  </button>
+                </div>
+              </div>
+
+              <div className={styles.editorContainer}>
+                {/* Font & Formatting Toolbar */}
+                <div className={styles.editorToolbar}>
+                  <div className={styles.fontSelectGroup}>
+                    <Type size={13} style={{ color: '#0284C7' }} />
+                    <select
+                      className={styles.fontSelect}
+                      value={selectedFont}
+                      onChange={(e) => applyFontToSelection(e.target.value)}
+                      title="Choose font for current line or selected text"
+                    >
+                      {FONT_OPTIONS.map((f) => (
+                        <option key={f.value} value={f.value}>
+                          Font: {f.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className={styles.toolbarDivider} />
+
+                  <button
+                    type="button"
+                    className={styles.formatBtn}
+                    onClick={() => applyTagFormat('h1')}
+                    title="Heading 1 (Main Title)"
+                  >
+                    H1
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.formatBtn}
+                    onClick={() => applyTagFormat('h2')}
+                    title="Heading 2 (Sub-section)"
+                  >
+                    H2
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.formatBtn}
+                    onClick={() => applyTagFormat('quote')}
+                    title="Quote Block"
+                  >
+                    <Quote size={12} />
+                  </button>
+
+                  <div className={styles.toolbarDivider} />
+
+                  <button
+                    type="button"
+                    className={styles.formatBtn}
+                    onClick={() => applyTagFormat('b')}
+                    title="Bold"
+                  >
+                    <Bold size={12} />
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.formatBtn}
+                    onClick={() => applyTagFormat('i')}
+                    title="Italic"
+                  >
+                    <Italic size={12} />
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.formatBtn}
+                    onClick={() => applyTagFormat('u')}
+                    title="Underline"
+                  >
+                    <Underline size={12} />
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.formatBtn}
+                    onClick={() => applyTagFormat('list')}
+                    title="Bullet List"
+                  >
+                    <List size={12} />
+                  </button>
+                </div>
+
+                {editorTab === 'write' ? (
+                  <textarea
+                    ref={contentRef}
+                    className={styles.editorTextarea}
+                    rows={6}
+                    placeholder="Write your story details here. Highlight any sentence to change its font or apply H1/H2 headings..."
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    required
+                  />
+                ) : (
+                  <div className={styles.previewPanel}>
+                    {content.trim() ? (
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: cleanArticleContent(content),
+                        }}
+                      />
+                    ) : (
+                      <div className={styles.previewEmpty}>
+                        Start writing your story in the Write tab to see live preview with chosen fonts!
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+              <span className={styles.helperText}>
+                <Sparkles size={12} color="#D97706" />
+                Select any text or line and click a font or heading to style it individually.
+              </span>
             </div>
 
             {/* Thumbnail Upload Section */}

@@ -59,10 +59,10 @@ export function compressImage(file: File, maxWidth = 800, quality = 0.75): Promi
 
 /**
  * Upload story thumbnail image.
- * Tries Firebase Storage first, and smoothly falls back to an optimized, lightweight compressed image.
+ * Tries Firebase Storage with a strict 2.5s timeout, and smoothly falls back to an optimized, lightweight compressed image.
  */
 export async function uploadStoryThumbnail(file: File): Promise<string> {
-  // Always compress first to ensure optimal resolution and size
+  // Always prepare compressed data URL first (~30-50KB)
   const compressedDataUrl = await compressImage(file, 800, 0.75);
 
   if (isFirebaseConfigured() && storage) {
@@ -71,13 +71,21 @@ export async function uploadStoryThumbnail(file: File): Promise<string> {
       const filename = `submissions/${Date.now()}_${cleanName}`;
       const storageRef = ref(storage, filename);
       
-      const snapshot = await uploadBytes(storageRef, file, {
-        contentType: file.type || 'image/jpeg',
-      });
-      const downloadUrl = await getDownloadURL(snapshot.ref);
+      const uploadPromise = (async () => {
+        const snapshot = await uploadBytes(storageRef, file, {
+          contentType: file.type || 'image/jpeg',
+        });
+        return await getDownloadURL(snapshot.ref);
+      })();
+
+      const timeoutPromise = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('Storage upload timed out')), 2500)
+      );
+
+      const downloadUrl = await Promise.race([uploadPromise, timeoutPromise]);
       return downloadUrl;
     } catch (err) {
-      console.warn('Firebase Storage direct upload not available, using optimized thumbnail:', err);
+      console.warn('Firebase Storage upload timed out or unavailable, using optimized thumbnail:', err);
     }
   }
 
