@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
-import { X, Mail, Lock, User, Sparkles, CheckCircle2 } from 'lucide-react';
+import { X, Mail, Lock, User, ShieldCheck } from 'lucide-react';
 import styles from './AuthModal.module.css';
 
 export default function AuthModal() {
@@ -170,15 +171,14 @@ export default function AuthModal() {
             <span>Continue with Google</span>
           </button>
 
-          {/* Configuration / Live status badge */}
-          <div className={styles.statusNotice}>
-            <CheckCircle2 size={14} color={isFirebaseLive ? '#10B981' : '#3B82F6'} />
-            <span>
-              {isFirebaseLive 
-                ? 'Connected to Live Firebase Authentication.' 
-                : 'Demo Mode Active: Enter any test email & password to test sign in instantly!'}
-            </span>
-          </div>
+          <Link 
+            href="/admin" 
+            className={styles.adminLoginBtn}
+            onClick={closeAuthModal}
+          >
+            <ShieldCheck size={16} />
+            <span>Admin Login</span>
+          </Link>
         </div>
       </div>
     </div>
