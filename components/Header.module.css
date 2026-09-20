@@ -26,25 +26,25 @@
 }
 
 .logoMark {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 10px;
-  background: #0F172A;
+  background: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
   flex: none;
   overflow: hidden;
-  padding: 4px;
-  border: 1px solid rgba(253, 211, 2, 0.35);
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+  padding: 3px;
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.08);
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .brand:hover .logoMark {
   transform: translateY(-1px) scale(1.04);
-  border-color: #FDD302;
-  box-shadow: 0 4px 14px rgba(253, 211, 2, 0.25);
+  border-color: #0284C7;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.2);
 }
 
 .logoImg {

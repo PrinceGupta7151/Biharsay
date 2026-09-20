@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import {
   LayoutDashboard,
   FileText,
@@ -66,7 +67,15 @@ export default function AdminSidebar({ pendingCount, isOpen, onClose }: AdminSid
       )}
       <aside className={`admin-sidebar ${isOpen ? 'open' : ''}`}>
         <div className="admin-sidebar-brand">
-          <div className="brand-icon">BS</div>
+          <div className="brand-icon" style={{ background: 'transparent', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Image
+              src="/logos/biharsay-icon.png"
+              alt="Bihar Say"
+              width={34}
+              height={34}
+              style={{ objectFit: 'contain' }}
+            />
+          </div>
           <div>
             <h2>Bihar Say</h2>
             <span>Admin Panel</span>

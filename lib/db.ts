@@ -1129,7 +1129,12 @@ export function sanitizeStory(story: Story): Story {
     content = content.replace(/mango and makhana clusters/gi, 'mango and regional horticulture clusters')
       .replace(/makhana/gi, 'horticulture');
   }
-  return { ...story, title, summary, content, readTime, imageUrl: img };
+
+  const clean = { ...story, title, summary, content, readTime, imageUrl: img };
+  if ((clean as any).serverTimestamp) {
+    delete (clean as any).serverTimestamp;
+  }
+  return clean;
 }
 
 export function deduplicateStories(stories: Story[]): Story[] {
