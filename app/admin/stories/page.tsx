@@ -149,23 +149,23 @@ export default function StoriesPage() {
                   <th>Author</th>
                   <th>Date</th>
                   <th>Read Time</th>
-                  <th>Actions</th>
+                  <th style={{ minWidth: 110, textAlign: 'right', paddingRight: 20 }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.slice(0, 50).map((story) => (
                   <tr key={story.id}>
-                    <td className="title-cell">{story.title}</td>
+                    <td className="title-cell" title={story.title}>{story.title}</td>
                     <td>
                       <span className="category-tag">{story.category}</span>
                     </td>
-                    <td style={{ color: '#94A3B8', fontSize: 13 }}>
+                    <td style={{ color: '#94A3B8', fontSize: 13, whiteSpace: 'nowrap' }}>
                       {story.author || 'Bihar Say Desk'}
                     </td>
                     <td className="meta-cell">{story.date || '—'}</td>
                     <td className="meta-cell">{story.readTime || '—'}</td>
-                    <td>
-                      <div className="admin-actions">
+                    <td style={{ textAlign: 'right', paddingRight: 20 }}>
+                      <div className="admin-actions" style={{ justifyContent: 'flex-end' }}>
                         <Link
                           href={`/article/${story.id}`}
                           target="_blank"

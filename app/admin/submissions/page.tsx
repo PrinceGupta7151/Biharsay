@@ -192,7 +192,7 @@ export default function SubmissionsPage() {
                   <th>Category</th>
                   <th>Status</th>
                   <th>Submitted</th>
-                  <th>Actions</th>
+                  <th style={{ minWidth: 210, textAlign: 'right', paddingRight: 20 }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -241,8 +241,8 @@ export default function SubmissionsPage() {
                           </div>
                         )}
                       </td>
-                      <td className="title-cell">{sub.title}</td>
-                      <td>{sub.authorName || 'Unknown'}</td>
+                      <td className="title-cell" title={sub.title}>{sub.title}</td>
+                      <td style={{ whiteSpace: 'nowrap' }}>{sub.authorName || 'Unknown'}</td>
                       <td>
                         <span className="category-tag">{sub.category}</span>
                       </td>
@@ -255,8 +255,8 @@ export default function SubmissionsPage() {
                       <td className="meta-cell">
                         {new Date(sub.createdAt).toLocaleDateString()}
                       </td>
-                      <td>
-                        <div className="admin-actions">
+                      <td style={{ textAlign: 'right', paddingRight: 20 }}>
+                        <div className="admin-actions" style={{ justifyContent: 'flex-end' }}>
                           <button
                             className="admin-btn ghost"
                             onClick={() =>

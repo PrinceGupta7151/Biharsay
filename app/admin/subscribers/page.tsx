@@ -175,13 +175,13 @@ export default function SubscribersPage() {
                   <th>Contact</th>
                   <th>Channel</th>
                   <th>Subscribed</th>
-                  <th>Actions</th>
+                  <th style={{ minWidth: 80, textAlign: 'right', paddingRight: 20 }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((sub) => (
                   <tr key={sub.id}>
-                    <td style={{ fontWeight: 600, color: '#E2E8F0' }}>{sub.contact}</td>
+                    <td style={{ fontWeight: 600, color: '#E2E8F0', whiteSpace: 'nowrap' }}>{sub.contact}</td>
                     <td>
                       <span className={`status-badge ${sub.channel === 'email' ? 'new' : 'approved'}`}>
                         {sub.channel === 'email' ? <Mail size={11} /> : <Phone size={11} />}
@@ -191,7 +191,7 @@ export default function SubscribersPage() {
                     <td className="meta-cell">
                       {sub.subscribedAt ? new Date(sub.subscribedAt).toLocaleDateString() : '—'}
                     </td>
-                    <td>
+                    <td style={{ textAlign: 'right', paddingRight: 20 }}>
                       <button
                         className="admin-btn danger"
                         onClick={() => handleDelete(sub.id!)}

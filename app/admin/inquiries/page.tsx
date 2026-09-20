@@ -166,7 +166,7 @@ export default function InquiriesPage() {
                   <th>Company</th>
                   <th>Status</th>
                   <th>Date</th>
-                  <th>Actions</th>
+                  <th style={{ minWidth: 170, textAlign: 'right', paddingRight: 20 }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -232,8 +232,8 @@ export default function InquiriesPage() {
                           <Clock size={11} style={{ marginRight: 4 }} />
                           {new Date(inquiry.createdAt).toLocaleDateString()}
                         </td>
-                        <td>
-                          <div className="admin-actions">
+                        <td style={{ textAlign: 'right', paddingRight: 20 }}>
+                          <div className="admin-actions" style={{ justifyContent: 'flex-end' }}>
                             <button
                               className="admin-btn ghost"
                               onClick={() =>

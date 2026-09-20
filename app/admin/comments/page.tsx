@@ -112,7 +112,7 @@ export default function CommentsPage() {
                   <th>Comment</th>
                   <th>Article ID</th>
                   <th>Date</th>
-                  <th>Actions</th>
+                  <th style={{ minWidth: 100, textAlign: 'right', paddingRight: 20 }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -137,7 +137,7 @@ export default function CommentsPage() {
                         >
                           {comment.userName?.charAt(0).toUpperCase() || 'U'}
                         </span>
-                        <span style={{ fontWeight: 600, color: '#E2E8F0', fontSize: 13 }}>
+                        <span style={{ fontWeight: 600, color: '#E2E8F0', fontSize: 13, whiteSpace: 'nowrap' }}>
                           {comment.userName}
                         </span>
                       </div>
@@ -152,7 +152,7 @@ export default function CommentsPage() {
                       <Clock size={11} style={{ marginRight: 4 }} />
                       {new Date(comment.createdAt).toLocaleDateString()}
                     </td>
-                    <td>
+                    <td style={{ textAlign: 'right', paddingRight: 20 }}>
                       <button
                         className="admin-btn danger"
                         onClick={() => handleDelete(comment.id)}
