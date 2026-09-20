@@ -26,6 +26,7 @@ import {
 // ------- Admin Authorization -------
 const ADMIN_EMAILS: string[] = [
   'neehar@biharsay.com',
+  'guptaprince202004@gmail.com',
   // Add more admin emails here
 ];
 

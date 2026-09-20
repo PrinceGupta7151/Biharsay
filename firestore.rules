@@ -8,10 +8,11 @@ service cloud.firestore {
     }
 
     function isAdmin() {
-      // Admin check: custom claim 'admin' == true or specific authorized editorial UID
+      // Admin check: custom claim 'admin' == true or specific authorized editorial emails
       return isAuthenticated() && (
         request.auth.token.admin == true ||
-        request.auth.token.email == "neehar@biharsay.com"
+        request.auth.token.email == "neehar@biharsay.com" ||
+        request.auth.token.email == "guptaprince202004@gmail.com"
       );
     }
 
