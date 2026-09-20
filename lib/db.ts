@@ -1404,21 +1404,38 @@ export async function getStoriesByCategory(categorySlug: CategorySlug): Promise<
 export async function submitStory(submission: Omit<StorySubmission, 'createdAt' | 'status'>): Promise<string> {
   const fullSubmission: StorySubmission = {
     ...submission,
+    imageUrl: submission.imageUrl || '',
+    authorName: submission.authorName || 'Community Voice',
+    authorEmail: submission.authorEmail || 'contributor@biharsay.com',
+    userId: submission.userId || '',
     createdAt: new Date().toISOString(),
     status: 'pending', // Pending editorial moderation before publishing
   };
 
   if (isFirebaseConfigured() && db) {
     try {
-      const docRef = await addDoc(collection(db, SUBMISSIONS_COLLECTION), {
-        ...fullSubmission,
+      const cleanDoc: Record<string, any> = {
+        title: fullSubmission.title || '',
+        category: fullSubmission.category || 'Culture & Heritage',
+        categorySlug: fullSubmission.categorySlug || 'culture-heritage',
+        content: fullSubmission.content || '',
+        authorName: fullSubmission.authorName,
+        authorEmail: fullSubmission.authorEmail,
+        status: 'pending',
+        createdAt: fullSubmission.createdAt,
+        imageUrl: fullSubmission.imageUrl || '',
         serverTimestamp: serverTimestamp(),
-      });
-      // Story stays in SUBMISSIONS_COLLECTION with status 'pending'
-      // until reviewed and approved by Bihar Say editorial moderation.
+      };
+      if (fullSubmission.userId) {
+        cleanDoc.userId = fullSubmission.userId;
+      }
+
+      const docRef = await addDoc(collection(db, SUBMISSIONS_COLLECTION), cleanDoc);
       return docRef.id;
-    } catch (err) {
-      console.warn('Failed saving submission to Firestore, saving to local state:', err);
+    } catch (err: any) {
+      console.error('Failed saving submission to Firestore:', err);
+      // Re-throw so user gets real error feedback
+      throw new Error(err?.message || 'Failed saving story to database.');
     }
   }
 
@@ -1456,7 +1473,7 @@ export async function approveStorySubmission(submissionId: string): Promise<bool
         author: data.authorName,
         readTime: '3 min read',
         views: 1,
-        imageUrl: '',
+        imageUrl: data.imageUrl || '',
         createdAt: new Date().toISOString(),
       });
 

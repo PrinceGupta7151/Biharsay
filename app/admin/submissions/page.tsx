@@ -17,6 +17,8 @@ import {
   Search,
   ChevronDown,
   ChevronUp,
+  ImageIcon,
+  RefreshCw,
 } from 'lucide-react';
 
 type FilterTab = 'all' | 'pending' | 'approved' | 'rejected';
@@ -143,6 +145,16 @@ export default function SubmissionsPage() {
             <span className="table-count">{filtered.length}</span>
           </h3>
           <div className="admin-table-controls">
+            <button 
+              className="admin-btn ghost" 
+              onClick={loadData} 
+              disabled={loading}
+              title="Refresh submissions"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}
+            >
+              <RefreshCw size={13} className={loading ? 'animate-spin' : ''} />
+              <span>Refresh</span>
+            </button>
             <div style={{ position: 'relative' }}>
               <Search
                 size={14}
@@ -174,6 +186,7 @@ export default function SubmissionsPage() {
             <table className="admin-table">
               <thead>
                 <tr>
+                  <th style={{ width: 68, textAlign: 'center' }}>Cover</th>
                   <th>Title</th>
                   <th>Author</th>
                   <th>Category</th>
@@ -186,6 +199,48 @@ export default function SubmissionsPage() {
                 {filtered.map((sub) => (
                   <React.Fragment key={sub.id || sub.createdAt}>
                     <tr>
+                      <td style={{ padding: '8px 10px', textAlign: 'center' }}>
+                        {sub.imageUrl ? (
+                          <div 
+                            style={{ 
+                              width: 48, 
+                              height: 36, 
+                              borderRadius: 6, 
+                              overflow: 'hidden', 
+                              border: '1px solid rgba(148, 163, 184, 0.25)', 
+                              background: '#1E293B',
+                              cursor: 'pointer',
+                              display: 'inline-block'
+                            }}
+                            onClick={() => setExpandedId(expandedId === sub.id ? null : (sub.id || null))}
+                            title="Click to view full cover & content"
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img 
+                              src={sub.imageUrl} 
+                              alt="Thumbnail" 
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                            />
+                          </div>
+                        ) : (
+                          <div 
+                            style={{ 
+                              width: 48, 
+                              height: 36, 
+                              borderRadius: 6, 
+                              background: 'rgba(30, 41, 59, 0.6)', 
+                              border: '1px dashed rgba(148, 163, 184, 0.25)', 
+                              display: 'inline-flex', 
+                              alignItems: 'center', 
+                              justifyContent: 'center',
+                              color: '#64748B'
+                            }}
+                            title="No image uploaded"
+                          >
+                            <ImageIcon size={16} />
+                          </div>
+                        )}
+                      </td>
                       <td className="title-cell">{sub.title}</td>
                       <td>{sub.authorName || 'Unknown'}</td>
                       <td>
@@ -248,20 +303,24 @@ export default function SubmissionsPage() {
                     </tr>
                     {expandedId === sub.id && (
                       <tr>
-                        <td colSpan={6}>
+                        <td colSpan={7}>
                           <div className="admin-preview-panel">
                             {sub.imageUrl && (
-                              <div style={{ marginBottom: 14 }}>
-                                <strong style={{ display: 'block', marginBottom: 6, color: '#94A3B8' }}>
-                                  Story Thumbnail / Cover:
+                              <div style={{ marginBottom: 16 }}>
+                                <strong style={{ display: 'block', marginBottom: 8, color: '#94A3B8', fontSize: 13 }}>
+                                  Uploaded Story Cover:
                                 </strong>
-                                <div style={{ maxWidth: 320, borderRadius: 8, overflow: 'hidden', border: '1px solid rgba(148, 163, 184, 0.2)' }}>
+                                <div style={{ maxWidth: 460, borderRadius: 10, overflow: 'hidden', border: '1px solid rgba(148, 163, 184, 0.25)', boxShadow: '0 4px 20px rgba(0,0,0,0.25)' }}>
                                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                                  <img src={sub.imageUrl} alt="Story Thumbnail" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                                  <img 
+                                    src={sub.imageUrl} 
+                                    alt="Story Thumbnail" 
+                                    style={{ width: '100%', maxHeight: 280, objectFit: 'cover', display: 'block' }} 
+                                  />
                                 </div>
                               </div>
                             )}
-                            <strong style={{ display: 'block', marginBottom: 6, color: '#94A3B8' }}>
+                            <strong style={{ display: 'block', marginBottom: 6, color: '#94A3B8', fontSize: 13 }}>
                               Full Content:
                             </strong>
                             <div
