@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AuthModal from '@/components/AuthModal';
 import SubmitStoryModal from '@/components/SubmitStoryModal';
+import WelcomePopup from '@/components/WelcomePopup';
 import ScrollRevealInit from '@/components/ScrollRevealInit';
 import BackToTop from '@/components/BackToTop';
 
@@ -32,6 +33,7 @@ export default function AppShell({ children }: AppShellProps) {
       <BackToTop />
       <AuthModal />
       <SubmitStoryModal />
+      <WelcomePopup />
     </>
   );
 }
