@@ -21,6 +21,19 @@ interface BrandAdItem {
 
 export const BRAND_ADS: BrandAdItem[] = [
   {
+    id: 'ad-digital-standee',
+    serviceId: 'digital-standee',
+    tag: 'Retail & Event Displays',
+    badge: '4K Ultra-HD Smart Displays',
+    headline: 'Commercial Digital Standees & Interactive Kiosks',
+    description: 'Captivate shoppers and conference attendees across Patna & Bihar with plug-and-play vertical smart displays with remote cloud content management.',
+    benefits: ['Bright IPS Panels (Daylight Visible)', 'Cloud Remote Scheduling', 'On-Site Delivery & Setup Across Bihar'],
+    ctaText: 'Get Standee Pricing',
+    imageUrl: '/commercial/digital-standee-patna.jpg',
+    icon: Monitor,
+    accentColor: '#1D6FD8',
+  },
+  {
     id: 'ad-makhana',
     serviceId: 'makhana-sample',
     tag: 'B2B Sourcing · Mithila Harvest',
@@ -45,19 +58,6 @@ export const BRAND_ADS: BrandAdItem[] = [
     imageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80',
     icon: Leaf,
     accentColor: '#059669',
-  },
-  {
-    id: 'ad-digital-standee',
-    serviceId: 'digital-standee',
-    tag: 'Retail & Event Displays',
-    badge: '4K Ultra-HD Smart Displays',
-    headline: 'Commercial Digital Standees & Interactive Kiosks',
-    description: 'Captivate shoppers and conference attendees across Patna & Bihar with plug-and-play vertical smart displays with remote cloud content management.',
-    benefits: ['Bright IPS Panels (Daylight Visible)', 'Cloud Remote Scheduling', 'On-Site Delivery & Setup Across Bihar'],
-    ctaText: 'Get Standee Pricing',
-    imageUrl: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80',
-    icon: Monitor,
-    accentColor: '#1D6FD8',
   },
   {
     id: 'ad-performance-marketing',
