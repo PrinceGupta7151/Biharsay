@@ -173,24 +173,27 @@
   display: flex;
   gap: 12px;
   align-items: center;
-  padding-top: 6px;
+  justify-content: center;
+  padding-top: 8px;
 }
 
 .submitBtn {
   background: #0F172A;
   color: #FFFFFF;
   border: 1px solid #0F172A;
-  padding: 12px 20px;
+  padding: 13px 28px;
+  width: 100%;
+  max-width: 320px;
   border-radius: var(--radius-full);
   font-weight: 700;
-  font-size: 14px;
-  display: flex;
+  font-size: 14.5px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
 }
 
 .submitBtn:hover:not(:disabled) {
@@ -202,27 +205,6 @@
 .submitBtn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-}
-
-.whatsAppQuickBtn {
-  background: #25D366;
-  color: #FFFFFF;
-  border: none;
-  padding: 12px 18px;
-  border-radius: var(--radius-full);
-  font-weight: 700;
-  font-size: 13.5px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
-}
-
-.whatsAppQuickBtn:hover {
-  background: #20BA5A;
-  transform: translateY(-1px);
 }
 
 .directContactFooter {

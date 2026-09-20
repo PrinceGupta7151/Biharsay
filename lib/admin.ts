@@ -263,19 +263,48 @@ export async function deleteSubscriber(subscriberId: string): Promise<boolean> {
 
 // ------- Business Inquiries -------
 export async function getBusinessInquiries(): Promise<BusinessInquiry[]> {
-  if (!firestoreReady() || !db) return [];
-  try {
-    const q = query(collection(db, INQUIRIES), orderBy('createdAt', 'desc'));
-    const snap = await getDocs(q);
-    return snap.docs.map((d) => ({ id: d.id, ...d.data() } as BusinessInquiry));
-  } catch (err) {
+  const list: BusinessInquiry[] = [];
+  const seenIds = new Set<string>();
+
+  if (firestoreReady() && db) {
     try {
-      const snap = await getDocs(collection(db!, INQUIRIES));
-      return snap.docs.map((d) => ({ id: d.id, ...d.data() } as BusinessInquiry));
-    } catch {
-      return [];
+      const q = query(collection(db, INQUIRIES), orderBy('createdAt', 'desc'));
+      const snap = await getDocs(q);
+      snap.docs.forEach((d) => {
+        seenIds.add(d.id);
+        list.push({ id: d.id, ...d.data() } as BusinessInquiry);
+      });
+    } catch (err) {
+      try {
+        const snap = await getDocs(collection(db!, INQUIRIES));
+        snap.docs.forEach((d) => {
+          if (!seenIds.has(d.id)) {
+            seenIds.add(d.id);
+            list.push({ id: d.id, ...d.data() } as BusinessInquiry);
+          }
+        });
+      } catch {}
     }
   }
+
+  // Also check localStorage fallback if client
+  if (typeof window !== 'undefined') {
+    try {
+      const local: BusinessInquiry[] = JSON.parse(
+        localStorage.getItem('biharsay_business_queries') || '[]'
+      );
+      local.forEach((item) => {
+        if (item.id && !seenIds.has(item.id)) {
+          seenIds.add(item.id);
+          list.push(item);
+        }
+      });
+    } catch {}
+  }
+
+  return list.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
 }
 
 export async function markInquiryResolved(inquiryId: string): Promise<boolean> {

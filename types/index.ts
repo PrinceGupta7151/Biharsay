@@ -96,6 +96,8 @@ export interface BusinessInquiry {
   name?: string;
   email?: string;
   phone?: string;
+  mobile?: string;
+  whatsapp?: string;
   company?: string;
   message?: string;
   budget?: string;

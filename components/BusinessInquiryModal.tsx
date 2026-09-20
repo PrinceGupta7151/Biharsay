@@ -78,13 +78,6 @@ export default function BusinessInquiryModal({
 
   const activeServiceObj = BUSINESS_SERVICES.find(s => s.id === selectedService) || BUSINESS_SERVICES[0];
 
-  const handleWhatsAppDirect = () => {
-    const text = encodeURIComponent(
-      `Hi Bihar Say Team! I would like to inquire about *${activeServiceObj.label}*.\n\nMy Name: ${name || '[My Name]'}\nCompany: ${company || '[My Brand]'}\nContact: ${phone || '[My Phone]'}`
-    );
-    window.open(`https://api.whatsapp.com/send?phone=918050083233&text=${text}`, '_blank');
-  };
-
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
@@ -102,11 +95,7 @@ export default function BusinessInquiryModal({
               Thank you for reaching out regarding <strong>{activeServiceObj.label}</strong>. Our business development team will contact you within <strong>4 business hours</strong>.
             </p>
             <div className={styles.successActions}>
-              <button className={styles.btnWhatsApp} onClick={handleWhatsAppDirect}>
-                <MessageSquare size={16} />
-                <span>Connect Instantly on WhatsApp</span>
-              </button>
-              <button className={styles.btnSecondary} onClick={handleReset}>
+              <button className={styles.btnSecondary} onClick={handleReset} style={{ width: '100%', background: '#0F172A', color: '#FFFFFF' }}>
                 Done
               </button>
             </div>
@@ -192,7 +181,7 @@ export default function BusinessInquiryModal({
 
                 <div className={styles.fieldGroup}>
                   <label className={styles.label} htmlFor="inq-phone">
-                    <Phone size={13} /> Mobile / WhatsApp *
+                    <Phone size={13} /> Mobile Number *
                   </label>
                   <input
                     id="inq-phone"
@@ -229,24 +218,10 @@ export default function BusinessInquiryModal({
                   <Send size={15} />
                   <span>{isSubmitting ? 'Submitting Inquiry...' : 'Submit Business Inquiry'}</span>
                 </button>
-
-                <button
-                  type="button"
-                  className={styles.whatsAppQuickBtn}
-                  onClick={handleWhatsAppDirect}
-                  title="Chat directly on WhatsApp"
-                >
-                  <MessageSquare size={15} />
-                  <span>Chat on WhatsApp</span>
-                </button>
               </div>
 
               <div className={styles.directContactFooter}>
                 <span>Or reach us directly:</span>
-                <a href="https://wa.me/918050083233" target="_blank" rel="noopener noreferrer">
-                  Chat on WhatsApp
-                </a>
-                <span className={styles.sepDot}>•</span>
                 <a href="mailto:neehar@biharsay.com">
                   neehar@biharsay.com
                 </a>
