@@ -43,21 +43,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // Check if running live Firebase Auth or demo state
     if (isFirebaseLive && auth) {
-      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-        setFirebaseUser(currentUser);
-        if (currentUser) {
-          setUser({
-            uid: currentUser.uid,
-            email: currentUser.email,
-            displayName: currentUser.displayName || currentUser.email?.split('@')[0] || 'Bihari Member',
-            photoURL: currentUser.photoURL,
-          });
-        } else {
-          setUser(null);
-        }
+      // Safety timeout: Ensure loading never hangs indefinitely
+      const safetyTimer = setTimeout(() => {
         setLoading(false);
-      });
-      return () => unsubscribe();
+      }, 2500);
+
+      const unsubscribe = onAuthStateChanged(
+        auth,
+        (currentUser) => {
+          clearTimeout(safetyTimer);
+          setFirebaseUser(currentUser);
+          if (currentUser) {
+            setUser({
+              uid: currentUser.uid,
+              email: currentUser.email,
+              displayName: currentUser.displayName || currentUser.email?.split('@')[0] || 'Bihari Member',
+              photoURL: currentUser.photoURL,
+            });
+          } else {
+            setUser(null);
+          }
+          setLoading(false);
+        },
+        (error) => {
+          clearTimeout(safetyTimer);
+          console.warn('Firebase onAuthStateChanged error:', error);
+          setLoading(false);
+        }
+      );
+
+      return () => {
+        clearTimeout(safetyTimer);
+        unsubscribe();
+      };
     } else {
       // Demo / fallback local auth persistence
       const savedUser = localStorage.getItem('biharsay_demo_user');

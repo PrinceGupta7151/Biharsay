@@ -2,13 +2,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
-import TopStrip from '@/components/TopStrip';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import AuthModal from '@/components/AuthModal';
-import SubmitStoryModal from '@/components/SubmitStoryModal';
-import ScrollRevealInit from '@/components/ScrollRevealInit';
-import BackToTop from '@/components/BackToTop';
+import AppShell from '@/components/AppShell';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://biharsay.com'),
@@ -66,16 +60,9 @@ export default function RootLayout({
           />
         )}
         <AuthProvider>
-          <ScrollRevealInit />
-          <TopStrip />
-          <Header />
-          <main className="wrap">
+          <AppShell>
             {children}
-          </main>
-          <Footer />
-          <BackToTop />
-          <AuthModal />
-          <SubmitStoryModal />
+          </AppShell>
         </AuthProvider>
       </body>
     </html>

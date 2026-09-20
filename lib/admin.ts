@@ -32,7 +32,8 @@ const ADMIN_EMAILS: string[] = [
 
 export function isAdminUser(email: string | null | undefined): boolean {
   if (!email) return false;
-  return ADMIN_EMAILS.includes(email.toLowerCase());
+  const normalized = email.toLowerCase().trim();
+  return ADMIN_EMAILS.some(adminEmail => adminEmail.toLowerCase().trim() === normalized);
 }
 
 // ------- Collection Names -------

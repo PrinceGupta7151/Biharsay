@@ -777,7 +777,6 @@
   -webkit-overflow-scrolling: touch;
 }
 
-/* ------- Auth Guard ------- */
 .admin-auth-guard {
   display: flex;
   align-items: center;
@@ -788,30 +787,193 @@
   gap: 16px;
   color: #94A3B8;
   font-size: 15px;
+  padding: 24px;
 }
 
-.admin-auth-guard h2 {
-  font-family: 'Playfair Display', Georgia, serif;
-  color: #F1F5F9;
-  font-size: 24px;
-  margin-bottom: 4px;
+.admin-root-container {
+  min-height: 100vh;
+  background: #0B1120;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.admin-auth-guard p {
-  color: #64748B;
-  max-width: 400px;
+.admin-auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: #0F172A;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 20px;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  line-height: 1.6;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
-.admin-auth-guard .lock-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  background: rgba(225, 29, 72, 0.1);
+.admin-auth-badge {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FB7185;
-  margin-bottom: 8px;
+  color: #818CF8;
+  margin-bottom: 16px;
 }
+
+.admin-auth-badge.danger {
+  background: rgba(225, 29, 72, 0.12);
+  border-color: rgba(225, 29, 72, 0.25);
+  color: #FB7185;
+}
+
+.admin-auth-card h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  color: #F8FAFC;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.admin-auth-card p {
+  color: #94A3B8;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+.admin-google-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #FFFFFF;
+  color: #1E293B;
+  font-weight: 600;
+  font-size: 14.5px;
+  padding: 13px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.admin-google-btn:hover {
+  background: #F1F5F9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.admin-auth-divider {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  color: #64748B;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.admin-auth-divider::before,
+.admin-auth-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.admin-auth-divider span {
+  padding: 0 12px;
+}
+
+.admin-auth-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+}
+
+.admin-auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-auth-field label {
+  font-size: 12.5px;
+  color: #CBD5E1;
+  font-weight: 500;
+}
+
+.admin-auth-field input {
+  background: #1E293B;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: #F8FAFC;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.admin-auth-field input:focus {
+  border-color: #6366F1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.admin-auth-submit {
+  width: 100%;
+  margin-top: 6px;
+  background: #6366F1;
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.admin-auth-submit:hover {
+  background: #4F46E5;
+}
+
+.admin-auth-error {
+  width: 100%;
+  background: rgba(225, 29, 72, 0.12);
+  border: 1px solid rgba(225, 29, 72, 0.3);
+  color: #FB7185;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.admin-auth-links {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.admin-auth-link {
+  color: #64748B;
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.admin-auth-link:hover {
+  color: #94A3B8;
+}
+

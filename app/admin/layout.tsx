@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { AuthProvider } from '@/context/AuthContext';
 import AdminGuard from '@/components/admin/AdminGuard';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 import { useAuth } from '@/context/AuthContext';
@@ -48,9 +47,5 @@ function AdminShell({ children }: { children: React.ReactNode }) {
 }
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <AuthProvider>
-      <AdminShell>{children}</AdminShell>
-    </AuthProvider>
-  );
+  return <AdminShell>{children}</AdminShell>;
 }
