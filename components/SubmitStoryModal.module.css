@@ -127,3 +127,78 @@
   gap: 12px;
   margin-top: 8px;
 }
+
+.uploadZone {
+  border: 2px dashed var(--line);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  background: var(--bg-subtle);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  position: relative;
+}
+
+.uploadZone:hover {
+  border-color: #0284C7;
+  background: #F0F9FF;
+}
+
+.uploadIcon {
+  color: #0284C7;
+  margin-bottom: 6px;
+}
+
+.uploadText {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.uploadHint {
+  font-size: 11.5px;
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
+.previewCard {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #0F172A;
+}
+
+.previewImg {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.removeThumbBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.removeThumbBtn:hover {
+  background: #EF4444;
+}
+

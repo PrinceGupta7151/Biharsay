@@ -1,6 +1,7 @@
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import { getAuth, Auth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore, Firestore } from 'firebase/firestore';
+import { getStorage, FirebaseStorage } from 'firebase/storage';
 import { getAnalytics, Analytics, isSupported } from 'firebase/analytics';
 
 export const firebaseConfig = {
@@ -20,6 +21,7 @@ export const isFirebaseConfigured = () => {
 let app: FirebaseApp;
 let auth: Auth | null = null;
 let db: Firestore | null = null;
+let storage: FirebaseStorage | null = null;
 let analytics: Analytics | null = null;
 let googleProvider: GoogleAuthProvider | null = null;
 
@@ -33,6 +35,7 @@ if (typeof window !== 'undefined') {
   try {
     auth = getAuth(app);
     db = getFirestore(app);
+    storage = getStorage(app);
     googleProvider = new GoogleAuthProvider();
 
     isSupported()
@@ -56,9 +59,10 @@ if (typeof window !== 'undefined') {
   try {
     auth = getAuth(app);
     db = getFirestore(app);
+    storage = getStorage(app);
   } catch (error) {
     console.warn('Firebase server setup note:', error);
   }
 }
 
-export { app, auth, db, analytics, googleProvider };
+export { app, auth, db, storage, analytics, googleProvider };

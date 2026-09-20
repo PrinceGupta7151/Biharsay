@@ -71,6 +71,7 @@ export interface StorySubmission {
   userId?: string;
   createdAt: string;
   status: 'pending' | 'approved' | 'rejected';
+  imageUrl?: string;
 }
 
 export interface StoryComment {

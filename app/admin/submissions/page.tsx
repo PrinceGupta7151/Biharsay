@@ -250,9 +250,22 @@ export default function SubmissionsPage() {
                       <tr>
                         <td colSpan={6}>
                           <div className="admin-preview-panel">
-                            <strong>Full Content:</strong>
+                            {sub.imageUrl && (
+                              <div style={{ marginBottom: 14 }}>
+                                <strong style={{ display: 'block', marginBottom: 6, color: '#94A3B8' }}>
+                                  Story Thumbnail / Cover:
+                                </strong>
+                                <div style={{ maxWidth: 320, borderRadius: 8, overflow: 'hidden', border: '1px solid rgba(148, 163, 184, 0.2)' }}>
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img src={sub.imageUrl} alt="Story Thumbnail" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                                </div>
+                              </div>
+                            )}
+                            <strong style={{ display: 'block', marginBottom: 6, color: '#94A3B8' }}>
+                              Full Content:
+                            </strong>
                             <div
-                              style={{ marginTop: 8 }}
+                              style={{ marginTop: 4, whiteSpace: 'pre-wrap', lineHeight: 1.6 }}
                               dangerouslySetInnerHTML={{ __html: sub.content }}
                             />
                           </div>

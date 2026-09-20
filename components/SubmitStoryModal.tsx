@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { submitStory } from '@/lib/db';
+import { uploadStoryThumbnail } from '@/lib/storage';
 import { CATEGORIES } from '@/data/seedStories';
 import { CategorySlug } from '@/types';
-import { X, Send, CheckCircle, FileText, Tag, User } from 'lucide-react';
+import { X, Send, CheckCircle, UploadCloud, ImageIcon, Trash2 } from 'lucide-react';
 import styles from './SubmitStoryModal.module.css';
 
 interface SubmitStoryModalProps {
@@ -14,16 +15,51 @@ interface SubmitStoryModalProps {
 
 export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalProps) {
   const { isSubmitModalOpen, closeSubmitModal, user } = useAuth();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [title, setTitle] = useState('');
   const [categorySlug, setCategorySlug] = useState<CategorySlug>('culture-heritage');
   const [content, setContent] = useState('');
   const [authorName, setAuthorName] = useState(user?.displayName || '');
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   if (!isSubmitModalOpen) return null;
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      setError('Please select a valid image file (JPG, PNG, WebP).');
+      return;
+    }
+
+    // Limit to 10MB
+    if (file.size > 10 * 1024 * 1024) {
+      setError('Image must be smaller than 10MB.');
+      return;
+    }
+
+    setError(null);
+    setThumbnailFile(file);
+    const previewUrl = URL.createObjectURL(file);
+    setThumbnailPreview(previewUrl);
+  };
+
+  const handleRemoveThumbnail = () => {
+    setThumbnailFile(null);
+    if (thumbnailPreview) {
+      URL.revokeObjectURL(thumbnailPreview);
+    }
+    setThumbnailPreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,18 +71,26 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
     setSubmitting(true);
     setError(null);
 
-    const categoryObj = CATEGORIES.find(c => c.slug === categorySlug);
+    const categoryObj = CATEGORIES.find((c) => c.slug === categorySlug);
     const categoryName = categoryObj ? categoryObj.name : 'Culture & Heritage';
 
     try {
+      let imageUrl: string | undefined = undefined;
+
+      // Upload thumbnail to Firebase Storage if selected
+      if (thumbnailFile) {
+        imageUrl = await uploadStoryThumbnail(thumbnailFile);
+      }
+
       await submitStory({
-        title,
+        title: title.trim(),
         category: categoryName,
         categorySlug,
-        content,
+        content: content.trim(),
         authorName: authorName.trim() || user?.displayName || 'Community Voice',
         authorEmail: user?.email || 'contributor@biharsay.com',
         userId: user?.uid,
+        imageUrl,
       });
 
       setSuccess(true);
@@ -57,6 +101,7 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
         setSuccess(false);
         setTitle('');
         setContent('');
+        handleRemoveThumbnail();
         closeSubmitModal();
       }, 2000);
     } catch (err: any) {
@@ -83,7 +128,10 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
           <div className={styles.successBox}>
             <CheckCircle size={44} color="#10B981" />
             <h4>Story Submitted for Review!</h4>
-            <p>Thank you for contributing! Our editorial team reviews every submission to ensure journalistic quality. Your story will appear once approved.</p>
+            <p>
+              Thank you for contributing! Our editorial team reviews every submission to ensure journalistic quality.
+              Your story will appear once approved.
+            </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className={styles.form}>
@@ -129,7 +177,7 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
             <div className={styles.field}>
               <label>Story Content *</label>
               <textarea
-                rows={6}
+                rows={5}
                 placeholder="Write the details of the story, key figures, locations in Bihar, and impact..."
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
@@ -137,21 +185,47 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
               />
             </div>
 
+            {/* Thumbnail Upload Section */}
+            <div className={styles.field}>
+              <label>Story Cover / Thumbnail (Optional)</label>
+              <input
+                type="file"
+                ref={fileInputRef}
+                accept="image/png,image/jpeg,image/webp,image/jpg"
+                onChange={handleFileChange}
+                style={{ display: 'none' }}
+              />
+
+              {thumbnailPreview ? (
+                <div className={styles.previewCard}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={thumbnailPreview} alt="Thumbnail Preview" className={styles.previewImg} />
+                  <button
+                    type="button"
+                    className={styles.removeThumbBtn}
+                    onClick={handleRemoveThumbnail}
+                    title="Remove Image"
+                    aria-label="Remove thumbnail"
+                  >
+                    <Trash2 size={15} />
+                  </button>
+                </div>
+              ) : (
+                <div className={styles.uploadZone} onClick={() => fileInputRef.current?.click()}>
+                  <UploadCloud size={28} className={styles.uploadIcon} />
+                  <span className={styles.uploadText}>Click to upload thumbnail</span>
+                  <span className={styles.uploadHint}>PNG, JPG, or WebP up to 10MB</span>
+                </div>
+              )}
+            </div>
+
             <div className={styles.footer}>
-              <button 
-                type="button" 
-                className="btn-secondary" 
-                onClick={closeSubmitModal}
-              >
+              <button type="button" className="btn-secondary" onClick={closeSubmitModal}>
                 Cancel
               </button>
-              <button 
-                type="submit" 
-                className="btn-primary" 
-                disabled={submitting}
-              >
+              <button type="submit" className="btn-primary" disabled={submitting}>
                 <Send size={16} />
-                <span>{submitting ? 'Publishing...' : 'Publish to Bihar Say'}</span>
+                <span>{submitting ? 'Uploading & Publishing...' : 'Publish to Bihar Say'}</span>
               </button>
             </div>
           </form>
