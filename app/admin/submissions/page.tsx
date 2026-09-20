@@ -320,11 +320,12 @@ export default function SubmissionsPage() {
                                 </div>
                               </div>
                             )}
-                            <strong style={{ display: 'block', marginBottom: 6, color: '#94A3B8', fontSize: 13 }}>
+                            <strong style={{ display: 'block', marginBottom: 10, color: '#94A3B8', fontSize: 13 }}>
                               Full Content:
                             </strong>
                             <div
-                              style={{ marginTop: 4, whiteSpace: 'pre-wrap', lineHeight: 1.6 }}
+                              className="admin-preview-content"
+                              style={{ marginTop: 4, whiteSpace: 'pre-wrap', lineHeight: 1.7, color: '#FFFFFF' }}
                               dangerouslySetInnerHTML={{ __html: sub.content }}
                             />
                           </div>

@@ -1170,7 +1170,7 @@ export async function getAllStories(): Promise<Story[]> {
   if (isFirebaseConfigured() && db) {
     try {
       const q = query(collection(db, STORIES_COLLECTION), firestoreLimit(500));
-      const timeoutPromise = new Promise<null>((resolve) => setTimeout(() => resolve(null), 1500));
+      const timeoutPromise = new Promise<null>((resolve) => setTimeout(() => resolve(null), 5000));
       const snapshot = await Promise.race([getDocs(q), timeoutPromise]);
 
       if (snapshot && !snapshot.empty) {
@@ -1193,6 +1193,21 @@ export async function getAllStories(): Promise<Story[]> {
             firestoreStories.push(sanitizeStory({ id: docId, ...data } as Story));
           }
         });
+
+        const getStoryTimestamp = (s: Story): number => {
+          if (s.createdAt) {
+            const t = new Date(s.createdAt).getTime();
+            if (!isNaN(t)) return t;
+          }
+          if (s.date) {
+            const t = new Date(s.date).getTime();
+            if (!isNaN(t)) return t;
+          }
+          return 0;
+        };
+
+        // Sort firestore stories so newly approved/published stories come FIRST
+        firestoreStories.sort((a, b) => getStoryTimestamp(b) - getStoryTimestamp(a));
 
         const combined = [...firestoreStories, ...Array.from(localStoryMap.values())]
           .filter(s => !EXCLUDED_STORY_IDS.has(s.id));
@@ -1461,7 +1476,8 @@ export async function approveStorySubmission(submissionId: string): Promise<bool
       // Mark submission as approved
       await updateDoc(subDocRef, { status: 'approved' });
 
-      // Publish to public stories collection
+      // Publish to public stories collection with featured & hero priority
+      const now = new Date();
       await setDoc(doc(db, STORIES_COLLECTION, storyId), {
         id: storyId,
         title: data.title,
@@ -1469,12 +1485,16 @@ export async function approveStorySubmission(submissionId: string): Promise<bool
         content: data.content,
         category: data.category,
         categorySlug: data.categorySlug,
-        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        date: now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
         author: data.authorName,
         readTime: '3 min read',
         views: 1,
         imageUrl: data.imageUrl || '',
-        createdAt: new Date().toISOString(),
+        isFeatured: true,
+        isHero: true,
+        featuredOrder: 0,
+        createdAt: now.toISOString(),
+        publishedAt: now.toISOString(),
       });
 
       return true;

@@ -132,11 +132,12 @@ export async function approveSubmission(submissionId: string): Promise<boolean> 
       await updateDoc(doc(db, targetCollection === SUBMISSIONS ? ALT_SUBMISSIONS : SUBMISSIONS, submissionId), { status: 'approved' });
     } catch {}
 
-    // Publish to stories collection
+    // Publish to stories collection with featured & hero flags for top card placement
     const defaultImage =
       (data as any).imageUrl ||
       'https://images.unsplash.com/photo-1571508601891-ca5e7a713859?auto=format&fit=crop&w=800&q=80';
 
+    const now = new Date();
     await setDoc(doc(db, STORIES, storyId), {
       id: storyId,
       title: data.title,
@@ -144,7 +145,7 @@ export async function approveSubmission(submissionId: string): Promise<boolean> 
       content: data.content,
       category: data.category || 'Culture & Heritage',
       categorySlug: data.categorySlug || 'culture-heritage',
-      date: new Date().toLocaleDateString('en-US', {
+      date: now.toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
         year: 'numeric',
@@ -153,7 +154,11 @@ export async function approveSubmission(submissionId: string): Promise<boolean> 
       readTime: '3 min read',
       views: 1,
       imageUrl: defaultImage,
-      createdAt: new Date().toISOString(),
+      isFeatured: true,
+      isHero: true,
+      featuredOrder: 0,
+      createdAt: now.toISOString(),
+      publishedAt: now.toISOString(),
       serverTimestamp: serverTimestamp(),
     });
 

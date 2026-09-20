@@ -20,6 +20,7 @@ import PartnerBrandsTicker from './PartnerBrandsTicker';
 import RecentPostsSection from './RecentPostsSection';
 import MsmeCommunityBanner from './MsmeCommunityBanner';
 import { hasValidImage } from '@/lib/imageUtils';
+import { getAllStories } from '@/lib/db';
 import Link from 'next/link';
 import { Sparkles, FileSearch, ArrowRight } from 'lucide-react';
 
@@ -41,9 +42,24 @@ const REMOVED_CARD_IDS = new Set<string>([
 ]);
 
 export default function HomeFeed({ initialStories }: HomeFeedProps) {
-  const stories = useMemo(() => {
+  const [stories, setStories] = useState<Story[]>(() => {
     return initialStories.filter((s) => !REMOVED_CARD_IDS.has(s.id));
-  }, [initialStories]);
+  });
+
+  // Client-side live sync to pick up newly approved stories immediately
+  useEffect(() => {
+    let mounted = true;
+    getAllStories()
+      .then((live) => {
+        if (mounted && live && live.length > 0) {
+          setStories(live.filter((s) => !REMOVED_CARD_IDS.has(s.id)));
+        }
+      })
+      .catch((err) => console.warn('HomeFeed live sync error:', err));
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CategorySlug | 'all'>('all');
@@ -157,10 +173,20 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
   const isFiltering = Boolean(searchQuery.trim() || selectedCategory !== 'all');
 
   // Split all stories into two groups per requirement:
-  // articlesWithImages -> Existing image cards
-  // articlesWithoutImages -> Title-only "Recent Posts" list
+  // articlesWithImages -> Existing image cards, sorted with newest published stories first
   const articlesWithImages = useMemo(() => {
-    return stories.filter((story) => hasValidImage(story));
+    const valid = stories.filter((story) => hasValidImage(story));
+    return [...valid].sort((a, b) => {
+      // Newly approved community stories (starts with 'story-') always take top priority
+      const aIsNew = a.id.startsWith('story-');
+      const bIsNew = b.id.startsWith('story-');
+      if (aIsNew && !bIsNew) return -1;
+      if (!aIsNew && bIsNew) return 1;
+
+      const timeA = a.createdAt ? new Date(a.createdAt).getTime() : (a.date ? new Date(a.date).getTime() : 0);
+      const timeB = b.createdAt ? new Date(b.createdAt).getTime() : (b.date ? new Date(b.date).getTime() : 0);
+      return timeB - timeA;
+    });
   }, [stories]);
 
   const articlesWithoutImages = useMemo(() => {
@@ -169,11 +195,16 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
 
   // Community spotlight stories with valid images
   const communityStories = useMemo(() => {
-    return articlesWithImages.filter((s) => s.id.startsWith('user-story') || s.id.startsWith('local'));
+    return articlesWithImages.filter((s) => s.id.startsWith('story-') || s.id.startsWith('user-story') || s.id.startsWith('local'));
   }, [articlesWithImages]);
 
-  // Featured story for hero - prefers article with valid image, falls back safely
+  // Featured story for hero - latest published article is placed in the FIRST card!
   const featuredStory = useMemo(() => {
+    // 1. If there's an approved community story, make it the hero card
+    const newlyApproved = articlesWithImages.find((s) => s.id.startsWith('story-'));
+    if (newlyApproved) return newlyApproved;
+
+    // 2. Otherwise pick story marked as isFeatured or the very first story
     return (
       articlesWithImages.find((s) => s.isFeatured) ||
       articlesWithImages[0] ||
@@ -192,7 +223,7 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
     return pool.filter((s) => s.id !== featuredStory?.id).slice(0, 3);
   }, [articlesWithImages, stories, featuredStory]);
 
-  // Set of story IDs featured in Hero to prevent repeating them immediately in categories
+  // Set of story IDs featured in Hero
   const heroStoryIds = useMemo(() => {
     const ids = new Set<string>();
     if (featuredStory?.id) ids.add(featuredStory.id);
@@ -202,11 +233,21 @@ export default function HomeFeed({ initialStories }: HomeFeedProps) {
     return ids;
   }, [featuredStory, sideStories]);
 
-  // Group stories by category slug, strictly using articlesWithImages
+  // Group stories by category slug, with the latest approved story at the FRONT of its category
   const getCategoryStories = (slug: CategorySlug) => {
     const categoryArticles = articlesWithImages.filter((s) => s.categorySlug === slug);
-    const filtered = categoryArticles.filter((s) => !heroStoryIds.has(s.id));
-    return filtered.length > 0 ? filtered : categoryArticles;
+    // Sort so newly approved stories are first in their category
+    const sorted = [...categoryArticles].sort((a, b) => {
+      const aIsNew = a.id.startsWith('story-');
+      const bIsNew = b.id.startsWith('story-');
+      if (aIsNew && !bIsNew) return -1;
+      if (!aIsNew && bIsNew) return 1;
+
+      const timeA = a.createdAt ? new Date(a.createdAt).getTime() : (a.date ? new Date(a.date).getTime() : 0);
+      const timeB = b.createdAt ? new Date(b.createdAt).getTime() : (b.date ? new Date(b.date).getTime() : 0);
+      return timeB - timeA;
+    });
+    return sorted;
   };
 
   const getCategoryMeta = (slug: CategorySlug) => CATEGORIES.find((c) => c.slug === slug)!;
