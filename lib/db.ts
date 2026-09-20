@@ -904,7 +904,7 @@ export function cleanArticleContent(rawContent: string): string {
   text = text.replace(/\s*style="[^"]*"/gi, '');
 
   // 5. Unwrap useless <span> tags and strip container <div> tags
-  text = text.replace(/<span[^>]*>(.*?)<\/span>/gis, '$1');
+  text = text.replace(/<span[^>]*>([\s\S]*?)<\/span>/gi, '$1');
   text = text.replace(/<\/?span[^>]*>/gi, '');
   text = text.replace(/<div[^>]*>/gi, '').replace(/<\/div>/gi, '');
 
@@ -934,8 +934,8 @@ export function cleanArticleContent(rawContent: string): string {
   text = text.replace(/<h1(\s*|>)/gi, '<h2$1').replace(/<\/h1>/gi, '</h2>');
 
   // 12. Parse and style titles, questions, quotes, and lists within <p> tags
-  text = text.replace(/<p>(.*?)<\/p>/gis, (match, rawInner) => {
-    let inner = rawInner.trim();
+  text = text.replace(/<p>([\s\S]*?)<\/p>/gi, (match: string, rawInner: string) => {
+    let inner: string = (rawInner || '').trim();
     if (!inner) return '';
 
     // A. Standalone blockquotes / lead quotes (e.g. “मिट्टी से निकली कहानी, जिसने लाखों ज़िंदगियों की फसल बदल दी।”)
@@ -974,9 +974,9 @@ export function cleanArticleContent(rawContent: string): string {
 
     // E. Detect bullet lists within paragraph (e.g. "• item 1<br />• item 2" or "🔹 item 1 🔹 item 2")
     if (inner.includes('•') || inner.includes('–') || inner.includes('🔹') || inner.includes('- ')) {
-      const lines = inner.split(/<br\s*\/?>|\n|(?=🔹)/).map(l => l.trim()).filter(Boolean);
-      if (lines.length >= 2 && lines.every(l => /^[•\-\–🔹]|\d+\.\s/.test(l))) {
-        const listItems = lines.map(l => {
+      const lines: string[] = inner.split(/<br\s*\/?>|\n|(?=🔹)/).map((l: string) => l.trim()).filter(Boolean);
+      if (lines.length >= 2 && lines.every((l: string) => /^[•\-\–🔹]|\d+\.\s/.test(l))) {
+        const listItems = lines.map((l: string) => {
           const cleanLine = l.replace(/^[•\-\–🔹\d.]\s*/, '').trim();
           return `<li>${cleanLine}</li>`;
         }).join('\n  ');
@@ -989,7 +989,7 @@ export function cleanArticleContent(rawContent: string): string {
 
   // 13. Ensure <hr /> precedes <h2> if not already preceded by <hr> and not at the very top
   let joined = text.trim();
-  joined = joined.replace(/(?<!<hr\s*\/?>\s*)(<h2[^>]*>)/gi, (match, h2, offset) => {
+  joined = joined.replace(/(?<!<hr\s*\/?>\s*)(<h2[^>]*>)/gi, (match: string, h2: string, offset: number) => {
     return offset > 10 ? `<hr />\n${h2}` : h2;
   });
 
@@ -1115,15 +1115,6 @@ export function sanitizeStory(story: Story): Story {
       }
       if (!readTime) {
         readTime = canonicalFull.readTime;
-      }
-    } else if (proto) {
-      const protoFallback = proto;
-      content = cleanArticleContent(protoFallback.content);
-      if (!summary || summary.trim().length < 50) {
-        summary = protoFallback.summary || summary;
-      }
-      if (!readTime) {
-        readTime = protoFallback.readTime || '4 min read';
       }
     }
   }
