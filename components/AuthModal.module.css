@@ -6,6 +6,10 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  flex-shrink: 0;
 }
 
 .brandTitle {
@@ -60,6 +64,8 @@
 
 .modalBody {
   padding: 24px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .tabBar {
