@@ -66,6 +66,17 @@ export const AUTHENTIC_LOCAL_IMAGES = new Set<string>([
   '/legacy-images/Bihar-Say-Website-1.png',
   '/legacy-images/WhatsApp-Image-2026-09-01-at-5.23.42-PM.jpeg',
   '/legacy-images/WhatsApp-Image-2026-08-10-at-11.38.54-PM.jpeg',
+  '/legacy-images/hero-asia-hockey-cup-2025-rajgir.jpg',
+  '/legacy-images/bcci-central-contract-2025-bihar.png',
+  '/sports_images/bcci-central-contract-2025-bihar.png',
+  '/legacy-images/bihar-coach-leads-india-3-medals-international-karate-championship.png',
+  '/sports_images/bihar-coach-leads-india-3-medals-international-karate-championship.png',
+  '/legacy-images/vaibhav-suryavanshi-youngest-ipl-star-bihar.png',
+  '/sports_images/vaibhav-suryavanshi-youngest-ipl-star-bihar.png',
+  '/legacy-images/sepaktakraw-takes-over-bihar.png',
+  '/sports_images/sepaktakraw-takes-over-bihar.png',
+  '/legacy-images/rajgir-to-host-womens-kabaddi-world-cup-2025.png',
+  '/sports_images/rajgir-to-host-womens-kabaddi-world-cup-2025.png',
 ]);
 
 // Canonical image mapping from authentic locally hosted legacy media
@@ -78,6 +89,17 @@ const PROTOTYPE_IMAGE_MAP: Record<string, string> = {
   'bihar-ai-growth-2026-gcc-policy': '/legacy-images/Bihar-Say-Website-75.png',
   'bihar-makhana-boom-migration': '/legacy-images/WhatsApp-Image-2026-09-01-at-5.23.42-PM.jpeg',
   '17-year-old-ethical-hacker-from-bihar-enters-nasas-hall-of-fame': '/legacy-images/Bihar-Say-Website-2025-05-30T142446.563.png',
+  'hero-asia-hockey-cup-2025-begins-in-rajgir-from-today': '/legacy-images/hero-asia-hockey-cup-2025-rajgir.jpg',
+  'bcci-central-contract-2025-bihars-ishan-kishan-mukesh-kumar-akash-deep-included': '/legacy-images/bcci-central-contract-2025-bihar.png',
+  'bcci-central-contract-2025': '/legacy-images/bcci-central-contract-2025-bihar.png',
+  'bihar-coach-leads-india-to-3-medals-at-international-karate-championship': '/legacy-images/bihar-coach-leads-india-3-medals-international-karate-championship.png',
+  'bihar-coach-leads-india-3-medals-international-karate-championship': '/legacy-images/bihar-coach-leads-india-3-medals-international-karate-championship.png',
+  'vaibhav-suryavanshi-youngest-ipl-star-bihar-fastest-century': '/legacy-images/vaibhav-suryavanshi-youngest-ipl-star-bihar.png',
+  'vaibhav-suryavanshi': '/legacy-images/vaibhav-suryavanshi-youngest-ipl-star-bihar.png',
+  'sepaktakraw-takes-over-bihar-growth-success-future-opportunities': '/legacy-images/sepaktakraw-takes-over-bihar.png',
+  'sepaktakraw-takes-over-bihar': '/legacy-images/sepaktakraw-takes-over-bihar.png',
+  'rajgir-to-host-womens-kabaddi-world-cup-2025': '/legacy-images/rajgir-to-host-womens-kabaddi-world-cup-2025.png',
+  'rajgir-to-host-womens-kabaddi-world-cup': '/legacy-images/rajgir-to-host-womens-kabaddi-world-cup-2025.png',
 };
 
 function normalizeTitle(title: string): string {
@@ -144,6 +166,13 @@ export const ALIAS_TO_CANONICAL_ID: Record<string, string> = {
   'sportstar-aces-awards-2026-खेलों-के-प्रचार-में-बिहार-को-मिला-best-state-का-सम्मान': 'sportstar-aces-awards-2026-%e0%a4%96%e0%a5%87%e0%a4%b2%e0%a5%8b%e0%a4%82-%e0%a4%95%e0%a5%87-%e0%a4%aa%e0%a5%8d%e0%a4%b0%e0%a4%9a%e0%a4%be%e0%a4%b0-%e0%a4%ae%e0%a5%87%e0%a4%82-%e0%a4%ac%e0%a4%bf',
   'sportstar-aces-awards-2026-खेलों-के-प्रचार-में-बि': 'sportstar-aces-awards-2026-%e0%a4%96%e0%a5%87%e0%a4%b2%e0%a5%8b%e0%a4%82-%e0%a4%95%e0%a5%87-%e0%a4%aa%e0%a5%8d%e0%a4%b0%e0%a4%9a%e0%a4%be%e0%a4%b0-%e0%a4%ae%e0%a5%87%e0%a4%82-%e0%a4%ac%e0%a4%bf',
   'sportstar-aces-awards-2026-best-state-sports-promotion': 'sportstar-aces-awards-2026-%e0%a4%96%e0%a5%87%e0%a4%b2%e0%a5%8b%e0%a4%82-%e0%a4%95%e0%a5%87-%e0%a4%aa%e0%a5%8d%e0%a4%b0%e0%a4%9a%e0%a4%be%e0%a4%b0-%e0%a4%ae%e0%a5%87%e0%a4%82-%e0%a4%ac%e0%a4%bf',
+  'bcci-central-contract-2025': 'bcci-central-contract-2025-bihars-ishan-kishan-mukesh-kumar-akash-deep-included',
+  'bcci-central-contract-2025-bihar': 'bcci-central-contract-2025-bihars-ishan-kishan-mukesh-kumar-akash-deep-included',
+  'bcci-central-contract-2025-bihars-ishan-kishan-mukesh-kumar-akash-deep-included': 'bcci-central-contract-2025-bihars-ishan-kishan-mukesh-kumar-akash-deep-included',
+  'bihar-coach-leads-india-3-medals-international-karate-championship': 'bihar-coach-leads-india-to-3-medals-at-international-karate-championship',
+  'bihar-coach-leads-india-to-3-medals-at-international-karate-championship': 'bihar-coach-leads-india-to-3-medals-at-international-karate-championship',
+  'vaibhav-suryavanshi': 'vaibhav-suryavanshi-youngest-ipl-star-bihar-fastest-century',
+  'vaibhav-suryavanshi-youngest-ipl-star-bihar-fastest-century': 'vaibhav-suryavanshi-youngest-ipl-star-bihar-fastest-century',
 };
 
 // Rich editorial content for standalone prototype stories
@@ -528,6 +557,49 @@ export const PROTOTYPE_CONTENT_MAP: Record<string, { title?: string; summary?: s
 <h2>Bihar's Aggressive Industrial Incentives</h2>
 <p>Under the revised Bihar Industrial Investment Promotion Policy, the state government offers aggressive capital subsidies, 100% stamp duty exemptions, and power tariff rebates for anchor industrial units in IT and electronics hardware. Senior officials reaffirmed the government's commitment to single-window fast-track clearances.</p>
 <p>As discussions advance, Bihar's transition from an agricultural heartland to an emerging electronics manufacturing powerhouse continues to gain decisive momentum.</p>`
+  },
+  'hero-asia-hockey-cup-2025-begins-in-rajgir-from-today': {
+    title: 'HERO Asia Hockey Cup 2025 Begins in Rajgir from Today',
+    summary: 'Bihar makes history today as Rajgir hosts the HERO Asia Cup 2025, turning the ancient city into a global hockey destination with India vs China clash and eight Asian giants fighting for a direct Hockey World Cup spot.',
+    readTime: '4 min read',
+    content: `<h2>Asia Cup 2025 in Rajgir: Hockey’s Biggest Battle Begins Today with India vs China Clash</h2>
+<p>Bihar makes history today. For the first time ever, Rajgir is hosting the HERO Asia Cup 2025, turning the ancient city into a global hockey destination. The atmosphere is electric as eight Asian giants prepare to fight for glory, and the winner will book a direct spot in the Hockey World Cup.</p>
+
+<h2>A Historic Beginning in Bihar</h2>
+<p>The ten-day tournament kicks off with four matches on day one. The opener between Malaysia and Bangladesh starts at 9 AM, followed by Korea vs Chinese Taipei at 11 AM. Later, Japan faces Kazakhstan at 1 PM. The highlight, however, comes at 3 PM when India will face China.</p>
+<p>Adding to the moment, Chief Minister Nitish Kumar will inaugurate the Asia Cup at 2:45 PM, just before India’s clash with China.</p>
+
+<h2>Tournament Format and Pool Division</h2>
+<p>The competition features eight teams split into two pools:</p>
+<ul>
+  <li><strong>Pool A:</strong> India, Japan, China, Kazakhstan</li>
+  <li><strong>Pool B:</strong> Malaysia, Korea, Bangladesh, Chinese Taipei</li>
+</ul>
+<p>After the group stage, the top teams advance to the Super Four, followed by knockout matches. The final is scheduled for 7 September at 7:30 PM.</p>
+
+<h2>Tribute to Major Dhyan Chand</h2>
+<p>The start date holds symbolic value. 29 August marks the birth anniversary of hockey wizard Major Dhyan Chand, celebrated nationwide as National Sports Day. To honor him, the tournament mascot has been named “Chand.”</p>
+<p>The tiger-shaped mascot carries the Padma Bhushan emblem on its chest. Its red robe reflects passion, while the magician’s hat symbolizes Dhyan Chand’s unmatched skill.</p>
+
+<h2>India’s Squad Ready for Battle</h2>
+<p>Under the guidance of coach Craig Fulton and captain Harmanpreet Singh, India’s 18-member squad is determined to win on home turf. The team has trained hard and will use local conditions and massive fan support to their advantage.</p>
+<p><strong>India’s Squad:</strong></p>
+<ul>
+  <li><strong>Goalkeepers:</strong> Krishan Pathak, Suraj Karkera</li>
+  <li><strong>Defenders:</strong> Sumit Singh, Jarmanpreet Singh, Sanjay, Harmanpreet Singh, Amit Rohidas, Jugraj Singh</li>
+  <li><strong>Midfielders:</strong> Rajinder Singh, Rajkumar Pal, Hardik Singh, Manpreet Singh, Vivek Sagar Prasad</li>
+  <li><strong>Forwards:</strong> Mandeep Singh, Shilanand Lakra, Abhishek, Sukhjeet Singh, Dilpreet Singh</li>
+  <li><strong>Reserves:</strong> Neelam, Sanjeev Jens, Selvam Karthi</li>
+</ul>
+
+<h2>Ticket Frenzy and Fan Excitement</h2>
+<p>The excitement is so high that when tickets opened on the Zini app on 26 August, they sold out in just five minutes. Tickets are free but issued per day, allowing fans to watch all matches scheduled for that day.</p>
+<p>Fan parks with giant screens have also been set up across Bihar to bring the tournament closer to the people.</p>
+
+<h2>Why It Matters</h2>
+<p>The HERO Asia Cup 2025 is not just about hockey. It is about Bihar stepping into the international sports spotlight. Rajgir, known for its heritage, now earns recognition as a modern hub for global sporting events.</p>
+<p>This event will inspire young athletes, strengthen Bihar’s sporting infrastructure, and put the state firmly on the world map.</p>
+<p>Follow <strong><a href="https://biharsay.com">www.biharsay.com</a></strong> for more regular updates on Bihar’s sports, culture, and grassroots change.</p>`
   },
   'asian-womens-hockey-championship-rajgir': {
     title: "Bihar: The Rising Star of Indian Sports — Hosts Asian Women's Hockey Championship",

@@ -4,19 +4,19 @@
   --bg: #FFFFFF;
   --bg-subtle: #F8FAFC;
   --bg-muted: #F1F5F9;
-  
+
   --ink: #0F172A;
   --ink-secondary: #334155;
   --ink-muted: #64748B;
   --ink-faint: #94A3B8;
-  
+
   --primary: #0F172A;
   --accent: #2563EB;
   --accent-light: #EFF6FF;
   --brand-yellow: #FDD302;
   --brand-yellow-glow: rgba(253, 211, 2, 0.35);
   --brand-yellow-dark: #D97706;
-  
+
   /* Backward-compatible variable aliases */
   --ivory: #FFFFFF;
   --ivory-deep: #F8FAFC;
@@ -26,16 +26,16 @@
   --sindoor: #DC2626;
   --sage: #0D9488;
   --sky: #38BDF8;
-  
+
   --line: #E2E8F0;
   --line-subtle: #F1F5F9;
   --line-light: rgba(15, 23, 42, 0.08);
-  
+
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
   --shadow-md: 0 4px 16px -2px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
   --shadow-lg: 0 12px 32px -4px rgba(15, 23, 42, 0.08), 0 4px 8px -2px rgba(15, 23, 42, 0.04);
-  
+
   --radius-xs: 6px;
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -64,7 +64,12 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, .display {
+h1,
+h2,
+h3,
+h4,
+h5,
+.display {
   font-family: 'Playfair Display', Georgia, serif;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -83,7 +88,10 @@ img {
   object-fit: cover;
 }
 
-button, input, textarea, select {
+button,
+input,
+textarea,
+select {
   font-family: inherit;
 }
 
@@ -170,12 +178,30 @@ button, input, textarea, select {
   flex: none;
   display: inline-block;
 }
-.dot.culture { background: #D97706; }
-.dot.edu { background: #2563EB; }
-.dot.startup { background: #10B981; }
-.dot.industry { background: #6366F1; }
-.dot.sports { background: #E11D48; }
-.dot.invest { background: #0F172A; }
+
+.dot.culture {
+  background: #D97706;
+}
+
+.dot.edu {
+  background: #2563EB;
+}
+
+.dot.startup {
+  background: #10B981;
+}
+
+.dot.industry {
+  background: #6366F1;
+}
+
+.dot.sports {
+  background: #E11D48;
+}
+
+.dot.invest {
+  background: #0F172A;
+}
 
 /* ---------- Section Heading Pattern ---------- */
 .section-head {
@@ -204,7 +230,10 @@ button, input, textarea, select {
   max-width: 440px;
 }
 
-a, button, [role="button"], select {
+a,
+button,
+[role="button"],
+select {
   cursor: pointer;
 }
 
@@ -242,13 +271,25 @@ a, button, [role="button"], select {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(16px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* ---------- Scroll Reveal Animations ---------- */
