@@ -308,25 +308,89 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+.editorContentEditable {
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  outline: none;
+  min-height: 180px;
+  max-height: 340px;
+  overflow-y: auto;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #1E293B;
+  background: #FFFFFF;
+  font-family: inherit;
+}
+
+.editorContentEditable:empty:before {
+  content: attr(data-placeholder);
+  color: #94A3B8;
+  font-style: italic;
+  pointer-events: none;
+}
+
+.editorContentEditable h1,
+.editorContentEditable h2,
+.editorContentEditable h3 {
+  margin-top: 14px;
+  margin-bottom: 6px;
+  color: #0F172A;
+}
+
+.editorContentEditable p {
+  margin-bottom: 10px;
+}
+
+.editorContentEditable ul,
+.editorContentEditable ol {
+  margin: 10px 0 14px 24px;
+  padding-left: 6px;
+}
+
+.editorContentEditable ul {
+  list-style-type: disc;
+}
+
+.editorContentEditable ol {
+  list-style-type: decimal;
+}
+
+.editorContentEditable li {
+  margin-bottom: 4px;
+  line-height: 1.65;
+}
+
+.editorContentEditable blockquote {
+  border-left: 3px solid #D97706;
+  margin: 12px 0;
+  color: #475569;
+  font-style: italic;
+  background: #FEF3C7;
+  padding: 8px 12px;
+  border-radius: 0 6px 6px 0;
+}
+
 .editorTextarea {
   width: 100%;
-  padding: 12px 14px;
+  padding: 14px 16px;
   border: none;
   outline: none;
   resize: vertical;
-  font-size: 14px;
+  font-size: 13.5px;
   line-height: 1.6;
-  min-height: 160px;
-  font-family: inherit;
-  color: var(--ink);
+  min-height: 180px;
+  font-family: Consolas, 'Courier New', monospace;
+  color: #1E293B;
+  background: #F8FAFC;
 }
 
 .previewPanel {
-  padding: 16px;
-  min-height: 160px;
-  max-height: 320px;
+  padding: 18px;
+  min-height: 180px;
+  max-height: 340px;
   overflow-y: auto;
-  line-height: 1.7;
+  line-height: 1.75;
   color: #1E293B;
   background: #FAFAFA;
 }
@@ -334,22 +398,61 @@
 .previewPanel h1,
 .previewPanel h2,
 .previewPanel h3 {
-  margin-top: 10px;
-  margin-bottom: 6px;
+  margin-top: 16px;
+  margin-bottom: 8px;
   color: #0F172A;
 }
 
 .previewPanel p {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+.previewPanel ul,
+.previewPanel ol {
+  margin: 12px 0 16px 26px;
+  padding-left: 6px;
+}
+
+.previewPanel ul {
+  list-style-type: disc;
+}
+
+.previewPanel ol {
+  list-style-type: decimal;
+}
+
+.previewPanel li {
+  margin-bottom: 6px;
+  line-height: 1.65;
+}
+
+.previewPanel li strong,
+.previewPanel strong {
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.previewPanel em {
+  font-style: italic;
+}
+
+.previewPanel u {
+  text-decoration: underline;
+}
+
+.previewPanel hr {
+  border: none;
+  border-top: 1px solid #E2E8F0;
+  margin: 20px 0;
 }
 
 .previewPanel blockquote {
   border-left: 3px solid #D97706;
-  margin: 10px 0;
+  margin: 12px 0;
   color: #475569;
   font-style: italic;
   background: #FEF3C7;
-  padding: 8px 12px;
+  padding: 10px 14px;
   border-radius: 0 6px 6px 0;
 }
 

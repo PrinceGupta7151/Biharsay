@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { submitStory, cleanArticleContent } from '@/lib/db';
 import { uploadStoryThumbnail } from '@/lib/storage';
+import { cleanWordHtml, convertPlainTextToHtml } from '@/lib/textUtils';
 import { CATEGORIES } from '@/data/seedStories';
 import { CategorySlug } from '@/types';
 import { 
@@ -22,7 +23,8 @@ import {
   List, 
   Eye, 
   Edit3,
-  Sparkles
+  Sparkles,
+  Code
 } from 'lucide-react';
 import styles from './SubmitStoryModal.module.css';
 
@@ -42,6 +44,7 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
   const { isSubmitModalOpen, closeSubmitModal, user } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
+  const editorRef = useRef<HTMLDivElement>(null);
 
   const [title, setTitle] = useState('');
   const [categorySlug, setCategorySlug] = useState<CategorySlug>('culture-heritage');
@@ -53,7 +56,16 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedFont, setSelectedFont] = useState(FONT_OPTIONS[0].value);
-  const [editorTab, setEditorTab] = useState<'write' | 'preview'>('write');
+  const [editorTab, setEditorTab] = useState<'write' | 'preview' | 'html'>('write');
+
+  // Keep content in sync when switching to write mode
+  useEffect(() => {
+    if (editorTab === 'write' && editorRef.current) {
+      if (editorRef.current.innerHTML !== content) {
+        editorRef.current.innerHTML = content;
+      }
+    }
+  }, [editorTab]);
 
   if (!isSubmitModalOpen) return null;
 
@@ -89,82 +101,184 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
     }
   };
 
+  const handleEditorInput = () => {
+    if (editorRef.current) {
+      setContent(editorRef.current.innerHTML);
+    }
+  };
+
+  const handleEditorPaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const html = e.clipboardData.getData('text/html');
+    const text = e.clipboardData.getData('text/plain');
+
+    let formattedHtml = '';
+    if (html) {
+      formattedHtml = cleanWordHtml(html);
+    } else if (text) {
+      formattedHtml = convertPlainTextToHtml(text);
+    }
+
+    if (formattedHtml) {
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount > 0) {
+        const range = sel.getRangeAt(0);
+        range.deleteContents();
+
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = formattedHtml;
+        const frag = document.createDocumentFragment();
+        let node: ChildNode | null;
+        let lastNode: ChildNode | null = null;
+        while ((node = tempDiv.firstChild)) {
+          lastNode = frag.appendChild(node);
+        }
+        range.insertNode(frag);
+
+        if (lastNode) {
+          range.setStartAfter(lastNode);
+          range.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      } else if (editorRef.current) {
+        editorRef.current.innerHTML += formattedHtml;
+      }
+
+      if (editorRef.current) {
+        setContent(editorRef.current.innerHTML);
+      }
+    }
+  };
+
   const applyFontToSelection = (fontValue: string) => {
     setSelectedFont(fontValue);
-    const textarea = contentRef.current;
-    if (!textarea) return;
 
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selected = content.slice(start, end);
-
-    if (selected) {
-      const replacement = `<span style="font-family: ${fontValue};">${selected}</span>`;
+    if (editorTab === 'html') {
+      const textarea = contentRef.current;
+      if (!textarea) return;
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const selected = content.slice(start, end);
+      const replacement = selected
+        ? `<span style="font-family: ${fontValue};">${selected}</span>`
+        : `<p style="font-family: ${fontValue};">Styled text here...</p>`;
       const newContent = content.slice(0, start) + replacement + content.slice(end);
       setContent(newContent);
-    } else {
-      const fontName = FONT_OPTIONS.find(f => f.value === fontValue)?.label.split(' ')[0] || 'Styled';
-      const replacement = `\n<p style="font-family: ${fontValue};">Write ${fontName} text here...</p>\n`;
-      const newContent = content.slice(0, start) + replacement + content.slice(end);
-      setContent(newContent);
+      setTimeout(() => textarea.focus(), 10);
+      return;
     }
-    setTimeout(() => textarea.focus(), 50);
+
+    if (editorRef.current) {
+      editorRef.current.focus();
+    }
+
+    const sel = window.getSelection();
+    if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+      const range = sel.getRangeAt(0);
+      const span = document.createElement('span');
+      span.style.fontFamily = fontValue;
+      try {
+        span.appendChild(range.extractContents());
+        range.insertNode(span);
+        sel.removeAllRanges();
+        const newRange = document.createRange();
+        newRange.selectNodeContents(span);
+        sel.addRange(newRange);
+      } catch {
+        document.execCommand('fontName', false, fontValue);
+      }
+    } else if (editorRef.current) {
+      editorRef.current.style.fontFamily = fontValue;
+    }
+
+    if (editorRef.current) {
+      setContent(editorRef.current.innerHTML);
+    }
   };
 
   const applyTagFormat = (tag: 'h1' | 'h2' | 'quote' | 'b' | 'i' | 'u' | 'list') => {
-    const textarea = contentRef.current;
-    if (!textarea) return;
+    if (editorTab === 'html') {
+      const textarea = contentRef.current;
+      if (!textarea) return;
 
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selected = content.slice(start, end);
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const selected = content.slice(start, end);
 
-    let replacement = '';
-    const fontStyle = ` style="font-family: ${selectedFont};"`;
+      let replacement = '';
+      const fontStyle = ` style="font-family: ${selectedFont};"`;
+
+      switch (tag) {
+        case 'h1':
+          replacement = selected ? `<h1${fontStyle}>${selected}</h1>` : `\n<h1${fontStyle}>Main Section Title</h1>\n`;
+          break;
+        case 'h2':
+          replacement = selected ? `<h2${fontStyle}>${selected}</h2>` : `\n<h2${fontStyle}>Subheading Title</h2>\n`;
+          break;
+        case 'quote':
+          replacement = selected ? `<blockquote${fontStyle}>${selected}</blockquote>` : `\n<blockquote${fontStyle}>“Inspiring quote or key takeaway...”</blockquote>\n`;
+          break;
+        case 'b':
+          replacement = selected ? `<strong>${selected}</strong>` : `<strong>bold text</strong>`;
+          break;
+        case 'i':
+          replacement = selected ? `<em>${selected}</em>` : `<em>italic text</em>`;
+          break;
+        case 'u':
+          replacement = selected ? `<u>${selected}</u>` : `<u>underlined text</u>`;
+          break;
+        case 'list':
+          replacement = selected 
+            ? `\n<ul>\n  <li>${selected}</li>\n</ul>\n` 
+            : `\n<ul>\n  <li>Key point 1</li>\n  <li>Key point 2</li>\n</ul>\n`;
+          break;
+      }
+
+      const newContent = content.slice(0, start) + replacement + content.slice(end);
+      setContent(newContent);
+      setTimeout(() => textarea.focus(), 50);
+      return;
+    }
+
+    // Visual WYSIWYG Mode
+    if (editorRef.current) {
+      editorRef.current.focus();
+    }
 
     switch (tag) {
       case 'h1':
-        replacement = selected 
-          ? `<h1${fontStyle}>${selected}</h1>` 
-          : `\n<h1${fontStyle}>Main Section Title</h1>\n`;
+        document.execCommand('formatBlock', false, '<h1>');
         break;
       case 'h2':
-        replacement = selected 
-          ? `<h2${fontStyle}>${selected}</h2>` 
-          : `\n<h2${fontStyle}>Subheading Title</h2>\n`;
+        document.execCommand('formatBlock', false, '<h2>');
         break;
       case 'quote':
-        replacement = selected 
-          ? `<blockquote${fontStyle}>${selected}</blockquote>` 
-          : `\n<blockquote${fontStyle}>“Inspiring quote or key takeaway...”</blockquote>\n`;
+        document.execCommand('formatBlock', false, '<blockquote>');
         break;
       case 'b':
-        replacement = selected ? `<strong>${selected}</strong>` : `<strong>bold text</strong>`;
+        document.execCommand('bold');
         break;
       case 'i':
-        replacement = selected ? `<em>${selected}</em>` : `<em>italic text</em>`;
+        document.execCommand('italic');
         break;
       case 'u':
-        replacement = selected ? `<u>${selected}</u>` : `<u>underlined text</u>`;
+        document.execCommand('underline');
         break;
       case 'list':
-        replacement = selected 
-          ? `\n<ul>\n  <li>${selected}</li>\n</ul>\n` 
-          : `\n<ul>\n  <li>Key point 1</li>\n  <li>Key point 2</li>\n</ul>\n`;
+        document.execCommand('insertUnorderedList');
         break;
     }
 
-    const newContent = content.slice(0, start) + replacement + content.slice(end);
-    setContent(newContent);
-
-    setTimeout(() => {
-      textarea.focus();
-    }, 50);
+    if (editorRef.current) {
+      setContent(editorRef.current.innerHTML);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !content.trim()) {
+    const finalContent = content.trim() || (editorRef.current ? editorRef.current.innerHTML.trim() : '');
+    if (!title.trim() || !finalContent) {
       setError('Please fill in both the story title and content.');
       return;
     }
@@ -188,7 +302,7 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
         title: title.trim(),
         category: categoryName,
         categorySlug,
-        content: content.trim(),
+        content: finalContent,
         authorName: authorName.trim() || user?.displayName || 'Community Voice',
         authorEmail: user?.email || 'contributor@biharsay.com',
         userId: user?.uid,
@@ -209,6 +323,9 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
         setSuccess(false);
         setTitle('');
         setContent('');
+        if (editorRef.current) {
+          editorRef.current.innerHTML = '';
+        }
         handleRemoveThumbnail();
         closeSubmitModal();
       }, 2000);
@@ -291,6 +408,7 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
                     type="button"
                     className={`${styles.tabSwitchBtn} ${editorTab === 'write' ? styles.activeTab : ''}`}
                     onClick={() => setEditorTab('write')}
+                    title="Visual Editor (WYSIWYG)"
                   >
                     <Edit3 size={11} style={{ marginRight: 4, display: 'inline' }} />
                     Write
@@ -299,9 +417,19 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
                     type="button"
                     className={`${styles.tabSwitchBtn} ${editorTab === 'preview' ? styles.activeTab : ''}`}
                     onClick={() => setEditorTab('preview')}
+                    title="Live Article Preview"
                   >
                     <Eye size={11} style={{ marginRight: 4, display: 'inline' }} />
                     Preview
+                  </button>
+                  <button
+                    type="button"
+                    className={`${styles.tabSwitchBtn} ${editorTab === 'html' ? styles.activeTab : ''}`}
+                    onClick={() => setEditorTab('html')}
+                    title="HTML Source Code"
+                  >
+                    <Code size={11} style={{ marginRight: 4, display: 'inline' }} />
+                    HTML
                   </button>
                 </div>
               </div>
@@ -388,17 +516,20 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
                   </button>
                 </div>
 
-                {editorTab === 'write' ? (
-                  <textarea
-                    ref={contentRef}
-                    className={styles.editorTextarea}
-                    rows={6}
-                    placeholder="Write your story details here. Highlight any sentence to change its font or apply H1/H2 headings..."
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    required
-                  />
-                ) : (
+                {/* Visual WYSIWYG Editor */}
+                <div
+                  ref={editorRef}
+                  contentEditable
+                  className={styles.editorContentEditable}
+                  style={{ display: editorTab === 'write' ? 'block' : 'none' }}
+                  data-placeholder="Write your story details here. Highlight any sentence to change its font or apply headings. Content from Word pastes with rich formatting preserved..."
+                  onInput={handleEditorInput}
+                  onPaste={handleEditorPaste}
+                  suppressContentEditableWarning
+                />
+
+                {/* Live Preview Panel */}
+                {editorTab === 'preview' && (
                   <div className={styles.previewPanel}>
                     {content.trim() ? (
                       <div
@@ -412,6 +543,33 @@ export default function SubmitStoryModal({ onStorySubmitted }: SubmitStoryModalP
                       </div>
                     )}
                   </div>
+                )}
+
+                {/* Raw HTML Mode */}
+                {editorTab === 'html' && (
+                  <textarea
+                    ref={contentRef}
+                    className={styles.editorTextarea}
+                    rows={8}
+                    placeholder="HTML source code..."
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    onPaste={(e) => {
+                      const html = e.clipboardData.getData('text/html');
+                      if (html) {
+                        e.preventDefault();
+                        const cleaned = cleanWordHtml(html);
+                        const textarea = e.currentTarget;
+                        const start = textarea.selectionStart;
+                        const end = textarea.selectionEnd;
+                        const newContent = content.slice(0, start) + cleaned + content.slice(end);
+                        setContent(newContent);
+                        setTimeout(() => {
+                          textarea.selectionStart = textarea.selectionEnd = start + cleaned.length;
+                        }, 10);
+                      }
+                    }}
+                  />
                 )}
               </div>
               <span className={styles.helperText}>

@@ -899,13 +899,37 @@ export function cleanArticleContent(rawContent: string): string {
   // 3. Strip scraper tracking/chunk attributes like data-start="123", data-end="456", data-is-last-node, etc.
   text = text.replace(/\s*data-[a-zA-Z0-9\-]+(?:="[^"]*"|='[^']*'|=[^\s>]+)?/gi, '');
 
-  // 4. Remove inline class and style attributes from raw scraped DOM elements
-  text = text.replace(/\s*class="[^"]*"/gi, '');
-  text = text.replace(/\s*style="[^"]*"/gi, '');
+  // 4. Sanitize inline class and style attributes (preserve font-family, bold, italic, underline and article classes)
+  text = text.replace(/style=["']([^"']*)["']/gi, (match, styleStr) => {
+    const rules = styleStr.split(';').map((r: string) => r.trim()).filter(Boolean);
+    const kept: string[] = [];
+    for (const rule of rules) {
+      const [prop, val] = rule.split(':').map((s: string) => s.trim());
+      if (!prop || !val) continue;
+      const lower = prop.toLowerCase();
+      if (lower === 'font-family') {
+        kept.push(`font-family: ${val}`);
+      } else if (lower === 'font-weight' && (val === 'bold' || parseInt(val, 10) >= 600)) {
+        kept.push('font-weight: bold');
+      } else if (lower === 'font-style' && val === 'italic') {
+        kept.push('font-style: italic');
+      } else if (lower === 'text-decoration' && val.includes('underline')) {
+        kept.push('text-decoration: underline');
+      }
+    }
+    return kept.length > 0 ? ` style="${kept.join('; ')}"` : '';
+  });
 
-  // 5. Unwrap useless <span> tags and strip container <div> tags
-  text = text.replace(/<span[^>]*>([\s\S]*?)<\/span>/gi, '$1');
-  text = text.replace(/<\/?span[^>]*>/gi, '');
+  text = text.replace(/\s*class=["']([^"']*)["']/gi, (match, classStr) => {
+    const keptClasses = classStr
+      .split(/\s+/)
+      .filter((c: string) => c.startsWith('article-'))
+      .join(' ');
+    return keptClasses ? ` class="${keptClasses}"` : '';
+  });
+
+  // 5. Unwrap empty/useless spans but preserve spans that have style attributes (e.g. font-family)
+  text = text.replace(/<span\s*>([\s\S]*?)<\/span>/gi, '$1');
   text = text.replace(/<div[^>]*>/gi, '').replace(/<\/div>/gi, '');
 
   // 6. Normalize newlines
@@ -929,11 +953,23 @@ export function cleanArticleContent(rawContent: string): string {
   text = text.replace(/([a-z0-9\)])(Series:\s*\d+[^\n<]*)/gi, '$1</p>\n<p class="article-series-badge"><strong>$2</strong>');
   text = text.replace(/([”"»])([A-Z\u0900-\u097F])/g, '$1</p>\n<p>$2');
 
-  // 11. Remove redundant top-level <h1> if it duplicates headline, and convert internal <h1> to <h2>
-  text = text.replace(/^<h1(\s*|>)(.*?)<\/h1>\s*/i, '');
+  // 11. Convert internal <h1> to <h2> so user headings are prominently retained (article page headline is h1)
   text = text.replace(/<h1(\s*|>)/gi, '<h2$1').replace(/<\/h1>/gi, '</h2>');
 
-  // 12. Parse and style titles, questions, quotes, and lists within <p> tags
+  // 12. If text does not contain <p> tags, split by double newlines into blocks
+  if (!/<p[\s>]/i.test(text)) {
+    const blocks = text.split(/\n\n+/);
+    text = blocks.map(block => {
+      const trimmed = block.trim();
+      if (!trimmed) return '';
+      if (/^<(h\d|ul|ol|blockquote|table|hr)/i.test(trimmed)) {
+        return trimmed;
+      }
+      return `<p>${trimmed.replace(/\n/g, '<br />')}</p>`;
+    }).filter(Boolean).join('\n\n');
+  }
+
+  // 13. Parse and style titles, questions, quotes, and lists within <p> tags
   text = text.replace(/<p>([\s\S]*?)<\/p>/gi, (match: string, rawInner: string) => {
     let inner: string = (rawInner || '').trim();
     if (!inner) return '';
@@ -972,22 +1008,63 @@ export function cleanArticleContent(rawContent: string): string {
       return `<h4 class="article-sub-heading"><strong>${inner}</strong></h4>`;
     }
 
-    // E. Detect bullet lists within paragraph (e.g. "• item 1<br />• item 2" or "🔹 item 1 🔹 item 2")
-    if (inner.includes('•') || inner.includes('–') || inner.includes('🔹') || inner.includes('- ')) {
+    // E. Detect bullet/numbered lists within paragraph (handles mixed paragraphs with intro/outro sentences)
+    if (inner.includes('•') || inner.includes('–') || inner.includes('🔹') || inner.includes('- ') || /^\d+[\.\)]\s/.test(inner)) {
       const lines: string[] = inner.split(/<br\s*\/?>|\n|(?=🔹)/).map((l: string) => l.trim()).filter(Boolean);
-      if (lines.length >= 2 && lines.every((l: string) => /^[•\-\–🔹]|\d+\.\s/.test(l))) {
-        const listItems = lines.map((l: string) => {
-          const cleanLine = l.replace(/^[•\-\–🔹\d.]\s*/, '').trim();
-          return `<li>${cleanLine}</li>`;
-        }).join('\n  ');
-        return `<ul>\n  ${listItems}\n</ul>`;
+      const hasBullets = lines.some((l: string) => /^[•\-\–\*🔹]|\d+[\.\)]\s/.test(l));
+
+      if (hasBullets) {
+        const parts: string[] = [];
+        let currentList: { type: 'ul' | 'ol'; items: string[] } | null = null;
+        let currentParagraph: string[] = [];
+
+        const flushText = () => {
+          if (currentParagraph.length > 0) {
+            parts.push(`<p>${currentParagraph.join('<br />')}</p>`);
+            currentParagraph = [];
+          }
+        };
+
+        const flushList = () => {
+          if (currentList && currentList.items.length > 0) {
+            const tag = currentList.type;
+            const itemsHtml = currentList.items.map(it => `  <li>${it}</li>`).join('\n');
+            parts.push(`<${tag}>\n${itemsHtml}\n</${tag}>`);
+            currentList = null;
+          }
+        };
+
+        for (const line of lines) {
+          const bulletMatch = line.match(/^[•\-\–\*🔹]\s*(.*)$/);
+          const numMatch = line.match(/^(\d+)[\.\)]\s*(.*)$/);
+
+          if (bulletMatch) {
+            flushText();
+            if (currentList && currentList.type !== 'ul') flushList();
+            if (!currentList) currentList = { type: 'ul', items: [] };
+            currentList.items.push(bulletMatch[1]);
+          } else if (numMatch) {
+            flushText();
+            if (currentList && currentList.type !== 'ol') flushList();
+            if (!currentList) currentList = { type: 'ol', items: [] };
+            currentList.items.push(numMatch[2]);
+          } else {
+            flushList();
+            currentParagraph.push(line);
+          }
+        }
+
+        flushList();
+        flushText();
+
+        return parts.join('\n');
       }
     }
 
     return `<p>${inner}</p>`;
   });
 
-  // 13. Ensure <hr /> precedes <h2> if not already preceded by <hr> and not at the very top
+  // 14. Ensure <hr /> precedes <h2> if not already preceded by <hr> and not at the very top
   let joined = text.trim();
   joined = joined.replace(/(?<!<hr\s*\/?>\s*)(<h2[^>]*>)/gi, (match: string, h2: string, offset: number) => {
     return offset > 10 ? `<hr />\n${h2}` : h2;
