@@ -75,12 +75,12 @@ export default function WelcomePopup() {
         <div className={styles.headerBanner}>
           <div className={styles.logoWrapper}>
             <Image
-              src="/logos/biharsay-icon.png"
+              src="/logos/biharsay-popup-logo.png"
               alt="Bihar Say"
-              width={52}
-              height={52}
+              width={130}
+              height={65}
               priority
-              style={{ objectFit: 'contain' }}
+              style={{ objectFit: 'contain', width: 'auto', height: '100%' }}
             />
           </div>
 

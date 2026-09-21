@@ -79,6 +79,8 @@ export interface StoryComment {
   storyId: string;
   userId: string;
   userName: string;
+  userEmail?: string;
+  userWebsite?: string;
   userPhoto?: string | null;
   content: string;
   createdAt: string;

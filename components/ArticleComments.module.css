@@ -1,126 +1,129 @@
 .commentsSection {
   margin: 48px 0;
   padding-top: 36px;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--line, #E2E8F0);
 }
 
-.sectionHeader {
-  margin-bottom: 24px;
+.replySection {
+  margin-bottom: 36px;
 }
 
-.titleRow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
-}
-
-.titleRow h3 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 22px;
-  color: var(--ink);
+.replyTitle {
+  font-family: inherit;
+  font-size: 26px;
   font-weight: 700;
+  color: var(--ink, #111827);
+  margin-bottom: 8px;
   letter-spacing: -0.02em;
 }
 
-.countBadge {
-  background: var(--bg-subtle);
-  color: var(--accent);
-  font-size: 12px;
-  font-weight: 700;
-  padding: 2px 10px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--line);
-}
-
-.sectionSub {
-  font-size: 14px;
-  color: #64748B;
-  max-width: 520px;
-  line-height: 1.5;
-}
-
-/* Comment Form Card */
-.formCard {
-  background: var(--ivory);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  margin-bottom: 32px;
-  box-shadow: 0 2px 12px rgba(14, 62, 115, 0.04);
-}
-
-.userBanner {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--indigo);
-  color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 13px;
-}
-
-.postingAs {
-  font-size: 13px;
-  color: #475569;
-}
-
-.postingAs strong {
-  color: var(--indigo-deep);
-}
-
-.textarea {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
+.replySubtitle {
   font-size: 14.5px;
-  line-height: 1.5;
+  color: #64748B;
+  margin-bottom: 24px;
+}
+
+.replyForm {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.inputRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .inputRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fullWidthRow {
+  width: 100%;
+}
+
+.inputField {
+  width: 100%;
+  padding: 14px 16px;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  font-size: 15px;
+  color: var(--ink, #111827);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
   font-family: inherit;
+}
+
+.inputField::placeholder {
+  color: #94A3B8;
+}
+
+.inputField:focus {
+  border-color: #0056FF;
+  box-shadow: 0 0 0 3px rgba(0, 86, 255, 0.12);
+}
+
+.textareaField {
+  width: 100%;
+  padding: 14px 16px;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink, #111827);
   outline: none;
   resize: vertical;
-  min-height: 90px;
+  min-height: 150px;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  font-family: inherit;
 }
 
-.textarea:focus {
-  border-color: var(--marigold);
-  box-shadow: 0 0 0 3px rgba(29, 111, 216, 0.12);
+.textareaField::placeholder {
+  color: #94A3B8;
 }
 
-.formActions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 12px;
+.textareaField:focus {
+  border-color: #0056FF;
+  box-shadow: 0 0 0 3px rgba(0, 86, 255, 0.12);
 }
 
-.guestPrompt {
+.actionRow {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 4px;
 }
 
-.promptText h4 {
-  font-size: 16px;
-  color: var(--indigo-deep);
-  margin-bottom: 4px;
+.submitBtn {
+  background: #0056FF;
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 13px 30px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
 }
 
-.promptText p {
-  font-size: 13.5px;
-  color: #64748B;
+.submitBtn:hover:not(:disabled) {
+  background: #0045CC;
+}
+
+.submitBtn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.successText {
+  color: #16A34A;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 /* Comments List */
@@ -128,13 +131,16 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line, #E2E8F0);
 }
 
 .commentItem {
   display: flex;
   gap: 16px;
   padding-bottom: 20px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--line, #E2E8F0);
 }
 
 .commentItem:last-child {
@@ -145,15 +151,15 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--ivory-deep);
-  border: 1.5px solid var(--line);
-  color: var(--indigo);
+  background: #F1F5F9;
+  border: 1.5px solid #E2E8F0;
+  color: #0056FF;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 15px;
-  flex: none;
+  flex-shrink: 0;
 }
 
 .commentBody {
@@ -163,47 +169,40 @@
 .commentMeta {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 6px;
 }
 
 .authorName {
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--indigo-deep);
+  font-weight: 600;
+  font-size: 14.5px;
+  color: var(--ink, #111827);
 }
 
 .commentDate {
-  font-size: 11.5px;
+  font-size: 12px;
   color: #94A3B8;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
 }
 
 .commentContent {
   font-size: 14.5px;
   line-height: 1.6;
-  color: #334155;
-  white-space: pre-wrap;
+  color: var(--ink-secondary, #334155);
 }
 
-.loadingState,
 .emptyComments {
-  padding: 32px 20px;
   text-align: center;
-  color: #64748B;
+  padding: 24px 0;
+  color: #94A3B8;
   font-size: 14px;
-  background: var(--ivory-deep);
-  border-radius: var(--radius-md);
 }
 
-@media (max-width: 600px) {
-  .formCard {
-    padding: 18px;
-  }
-  .guestPrompt {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.loadingState {
+  text-align: center;
+  padding: 20px 0;
+  color: #94A3B8;
+  font-size: 14px;
 }

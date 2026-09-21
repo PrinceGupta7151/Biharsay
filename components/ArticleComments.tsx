@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { getStoryComments, addStoryComment } from '@/lib/db';
 import { StoryComment } from '@/types';
-import { MessageSquare, Send, User, Sparkles, Clock } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import styles from './ArticleComments.module.css';
 
 interface ArticleCommentsProps {
@@ -12,11 +12,15 @@ interface ArticleCommentsProps {
 }
 
 export default function ArticleComments({ storyId }: ArticleCommentsProps) {
-  const { user, openAuthModal } = useAuth();
+  const { user } = useAuth();
   const [comments, setComments] = useState<StoryComment[]>([]);
-  const [newComment, setNewComment] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [website, setWebsite] = useState('');
+  const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -31,27 +35,34 @@ export default function ArticleComments({ storyId }: ArticleCommentsProps) {
     };
   }, [storyId]);
 
+  // Pre-fill name and email if user profile is available
+  useEffect(() => {
+    if (user) {
+      if (user.displayName && !name) setName(user.displayName);
+      if (user.email && !email) setEmail(user.email);
+    }
+  }, [user]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newComment.trim()) return;
-
-    if (!user) {
-      openAuthModal();
-      return;
-    }
+    if (!comment.trim() || !name.trim() || !email.trim()) return;
 
     setSubmitting(true);
     try {
       const added = await addStoryComment({
         storyId,
-        userId: user.uid,
-        userName: user.displayName || 'Bihari Voice',
-        userPhoto: user.photoURL,
-        content: newComment.trim(),
+        userId: user?.uid || `guest-${Date.now()}`,
+        userName: name.trim(),
+        userEmail: email.trim(),
+        userWebsite: website.trim() || undefined,
+        userPhoto: user?.photoURL || null,
+        content: comment.trim(),
       });
 
       setComments((prev) => [added, ...prev]);
-      setNewComment('');
+      setComment('');
+      setSuccessMessage(true);
+      setTimeout(() => setSuccessMessage(false), 5000);
     } catch (err) {
       console.error('Failed to post comment:', err);
     } finally {
@@ -70,62 +81,66 @@ export default function ArticleComments({ storyId }: ArticleCommentsProps) {
 
   return (
     <section className={styles.commentsSection}>
-      <div className={styles.sectionHeader}>
-        <div className={styles.titleRow}>
-          <MessageSquare size={22} color="#2563EB" />
-          <h3>Community Discussion</h3>
-          <span className={styles.countBadge}>{comments.length}</span>
-        </div>
-        <p className={styles.sectionSub}>
-          Share your reflections, local context, or congratulate the changemakers featured in this story.
+      <div className={styles.replySection}>
+        <h3 className={styles.replyTitle}>Leave a Reply</h3>
+        <p className={styles.replySubtitle}>
+          Your email address will not be published. Required fields are marked *
         </p>
-      </div>
 
-      {/* Post Comment Box */}
-      <div className={styles.formCard}>
-        {user ? (
-          <form onSubmit={handleSubmit} className={styles.form}>
-            <div className={styles.userBanner}>
-              <div className={styles.avatar}>
-                {user.displayName ? user.displayName.charAt(0).toUpperCase() : 'B'}
-              </div>
-              <span className={styles.postingAs}>
-                Commenting as <strong>{user.displayName}</strong>
-              </span>
-            </div>
-
-            <textarea
-              rows={3}
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder="What are your thoughts on this story? Leave a comment..."
-              className={styles.textarea}
+        <form onSubmit={handleSubmit} className={styles.replyForm}>
+          <div className={styles.inputRow}>
+            <input
+              type="text"
+              placeholder="Enter Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className={styles.inputField}
               required
             />
-
-            <div className={styles.formActions}>
-              <button
-                type="submit"
-                disabled={submitting || !newComment.trim()}
-                className="btn-primary"
-              >
-                <Send size={15} />
-                <span>{submitting ? 'Posting...' : 'Post Comment'}</span>
-              </button>
-            </div>
-          </form>
-        ) : (
-          <div className={styles.guestPrompt}>
-            <Sparkles size={24} color="#1D6FD8" />
-            <div className={styles.promptText}>
-              <h4>Join the Discussion</h4>
-              <p>Sign in or create your profile to leave thoughts on this story.</p>
-            </div>
-            <button className="btn-primary" onClick={openAuthModal}>
-              Sign In to Comment
-            </button>
+            <input
+              type="email"
+              placeholder="Enter Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={styles.inputField}
+              required
+            />
           </div>
-        )}
+
+          <div className={styles.fullWidthRow}>
+            <input
+              type="text"
+              placeholder="Enter Website"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              className={styles.inputField}
+            />
+          </div>
+
+          <div className={styles.fullWidthRow}>
+            <textarea
+              placeholder="Enter Comments"
+              rows={6}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              className={styles.textareaField}
+              required
+            />
+          </div>
+
+          <div className={styles.actionRow}>
+            <button
+              type="submit"
+              disabled={submitting || !comment.trim() || !name.trim() || !email.trim()}
+              className={styles.submitBtn}
+            >
+              {submitting ? 'Posting...' : 'Post Comment'}
+            </button>
+            {successMessage && (
+              <span className={styles.successText}>Comment posted successfully!</span>
+            )}
+          </div>
+        </form>
       </div>
 
       {/* Comments List */}
@@ -133,19 +148,19 @@ export default function ArticleComments({ storyId }: ArticleCommentsProps) {
         {loading ? (
           <div className={styles.loadingState}>Loading comments...</div>
         ) : comments.length > 0 ? (
-          comments.map((comment, idx) => (
-            <div key={comment.id || idx} className={styles.commentItem}>
+          comments.map((item, idx) => (
+            <div key={item.id || idx} className={styles.commentItem}>
               <div className={styles.commentAvatar}>
-                {comment.userName.charAt(0).toUpperCase()}
+                {item.userName ? item.userName.charAt(0).toUpperCase() : 'B'}
               </div>
               <div className={styles.commentBody}>
                 <div className={styles.commentMeta}>
-                  <span className={styles.authorName}>{comment.userName}</span>
+                  <span className={styles.authorName}>{item.userName}</span>
                   <span className={styles.commentDate}>
-                    <Clock size={11} /> {formatTimestamp(comment.createdAt)}
+                    <Clock size={11} /> {formatTimestamp(item.createdAt)}
                   </span>
                 </div>
-                <p className={styles.commentContent}>{comment.content}</p>
+                <p className={styles.commentContent}>{item.content}</p>
               </div>
             </div>
           ))
